@@ -15,4 +15,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyoFibril.Contracts\MyoFibril.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

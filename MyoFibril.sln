@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7598BA57
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyoFibril.WebAPI", "src\MyoFibril.WebAPI\MyoFibril.WebAPI.csproj", "{6286C4FA-44C4-4340-8338-804EB90E7E06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyoFibril.Contracts", "src\MyoFibril.Contracts\MyoFibril.Contracts.csproj", "{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{6286C4FA-44C4-4340-8338-804EB90E7E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6286C4FA-44C4-4340-8338-804EB90E7E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6286C4FA-44C4-4340-8338-804EB90E7E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6286C4FA-44C4-4340-8338-804EB90E7E06} = {3BEDE23A-C06F-49BA-94A0-F14F57AA6ADE}
+		{21D0FD6C-19EA-4C37-A1BE-8806C143EAA1} = {3BEDE23A-C06F-49BA-94A0-F14F57AA6ADE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E43A45FB-2AE3-41AF-82AF-E3CD8CB3463B}
