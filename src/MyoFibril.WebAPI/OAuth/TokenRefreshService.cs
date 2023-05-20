@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using MyoFibril.Contracts.Strava.Responses.OAuth;
+using System.Text.Json;
 using System.Web;
 
 namespace MyoFibril.WebAPI.OAuth;
@@ -13,7 +14,7 @@ public class TokenRefreshService : ITokenRefreshService
         _configuration = configuration;
     }
 
-    public async Task<TokenResponse> RefreshAccessToken()
+    public async Task<NewAccessTokenResponse> RefreshAccessToken()
     {
         using var httpClient = _httpClientFactory.CreateClient("strava-oauth");
         var uriBuilder = new UriBuilder(_configuration["StravaApp:RequestUri"]!+"/oauth/token");
@@ -29,7 +30,7 @@ public class TokenRefreshService : ITokenRefreshService
         response.EnsureSuccessStatusCode(); // Ensure the request was successful
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(responseContent, new JsonSerializerOptions
+        var tokenResponse = JsonSerializer.Deserialize<NewAccessTokenResponse>(responseContent, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true // Allows case-insensitive property matching
         });

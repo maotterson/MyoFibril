@@ -1,6 +1,8 @@
-﻿namespace MyoFibril.WebAPI.OAuth;
+﻿using MyoFibril.Contracts.Strava.Responses;
+
+namespace MyoFibril.WebAPI.OAuth;
 
 public interface ITokenRefreshService
 {
-    Task<TokenResponse> RefreshAccessToken();
+    Task<NewAccessTokenResponse> RefreshAccessToken();
 }

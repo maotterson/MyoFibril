@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyoFibril.Contracts.Strava.Responses;
+namespace MyoFibril.Contracts.Strava.Responses.OAuth;
 public class NewAccessTokenResponse
 {
 }
