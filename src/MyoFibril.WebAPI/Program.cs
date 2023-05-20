@@ -8,6 +8,7 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMemoryCache();
 
 // Register Strava OAuth Services
 builder.Services.AddStravaOAuthServices(configuration);
