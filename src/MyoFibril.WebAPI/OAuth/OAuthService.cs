@@ -1,4 +1,6 @@
-﻿namespace MyoFibril.WebAPI.OAuth;
+﻿using MyoFibril.WebAPI.OAuth.Interfaces;
+
+namespace MyoFibril.WebAPI.OAuth;
 
 public class OAuthService : IOAuthService
 {

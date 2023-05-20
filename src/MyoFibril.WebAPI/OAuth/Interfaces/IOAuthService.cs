@@ -1,4 +1,4 @@
-﻿namespace MyoFibril.WebAPI.OAuth;
+﻿namespace MyoFibril.WebAPI.OAuth.Interfaces;
 
 public interface IOAuthService
 {
