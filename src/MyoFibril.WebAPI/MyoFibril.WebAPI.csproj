@@ -18,8 +18,4 @@
     <ProjectReference Include="..\MyoFibril.Contracts\MyoFibril.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Strava\Services\" />
-  </ItemGroup>
-
 </Project>
