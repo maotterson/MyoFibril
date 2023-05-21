@@ -1,7 +1,7 @@
 using MyoFibril.Contracts.Strava.Static;
-using MyoFibril.WebAPI.Api;
-using MyoFibril.WebAPI.Extensions;
-using MyoFibril.WebAPI.OAuth;
+using MyoFibril.WebAPI.Strava.Api;
+using MyoFibril.WebAPI.Strava.Extensions;
+using MyoFibril.WebAPI.Strava.OAuth;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using MyoFibril.WebAPI.OAuth.Interfaces;
+using MyoFibril.WebAPI.Strava.OAuth.Interfaces;
 
-namespace MyoFibril.WebAPI.OAuth;
+namespace MyoFibril.WebAPI.Strava.OAuth;
 
 public class MemoryTokenCache : ITokenCache
 {

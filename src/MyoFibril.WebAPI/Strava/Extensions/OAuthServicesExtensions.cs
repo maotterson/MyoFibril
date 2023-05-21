@@ -1,8 +1,8 @@
-﻿using MyoFibril.WebAPI.OAuth.Interfaces;
-using MyoFibril.WebAPI.OAuth;
-using MyoFibril.Contracts.Strava.Static;
+﻿using MyoFibril.Contracts.Strava.Static;
+using MyoFibril.WebAPI.Strava.OAuth;
+using MyoFibril.WebAPI.Strava.OAuth.Interfaces;
 
-namespace MyoFibril.WebAPI.Extensions;
+namespace MyoFibril.WebAPI.Strava.Extensions;
 
 public static class OAuthServicesExtensions
 {

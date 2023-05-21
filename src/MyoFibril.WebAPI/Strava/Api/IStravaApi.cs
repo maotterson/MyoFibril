@@ -2,7 +2,7 @@
 using MyoFibril.Contracts.Strava.GetActivity;
 using Refit;
 
-namespace MyoFibril.WebAPI.Api;
+namespace MyoFibril.WebAPI.Strava.Api;
 
 [Headers("Authorization: Bearer")]
 public interface IStravaApi
