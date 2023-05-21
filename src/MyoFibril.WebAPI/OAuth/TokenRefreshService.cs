@@ -1,4 +1,5 @@
 ﻿using MyoFibril.Contracts.Strava.OAuth;
+using MyoFibril.Contracts.Strava.Static;
 using MyoFibril.WebAPI.OAuth.Interfaces;
 using System.Text.Json;
 using System.Web;
@@ -18,7 +19,7 @@ public class TokenRefreshService : ITokenRefreshService
     public async Task<NewAccessTokenResponse> RefreshAccessToken()
     {
         using var httpClient = _httpClientFactory.CreateClient("strava-oauth");
-        var uriBuilder = new UriBuilder(_configuration["StravaApp:RequestUri"]!+"/oauth/token");
+        var uriBuilder = new UriBuilder(StravaEndpoints.API_BASE_URL!+StravaEndpoints.GET_ACCESS_TOKEN);
 
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
         query["client_id"] = _configuration["StravaApp:ClientId"]!;

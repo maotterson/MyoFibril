@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.Strava.CreateActivity;
+using MyoFibril.Contracts.Strava.GetActivity;
 using MyoFibril.WebAPI.Api;
 
 namespace MyoFibril.WebAPI.Controllers;
