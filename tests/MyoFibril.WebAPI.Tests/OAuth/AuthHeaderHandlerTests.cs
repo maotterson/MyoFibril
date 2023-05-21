@@ -1,6 +1,6 @@
 using Moq;
-using MyoFibril.WebAPI.OAuth;
-using MyoFibril.WebAPI.OAuth.Interfaces;
+using MyoFibril.WebAPI.Strava.OAuth;
+using MyoFibril.WebAPI.Strava.OAuth.Interfaces;
 
 namespace MyoFibril.WebAPI.Tests.OAuth;
 

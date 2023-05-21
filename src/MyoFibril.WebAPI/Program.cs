@@ -1,4 +1,8 @@
-using MyoFibril.WebAPI.Extensions;
+using MyoFibril.Contracts.Strava.Static;
+using MyoFibril.WebAPI.Strava.Api;
+using MyoFibril.WebAPI.Strava.Extensions;
+using MyoFibril.WebAPI.Strava.OAuth;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -10,8 +14,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 
-// Register Strava OAuth Services
+// Register Strava services
 builder.Services.AddStravaOAuthServices(configuration);
+builder.Services.AddStravaServices(configuration);
+
+// Attach Strava External API Client
+builder.Services
+  .AddRefitClient<IStravaApi>()
+  .ConfigureHttpClient(client => client.BaseAddress = new Uri(StravaEndpoints.API_BASE_URL))
+  .AddHttpMessageHandler<AuthHeaderHandler>();
 
 var app = builder.Build();
 

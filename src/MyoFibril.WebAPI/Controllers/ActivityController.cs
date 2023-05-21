@@ -1,0 +1,51 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using MyoFibril.Contracts.Strava.CreateActivity;
+using MyoFibril.Contracts.Strava.GetActivity;
+using MyoFibril.WebAPI.Strava.Api;
+using MyoFibril.WebAPI.Strava.Services.Interfaces;
+
+namespace MyoFibril.WebAPI.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class ActivityController : ControllerBase
+{
+    private readonly ILogger<ActivityController> _logger;
+    private readonly IStravaActivityService _stravaActivityService;
+
+    public ActivityController(ILogger<ActivityController> logger, IStravaActivityService stravaActivityService)
+    {
+        _logger = logger;
+        _stravaActivityService = stravaActivityService;
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id)
+    {
+        var response = await _stravaActivityService.GetActivityById(id);
+
+        if (response is null)
+        {
+            _logger.LogError("Response not found");
+            return NotFound();
+        }
+        return Ok(response);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateActivityResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> CreateActivity(CreateActivityRequest createActivityRequest)
+    {
+        var response = await _stravaActivityService.CreateActivity(createActivityRequest);
+
+        if (response is null)
+        {
+            _logger.LogError("Response not found");
+            return NotFound();
+        }
+        return Ok(response);
+    }
+}

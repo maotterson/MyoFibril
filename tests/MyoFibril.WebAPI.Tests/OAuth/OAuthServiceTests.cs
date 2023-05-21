@@ -2,7 +2,7 @@
 using Moq;
 using MyoFibril.Contracts.Strava.Responses.OAuth;
 using MyoFibril.WebAPI.OAuth;
-using MyoFibril.WebAPI.OAuth.Interfaces;
+using MyoFibril.WebAPI.Strava.OAuth.Interfaces;
 using Xunit;
 
 namespace MyoFibril.WebAPI.Tests.OAuth
