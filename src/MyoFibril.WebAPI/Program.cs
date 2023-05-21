@@ -14,8 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 
-// Register Strava OAuth Services
+// Register Strava services
 builder.Services.AddStravaOAuthServices(configuration);
+builder.Services.AddStravaServices(configuration);
 
 // Attach Strava External API Client
 builder.Services
