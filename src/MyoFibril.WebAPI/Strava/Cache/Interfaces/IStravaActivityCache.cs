@@ -2,7 +2,7 @@
 using MyoFibril.Contracts.Strava.GetActivity;
 using MyoFibril.Contracts.Strava.Models;
 
-namespace MyoFibril.WebAPI.Strava.Repositories.Interfaces;
+namespace MyoFibril.WebAPI.Strava.Cache.Interfaces;
 
 public interface IStravaActivityCache
 {

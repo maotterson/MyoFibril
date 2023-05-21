@@ -1,7 +1,7 @@
 ﻿using MyoFibril.Contracts.Strava.CreateActivity;
 using MyoFibril.Contracts.Strava.GetActivity;
 using MyoFibril.WebAPI.Strava.Api;
-using MyoFibril.WebAPI.Strava.Repositories.Interfaces;
+using MyoFibril.WebAPI.Strava.Cache.Interfaces;
 using MyoFibril.WebAPI.Strava.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Strava.Services;

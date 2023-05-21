@@ -3,8 +3,8 @@ using MyoFibril.WebAPI.Strava.OAuth.Interfaces;
 using MyoFibril.WebAPI.Strava.OAuth;
 using MyoFibril.WebAPI.Strava.Services;
 using MyoFibril.WebAPI.Strava.Services.Interfaces;
-using MyoFibril.WebAPI.Strava.Repositories.Interfaces;
-using MyoFibril.WebAPI.Strava.Repositories;
+using MyoFibril.WebAPI.Strava.Cache.Interfaces;
+using MyoFibril.WebAPI.Strava.Cache;
 
 namespace MyoFibril.WebAPI.Strava.Extensions;
 

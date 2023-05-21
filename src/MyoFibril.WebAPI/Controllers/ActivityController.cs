@@ -2,6 +2,7 @@
 using MyoFibril.Contracts.Strava.CreateActivity;
 using MyoFibril.Contracts.Strava.GetActivity;
 using MyoFibril.WebAPI.Strava.Api;
+using MyoFibril.WebAPI.Strava.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Controllers;
 
@@ -10,12 +11,12 @@ namespace MyoFibril.WebAPI.Controllers;
 public class ActivityController : ControllerBase
 {
     private readonly ILogger<ActivityController> _logger;
-    private readonly IStravaApi _api;
+    private readonly IStravaActivityService _stravaActivityService;
 
-    public ActivityController(ILogger<ActivityController> logger, IStravaApi api)
+    public ActivityController(ILogger<ActivityController> logger, IStravaActivityService stravaActivityService)
     {
         _logger = logger;
-        _api = api;
+        _stravaActivityService = stravaActivityService;
     }
 
     [HttpGet("{id}")]
@@ -23,14 +24,14 @@ public class ActivityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id)
     {
-        var response = await _api.GetActivityById(id);
+        var response = await _stravaActivityService.GetActivityById(id);
 
         if (response is null)
         {
             _logger.LogError("Response not found");
             return NotFound();
         }
-        return Ok(response.Content);
+        return Ok(response);
     }
 
     [HttpPost]
@@ -38,13 +39,13 @@ public class ActivityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateActivity(CreateActivityRequest createActivityRequest)
     {
-        var response = await _api.CreateActivity(createActivityRequest);
+        var response = await _stravaActivityService.CreateActivity(createActivityRequest);
 
         if (response is null)
         {
             _logger.LogError("Response not found");
             return NotFound();
         }
-        return Ok(response.Content);
+        return Ok(response);
     }
 }
