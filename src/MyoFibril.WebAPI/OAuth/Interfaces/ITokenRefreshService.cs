@@ -1,4 +1,4 @@
-﻿using MyoFibril.Contracts.Strava.Responses.OAuth;
+﻿using MyoFibril.Contracts.Strava.OAuth;
 
 namespace MyoFibril.WebAPI.OAuth.Interfaces;
 
