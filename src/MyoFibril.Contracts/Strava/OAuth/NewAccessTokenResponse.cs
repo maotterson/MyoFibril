@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MyoFibril.Contracts.Strava.Responses.OAuth;
+namespace MyoFibril.Contracts.Strava.OAuth;
 public record NewAccessTokenResponse
 {
     [JsonPropertyName("token_type")]
