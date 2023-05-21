@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.Strava.CreateActivity;
+using MyoFibril.WebAPI.Api;
 
-namespace StravaWithRefitSimple.Controllers;
+namespace MyoFibril.WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
