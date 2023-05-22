@@ -19,7 +19,7 @@ public class StravaActivityService : IStravaActivityService
         _activityCache = activityCache;
     }
 
-    public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest createActivityRequest)
+    public async Task<StravaCreateActivityResponse> CreateActivity(StravaCreateActivityRequest createActivityRequest)
     {
         var response = await _api.CreateActivity(createActivityRequest);
         if (response is null || !response.IsSuccessStatusCode)
@@ -31,7 +31,7 @@ public class StravaActivityService : IStravaActivityService
         return response.Content;
     }
 
-    public async Task<GetActivityResponse> GetActivityById(string id)
+    public async Task<StravaGetActivityResponse> GetActivityById(string id)
     {
         var response = await _api.GetActivityById(id);
         if (response is null || !response.IsSuccessStatusCode)
