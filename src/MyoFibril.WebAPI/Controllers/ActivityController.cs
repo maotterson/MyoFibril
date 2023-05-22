@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyoFibril.Contracts.Strava.CreateActivity;
-using MyoFibril.Contracts.Strava.GetActivity;
-using MyoFibril.WebAPI.Strava.Api;
-using MyoFibril.WebAPI.Strava.Services.Interfaces;
+using MyoFibril.Contracts.WebAPI.CreateActivity;
+using MyoFibril.Contracts.WebAPI.GetActivity;
+using MyoFibril.WebAPI.Services.Interfaces;
+using System.ComponentModel;
 
 namespace MyoFibril.WebAPI.Controllers;
 
@@ -11,20 +11,20 @@ namespace MyoFibril.WebAPI.Controllers;
 public class ActivityController : ControllerBase
 {
     private readonly ILogger<ActivityController> _logger;
-    private readonly IStravaActivityService _stravaActivityService;
+    private readonly IActivityService _activityService;
 
-    public ActivityController(ILogger<ActivityController> logger, IStravaActivityService stravaActivityService)
+    public ActivityController(ILogger<ActivityController> logger, IActivityService activityService)
     {
         _logger = logger;
-        _stravaActivityService = stravaActivityService;
+        _activityService = activityService;
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id)
+    public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
     {
-        var response = await _stravaActivityService.GetActivityById(id);
+        var response = await _activityService.GetActivityById(id, includeStrava);
 
         if (response is null)
         {
@@ -39,7 +39,7 @@ public class ActivityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateActivity(CreateActivityRequest createActivityRequest)
     {
-        var response = await _stravaActivityService.CreateActivity(createActivityRequest);
+        var response = await _activityService.CreateActivity(createActivityRequest);
 
         if (response is null)
         {

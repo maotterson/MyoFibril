@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.Strava.Models;
-public class MetaAthlete
+public class StravaMetaAthlete
 {
     [JsonPropertyName("id")]
     [JsonRequired]

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.Strava.Models;
-public class Error
+public class StravaError
 {
     [JsonPropertyName("code")]
     public string? Code { get; set; }
