@@ -22,18 +22,34 @@
     </div>
 }
 
+@if (_error is not null)
+{
+    <p>@_error</p>
+}
+
 
 @code{
     public string? InputName { get; set; }
     private CreateActivityResponse? _createdActivity;
+    private string _error;
 
     public async Task CreateActivity()
     {
-        var createActivityRequest = new CreateActivityRequest
-            {
-                Name = InputName
-            };
-        _createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
-        StateHasChanged();
+        try
+        {
+            var createActivityRequest = new CreateActivityRequest
+                {
+                    Name = InputName
+                };
+            _createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
+        }
+        catch(Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            StateHasChanged();
+        }
     }
 }
