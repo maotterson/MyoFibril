@@ -6,9 +6,9 @@ namespace MyoFibril.WebAPI.Strava.Cache.Interfaces;
 
 public interface IStravaActivityCache
 {
-    Task<DetailedActivity> GetActivityById(string id);
-    Task<DetailedActivity> AddActivityToCache(DetailedActivity activity);
-    Task<DetailedActivity> RemoveActivityFromCache(DetailedActivity activity);
-    Task<IEnumerable<DetailedActivity>> GetAllActivities();
+    Task<StravaDetailedActivity> GetActivityById(string id);
+    Task<StravaDetailedActivity> AddActivityToCache(StravaDetailedActivity activity);
+    Task<StravaDetailedActivity> RemoveActivityFromCache(StravaDetailedActivity activity);
+    Task<IEnumerable<StravaDetailedActivity>> GetAllActivities();
 
 }

@@ -5,22 +5,22 @@ namespace MyoFibril.WebAPI.Strava.Cache;
 
 public class StravaActivityCache : IStravaActivityCache
 {
-    public Task<DetailedActivity> AddActivityToCache(DetailedActivity activity)
+    public Task<StravaDetailedActivity> AddActivityToCache(StravaDetailedActivity activity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DetailedActivity> GetActivityById(string id)
+    public Task<StravaDetailedActivity> GetActivityById(string id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<DetailedActivity>> GetAllActivities()
+    public Task<IEnumerable<StravaDetailedActivity>> GetAllActivities()
     {
         throw new NotImplementedException();
     }
 
-    public Task<DetailedActivity> RemoveActivityFromCache(DetailedActivity activity)
+    public Task<StravaDetailedActivity> RemoveActivityFromCache(StravaDetailedActivity activity)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,6 @@
 ﻿namespace MyoFibril.Contracts.Strava.Models;
-public class Fault
+public class StravaFault
 {
-    public Error[]? Errors { get; set; }
+    public StravaError[]? Errors { get; set; }
     public string? Message { get; set; }
 }
