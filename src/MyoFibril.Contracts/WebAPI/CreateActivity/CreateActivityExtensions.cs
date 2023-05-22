@@ -12,7 +12,7 @@ public static class CreateActivityExtensions
             Name = request.Name,
             Description = "Created by web api",
             SportType = StravaSportType.Workout.ToString(),
-            StartDateLocal = DateTimeOffset.Now.ToLocalTime().ToString(),
+            StartDateLocal = DateTimeOffset.Now.ToLocalTime().ToString("o"),
             ElapsedTime = 333
         };
         return stravaRequest;
