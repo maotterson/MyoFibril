@@ -1,7 +1,31 @@
 ﻿@page "/"
+@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.Contracts.WebAPI.CreateActivity;
 
-<h1>Hello, world!</h1>
+@inject INewActivityService _newActivityService
 
-Welcome to your new app.
+<h1>Create New Activity</h1>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <span>Name</span>
+    <input @bind="Name" />
+    <button @onclick="CreateActivity">Create</button>
+</div>
+
+@if (_activityCreated)
+{
+    <div>
+    </div>
+}
+
+
+@code{
+    public string? Name { get; set; }
+    private bool _activityCreated = false;
+
+    public async Task CreateActivity()
+    {
+        var createdActivity = await _newActivityService.CreateActivity(CreateActivityRequest createActivityRequest);
+        _activityCreated = true;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyoFibril.MAUIBlazorApp.Data;
+using MyoFibril.MAUIBlazorApp.Services;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -22,6 +23,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddScoped<INewActivityService, NewActivityService>();
 
         return builder.Build();
     }
