@@ -1,6 +1,6 @@
 ﻿namespace MyoFibril.Domain.Entities;
 
-public class Activity
+public class ActivityEntity
 {
     public Guid Guid { get; set; }
     public string Name { get; set; } = string.Empty;

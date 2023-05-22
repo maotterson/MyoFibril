@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.Strava.Models;
-public class DetailedActivity
+public class StravaDetailedActivity
 {
     [JsonPropertyName("id")]
     [JsonRequired]
@@ -9,7 +9,7 @@ public class DetailedActivity
     [JsonPropertyName("name")]
     public string? Name { get; set; }
     [JsonPropertyName("athlete")]
-    public MetaAthlete? Athlete { get; set; }
+    public StravaMetaAthlete? Athlete { get; set; }
     [JsonPropertyName("distance")]
     public float? Distance { get; set; }
     [JsonPropertyName("moving_time")]
@@ -17,7 +17,7 @@ public class DetailedActivity
     [JsonPropertyName("elapsed_time")]
     public int? ElapsedTime { get; set; }
     [JsonPropertyName("sport_type")]
-    public SportType? SportType { get; set; }
+    public StravaSportType? SportType { get; set; }
     [JsonPropertyName("start_date")]
     public DateTime? StartDate { get; set; }
     [JsonPropertyName("start_date_local")]
