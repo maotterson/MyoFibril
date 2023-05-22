@@ -12,8 +12,8 @@ public class NewActivityService : INewActivityService
     }
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest createActivityRequest)
     {
-        var httpClient = _httpClientFactory.CreateClient();
-        var requestUri = "https://localhost:7152/Activity";
+        var httpClient = _httpClientFactory.CreateClient("MyClient");
+        var requestUri = "https://localhost:5230/Activity";
         var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(createActivityRequest), Encoding.UTF8, "application/json");
 
         var response = await httpClient.PostAsync(requestUri, jsonContent);
