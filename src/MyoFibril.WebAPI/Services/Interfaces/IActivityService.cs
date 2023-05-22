@@ -6,5 +6,5 @@ namespace MyoFibril.WebAPI.Services.Interfaces;
 public interface IActivityService
 {
     Task<CreateActivityResponse> CreateActivity(CreateActivityRequest request);
-    Task<GetActivityResponse> GetActivityById(string id);
+    Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false);
 }

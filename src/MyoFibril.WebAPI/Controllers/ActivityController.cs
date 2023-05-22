@@ -2,6 +2,7 @@
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
 using MyoFibril.WebAPI.Services.Interfaces;
+using System.ComponentModel;
 
 namespace MyoFibril.WebAPI.Controllers;
 
@@ -21,9 +22,9 @@ public class ActivityController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id)
+    public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
     {
-        var response = await _activityService.GetActivityById(id);
+        var response = await _activityService.GetActivityById(id, includeStrava);
 
         if (response is null)
         {

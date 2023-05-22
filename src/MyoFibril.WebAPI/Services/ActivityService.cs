@@ -1,9 +1,13 @@
-﻿using MyoFibril.Contracts.WebAPI.CreateActivity;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyoFibril.Contracts.Strava.Models;
+using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
 using MyoFibril.Domain.Entities;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.WebAPI.Services.Interfaces;
 using MyoFibril.WebAPI.Strava.Services.Interfaces;
+using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -41,18 +45,21 @@ public class ActivityService : IActivityService
             Name = activityEntity.Name,
             StravaActivity = stravaResponse
         };
-
         return createActivityResponse;
     }
 
-    public async Task<GetActivityResponse> GetActivityById(string id)
+    public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false)
     {
         var activityEntity = await _activityRepository.GetActivityById(id);
+        StravaDetailedActivity? stravaActivity = null;
 
-        // retrieve connected activity from strava if one exists
-        var stravaActivity = activityEntity.StravaActivityId is not null ?
-            await _stravaActivityService.GetActivityById(activityEntity.StravaActivityId.ToString()!) :
-            null;
+        // retrieve connected activity from strava if one exists and is requested
+        if (includeStrava)
+        {
+            stravaActivity = activityEntity.StravaActivityId is not null ?
+                await _stravaActivityService.GetActivityById(activityEntity.StravaActivityId.ToString()!) :
+                null;
+        }
 
         // return get activity response
         var getActivityResponse = new GetActivityResponse
