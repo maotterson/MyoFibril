@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.Strava.CreateActivity;
-public class CreateActivityRequest
+public class StravaCreateActivityRequest
 {
     [JsonPropertyName("name")]
     [JsonRequired]
