@@ -1,0 +1,55 @@
+﻿@page "/"
+@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.Contracts.WebAPI.CreateActivity;
+
+@inject INewActivityService _newActivityService
+
+<h1>Create New Activity</h1>
+
+<div>
+    <span>Name</span>
+    <input @bind="InputName" />
+    <button @onclick="CreateActivity">Create</button>
+</div>
+
+@if (_createdActivity is not null)
+{
+    <p>Activity created!</p>
+    <div>
+        <p>>@_createdActivity.Id</p>
+        <p>@_createdActivity.Name</p>
+        <p>@_createdActivity.StravaActivity.StartDateLocal</p>
+    </div>
+}
+
+@if (_error is not null)
+{
+    <p>@_error</p>
+}
+
+
+@code{
+    public string? InputName { get; set; }
+    private CreateActivityResponse? _createdActivity;
+    private string _error;
+
+    public async Task CreateActivity()
+    {
+        try
+        {
+            var createActivityRequest = new CreateActivityRequest
+                {
+                    Name = InputName
+                };
+            _createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
+        }
+        catch(Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            StateHasChanged();
+        }
+    }
+}
