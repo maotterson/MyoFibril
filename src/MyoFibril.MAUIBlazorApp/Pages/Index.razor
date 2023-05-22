@@ -8,24 +8,32 @@
 
 <div>
     <span>Name</span>
-    <input @bind="Name" />
+    <input @bind="InputName" />
     <button @onclick="CreateActivity">Create</button>
 </div>
 
-@if (_activityCreated)
+@if (_createdActivity is not null)
 {
+    <p>Activity created!</p>
     <div>
+        <p>>@_createdActivity.Id</p>
+        <p>@_createdActivity.Name</p>
+        <p>@_createdActivity.StravaActivity.StartDateLocal</p>
     </div>
 }
 
 
 @code{
-    public string? Name { get; set; }
-    private bool _activityCreated = false;
+    public string? InputName { get; set; }
+    private CreateActivityResponse? _createdActivity;
 
     public async Task CreateActivity()
     {
-        var createdActivity = await _newActivityService.CreateActivity(CreateActivityRequest createActivityRequest);
-        _activityCreated = true;
+        var createActivityRequest = new CreateActivityRequest
+            {
+                Name = InputName
+            };
+        _createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
+        StateHasChanged();
     }
 }
