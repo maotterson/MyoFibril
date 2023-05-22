@@ -1,6 +1,7 @@
 ﻿using MyoFibril.Contracts.Strava.CreateActivity;
 using MyoFibril.Contracts.Strava.Models;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace MyoFibril.Contracts.WebAPI.GetActivity;
 public class GetActivityResponse
@@ -10,5 +11,6 @@ public class GetActivityResponse
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
     [JsonPropertyName("strava_activity")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public StravaDetailedActivity? StravaActivity { get; set; }
 }
