@@ -8,7 +8,7 @@
     <span>Name</span>
     <input @bind="InputName" />
 
-    @foreach (var exercise in _createActivityViewModel.Exercises)
+    @foreach (var exercise in _exercises)
     {
         <ExerciseSummary ExerciseDto="exercise"></ExerciseSummary>
     }
@@ -20,16 +20,17 @@
 </div>
 
 @code {
-    public string InputName { get; set; }
-    private async Task CreateButtonClicked()
-    {
-        await _createActivityViewModel.CreateActivity(InputName);
-        StateHasChanged();
-    }
+    private List<ExerciseDto> _exercises => _createActivityViewModel.Exercises;
+    public string InputName { get; set; } = string.Empty;
     private async Task AddExercise()
     {
         var newExercise = new ExerciseDto { ExerciseName = "Box squats" };
         _createActivityViewModel.Exercises.Add(newExercise);
+        StateHasChanged();
+    }
+    private async Task CreateButtonClicked()
+    {
+        await _createActivityViewModel.CreateActivity(InputName);
         StateHasChanged();
     }
 }
