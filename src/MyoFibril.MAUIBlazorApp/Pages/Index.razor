@@ -1,16 +1,11 @@
 ﻿@page "/"
 @using MyoFibril.MAUIBlazorApp.Services;
 @using MyoFibril.Contracts.WebAPI.CreateActivity;
+@using MyoFibril.MAUIBlazorApp.Components
 
 @inject INewActivityService _newActivityService
 
-<h1>Create New Activity</h1>
-
-<div>
-    <span>Name</span>
-    <input @bind="InputName" />
-    <button @onclick="CreateActivity">Create</button>
-</div>
+<CreateActivityComponent OnCreateButtonClicked="CreateActivity"></CreateActivityComponent>
 
 @if (_createdActivity is not null)
 {

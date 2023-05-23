@@ -1,0 +1,18 @@
+﻿<h1>Create New Activity</h1>
+
+<div>
+    <span>Name</span>
+    <input @bind="InputName" />
+    <button @onclick="CreateButtonClicked">Create</button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnCreateButtonClicked { get; set; }
+    public string? InputName { get; set; }
+
+    public async Task CreateButtonClicked()
+    {
+        await OnCreateButtonClicked.InvokeAsync();
+    }
+}

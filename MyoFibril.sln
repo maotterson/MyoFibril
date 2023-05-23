@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{C5A20DA3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyoFibril.WebAPI.Tests", "tests\MyoFibril.WebAPI.Tests\MyoFibril.WebAPI.Tests.csproj", "{16D39D76-CA7B-46D6-AFA9-CC5B14E23975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyoFibril.Domain", "src\MyoFibril.Domain\MyoFibril.Domain.csproj", "{1C50A12D-B898-4748-8998-2154DDD6A341}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyoFibril.Domain", "src\MyoFibril.Domain\MyoFibril.Domain.csproj", "{1C50A12D-B898-4748-8998-2154DDD6A341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyoFibril.MAUIBlazorApp", "src\MyoFibril.MAUIBlazorApp\MyoFibril.MAUIBlazorApp.csproj", "{3DBB0312-A628-4149-ACBA-C6B0A2737EDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyoFibril.MAUIBlazorApp", "src\MyoFibril.MAUIBlazorApp\MyoFibril.MAUIBlazorApp.csproj", "{3DBB0312-A628-4149-ACBA-C6B0A2737EDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
