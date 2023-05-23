@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MyoFibril.MAUIBlazorApp.Data;
+using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
 using MyoFibril.MAUIBlazorApp.Services;
 using System.Net;
 using System.Net.Http;
@@ -39,8 +39,7 @@ public static class MauiProgram
                return clientHandler;
            });
 
-
-        builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
 
         return builder.Build();
