@@ -1,0 +1,35 @@
+﻿@using MyoFibril.Contracts.WebAPI.Models;
+@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary
+@inject CreateActivityViewModel _createActivityViewModel
+
+<h1>Create New Activity</h1>
+
+<div>
+    <span>Name</span>
+    <input @bind="InputName" />
+
+    @foreach (var exercise in _createActivityViewModel.Exercises)
+    {
+        <ExerciseSummary ExerciseDto="exercise"></ExerciseSummary>
+    }
+
+    <!-- Add button to add a new input -->
+    <button class="btn btn-primary" @onclick="AddExercise">Add Exercise</button>
+
+    <button @onclick="CreateButtonClicked">Create</button>
+</div>
+
+@code {
+    public string InputName { get; set; }
+    private async Task CreateButtonClicked()
+    {
+        await _createActivityViewModel.CreateActivity(InputName);
+        StateHasChanged();
+    }
+    private async Task AddExercise()
+    {
+        var newExercise = new ExerciseDto { ExerciseName = "Box squats" };
+        _createActivityViewModel.Exercises.Add(newExercise);
+        StateHasChanged();
+    }
+}
