@@ -3,7 +3,7 @@
 @using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
 @using MyoFibril.MAUIBlazorApp.Services;
 @inject CreateActivityViewModel _createActivityViewModel
-@inject IAddExerciseService _modalService
+@inject IAddExerciseService _addExerciseService
 
 <h1>Create New Activity</h1>
 
@@ -28,17 +28,17 @@
 </div>
 
 @code {
-    private bool _modalOpen => _modalService.IsModalOpen();
+    private bool _modalOpen => _addExerciseService.IsModalOpen();
     private List<ExerciseDto> _exercises => _createActivityViewModel.Exercises;
     public string InputName { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
-        _modalService.OnModalStateChanged += StateHasChanged;
+        _addExerciseService.OnModalStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
-        _modalService.OpenModal();
+        _addExerciseService.OpenModal();
     }
     private async Task CreateButtonClicked()
     {
@@ -47,6 +47,6 @@
     }
     public void Dispose()
     {
-        _modalService.OnModalStateChanged -= StateHasChanged;
+        _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }
 }

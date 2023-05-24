@@ -1,5 +1,5 @@
-﻿namespace MyoFibril.MAUIBlazorApp.Services.UI;
-public class ModalService : IModalService
+﻿namespace MyoFibril.MAUIBlazorApp.Services;
+public class AddExerciseService : IAddExerciseService
 {
     private bool _modalOpen = false;
     public event Action OnModalStateChanged;

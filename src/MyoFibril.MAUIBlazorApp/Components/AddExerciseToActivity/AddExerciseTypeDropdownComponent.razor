@@ -1,4 +1,7 @@
-﻿<div class="dropdown">
+﻿@using MyoFibril.MAUIBlazorApp.Services;
+@inject IAddExerciseService _addExerciseService
+
+<div class="dropdown">
     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         Select Exercise
     </button>

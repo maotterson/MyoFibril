@@ -1,5 +1,5 @@
 ﻿@using MyoFibril.MAUIBlazorApp.Services;
-@inject IAddExerciseService _modalService
+@inject IAddExerciseService _addExerciseService
 
 <div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
     <div class="modal-dialog modal-dialog-centered">
@@ -20,15 +20,15 @@
 @code {
     protected override void OnInitialized()
     {
-        _modalService.OnModalStateChanged += StateHasChanged;
+        _addExerciseService.OnModalStateChanged += StateHasChanged;
     }
     private void CloseModal()
     {
-        _modalService.CloseModal();
+        _addExerciseService.CloseModal();
     }
     public void Dispose()
     {
-        _modalService.OnModalStateChanged -= StateHasChanged;
+        _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }
     /*
     private async Task AddExercise()
