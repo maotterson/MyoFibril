@@ -42,6 +42,9 @@ public static class MauiProgram
         builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
 
+        // add ui-related services
+        builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
+
         return builder.Build();
     }
 }

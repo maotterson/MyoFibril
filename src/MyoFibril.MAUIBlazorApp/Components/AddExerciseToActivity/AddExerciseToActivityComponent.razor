@@ -1,0 +1,44 @@
+﻿@using MyoFibril.MAUIBlazorApp.Services;
+@inject IAddExerciseService _addExerciseService
+
+<div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Exercise</h4>
+            </div>
+            <div class="modal-body">
+                <AddExerciseTypeDropdownComponent></AddExerciseTypeDropdownComponent>
+            </div>
+            <span>Selected exercise: @SelectedExercise</span>
+            <div class="modal-footer">
+                <button class="btn btn-primary" @onclick="CloseModal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    string SelectedExercise => _addExerciseService.SelectedExercise;
+    protected override void OnInitialized()
+    {
+        _addExerciseService.OnModalStateChanged += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        _addExerciseService.OnModalStateChanged -= StateHasChanged;
+    }
+    private void CloseModal()
+    {
+        _addExerciseService.CloseModal();
+    }
+    
+    /*
+    private async Task AddExercise()
+        {
+        var newExercise = new ExerciseDto { ExerciseName = "Box squats" };
+        _createActivityViewModel.Exercises.Add(newExercise);
+        StateHasChanged();
+    }
+    */
+}

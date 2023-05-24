@@ -1,8 +1,16 @@
 ﻿@using MyoFibril.Contracts.WebAPI.Models;
-@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary
+@using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
+@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
+@using MyoFibril.MAUIBlazorApp.Services;
 @inject CreateActivityViewModel _createActivityViewModel
+@inject IAddExerciseService _addExerciseService
 
 <h1>Create New Activity</h1>
+
+@if (_modalOpen)
+{
+    <AddExerciseToActivityComponent></AddExerciseToActivityComponent>
+}
 
 <div>
     <span>Name</span>
@@ -10,27 +18,35 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummary Exercise="exercise"></ExerciseSummary>
+        <ExerciseSummaryComponent Exercise="exercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
-    <button class="btn btn-primary" @onclick="AddExercise">Add Exercise</button>
+    <button class="btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
 
     <button @onclick="CreateButtonClicked">Create</button>
 </div>
 
 @code {
+    private bool _modalOpen => _addExerciseService.IsModalOpen();
     private List<ExerciseDto> _exercises => _createActivityViewModel.Exercises;
     public string InputName { get; set; } = string.Empty;
-    private async Task AddExercise()
+
+    protected override void OnInitialized()
     {
-        var newExercise = new ExerciseDto { ExerciseName = "Box squats" };
-        _createActivityViewModel.Exercises.Add(newExercise);
-        StateHasChanged();
+        _addExerciseService.OnModalStateChanged += StateHasChanged;
+    }
+    private void AddExerciseButtonClicked()
+    {
+        _addExerciseService.OpenModal();
     }
     private async Task CreateButtonClicked()
     {
         await _createActivityViewModel.CreateActivity(InputName);
         StateHasChanged();
+    }
+    public void Dispose()
+    {
+        _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }
 }
