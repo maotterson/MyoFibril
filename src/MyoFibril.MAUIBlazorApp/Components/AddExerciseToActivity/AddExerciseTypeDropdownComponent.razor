@@ -6,19 +6,27 @@
         Select Exercise
     </button>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#"><span class="oi oi-plus"></span> New Exercise</a></li>
+        <li @onclick="ClickedNewExercise"><a class="dropdown-item" href="#"><span class="oi oi-plus"></span> New Exercise</a></li>
         <li><hr class="dropdown-divider"></li>
         @foreach(var exercise in Exercises)
         {
-            <li><a class="dropdown-item" href="#">@exercise</a></li>
+            <li @onclick="() => SelectedExercise(exercise)"><a class="dropdown-item" href="#">@exercise</a></li>
         }
     </ul>
 </div>
 
 
 @code {
-    List<string> Exercises { get; set; } = new List<string>()
+    List<string> Exercises => _addExerciseService.GetExercisesList();
+
+    public void ClickedNewExercise()
     {
-        "Box Squat", "Bench Press", "Deadlift"
-    };
+        _addExerciseService.AddExerciseToList("added exercise");
+        StateHasChanged();
+    }
+
+    public void SelectedExercise(string exercise)
+    {
+        _addExerciseService.SelectedExercise = exercise;
+    }
 }
