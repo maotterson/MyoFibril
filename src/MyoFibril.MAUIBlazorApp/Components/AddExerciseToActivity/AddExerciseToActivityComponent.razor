@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <AddExerciseTypeDropdownComponent></AddExerciseTypeDropdownComponent>
             </div>
-            <span>Selected exercise: @</span>
+            <span>Selected exercise: @SelectedExercise</span>
             <div class="modal-footer">
                 <button class="btn btn-primary" @onclick="CloseModal">Close</button>
             </div>
@@ -19,6 +19,7 @@
 </div>
 
 @code {
+    string SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
