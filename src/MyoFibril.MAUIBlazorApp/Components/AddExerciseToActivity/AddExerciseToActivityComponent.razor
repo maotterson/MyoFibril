@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <AddExerciseTypeDropdownComponent></AddExerciseTypeDropdownComponent>
             </div>
+            <span>Selected exercise: @</span>
             <div class="modal-footer">
                 <button class="btn btn-primary" @onclick="CloseModal">Close</button>
             </div>
@@ -22,14 +23,15 @@
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
     }
-    private void CloseModal()
-    {
-        _addExerciseService.CloseModal();
-    }
     public void Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }
+    private void CloseModal()
+    {
+        _addExerciseService.CloseModal();
+    }
+    
     /*
     private async Task AddExercise()
         {

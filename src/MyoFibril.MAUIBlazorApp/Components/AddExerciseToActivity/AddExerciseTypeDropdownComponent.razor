@@ -10,22 +10,29 @@
         <li><hr class="dropdown-divider"></li>
         @foreach(var exercise in Exercises)
         {
-            <li @onclick="() => SelectedExercise(exercise)"><a class="dropdown-item" href="#">@exercise</a></li>
+            <li @onclick="() => ClickedSelectedExercise(exercise)"><a class="dropdown-item" href="#">@exercise</a></li>
         }
     </ul>
 </div>
 
 
 @code {
+    string SelectedExercise => _addExerciseService.SelectedExercise;
     List<string> Exercises => _addExerciseService.GetExercisesList();
-
+    protected override void OnInitialized()
+    {
+        _addExerciseService.OnModalStateChanged += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        _addExerciseService.OnModalStateChanged -= StateHasChanged;
+    }
     public void ClickedNewExercise()
     {
         _addExerciseService.AddExerciseToList("added exercise");
-        StateHasChanged();
     }
 
-    public void SelectedExercise(string exercise)
+    public void ClickedSelectedExercise(string exercise)
     {
         _addExerciseService.SelectedExercise = exercise;
     }
