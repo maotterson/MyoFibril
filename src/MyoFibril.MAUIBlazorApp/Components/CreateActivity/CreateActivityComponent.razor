@@ -1,9 +1,10 @@
-﻿@using MyoFibril.Contracts.WebAPI.Models;
-@using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
-@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
-@using MyoFibril.MAUIBlazorApp.Services.UI;
+﻿@    using MyoFibril.Contracts.WebAPI.Models;
+@    using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
+@    using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
+@    using MyoFibril.MAUIBlazorApp.Services.UI;
+    using MyoFibril.MAUIBlazorApp.Services;
 @inject CreateActivityViewModel _createActivityViewModel
-@inject IModalService _modalService
+@inject IAddExerciseService _modalService
 
 <h1>Create New Activity</h1>
 
