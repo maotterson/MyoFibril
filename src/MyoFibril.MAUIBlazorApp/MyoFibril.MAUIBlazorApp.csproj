@@ -50,6 +50,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="bootstrap" Version="5.2.3" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
