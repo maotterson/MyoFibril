@@ -29,6 +29,10 @@
     {
         _modalService.CloseModal();
     }
+    public void Dispose()
+    {
+        _modalService.OnModalStateChanged -= StateHasChanged;
+    }
     /*
     private async Task AddExercise()
         {

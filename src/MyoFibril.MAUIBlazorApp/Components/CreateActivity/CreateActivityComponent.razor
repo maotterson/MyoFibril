@@ -40,11 +40,13 @@
     {
         _modalService.OpenModal();
     }
-    
-    
     private async Task CreateButtonClicked()
     {
         await _createActivityViewModel.CreateActivity(InputName);
         StateHasChanged();
+    }
+    public void Dispose()
+    {
+        _modalService.OnModalStateChanged -= StateHasChanged;
     }
 }
