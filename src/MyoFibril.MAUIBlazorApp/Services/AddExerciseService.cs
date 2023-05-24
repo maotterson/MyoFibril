@@ -1,7 +1,10 @@
 ﻿namespace MyoFibril.MAUIBlazorApp.Services;
 public class AddExerciseService : IAddExerciseService
 {
-    private List<string> _exercises;
+    private List<string> _exercises = new List<string>()
+    {
+        "Box squat", "Deadlift", "Bench Press", "Overhead Press", "Pull-ups"
+    };
     private bool _modalOpen = false;
     public event Action OnModalStateChanged;
     private string _selectedExercise = string.Empty;
