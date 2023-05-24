@@ -4,15 +4,13 @@ public class AddExerciseService : IAddExerciseService
     private List<string> _exercises;
     private bool _modalOpen = false;
     public event Action OnModalStateChanged;
+    private string _selectedExercise = string.Empty;
     public string SelectedExercise 
     {
-        get
-        {
-            return SelectedExercise;
-        }
+        get => _selectedExercise;
         set
         {
-            SelectedExercise = value;
+            _selectedExercise = value;
             OnModalStateChanged.Invoke();
         }
     }
