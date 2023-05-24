@@ -1,4 +1,7 @@
-﻿<div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
+﻿@using MyoFibril.MAUIBlazorApp.Services.UI;
+@inject IModalService _modalService
+
+<div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,15 +21,20 @@
 </div>
 
 @code {
-    private bool isModalOpen = false;
-
-    private void OpenModal()
+    protected override void OnInitialized()
     {
-        isModalOpen = true;
+        _modalService.OnModalStateChanged += StateHasChanged;
     }
-
     private void CloseModal()
     {
-        isModalOpen = false;
+        _modalService.CloseModal();
     }
+    /*
+    private async Task AddExercise()
+        {
+        var newExercise = new ExerciseDto { ExerciseName = "Box squats" };
+        _createActivityViewModel.Exercises.Add(newExercise);
+        StateHasChanged();
+    }
+    */
 }
