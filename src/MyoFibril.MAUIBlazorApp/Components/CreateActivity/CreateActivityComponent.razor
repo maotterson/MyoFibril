@@ -1,5 +1,5 @@
 ﻿@using MyoFibril.Contracts.WebAPI.Models;
-@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary
+@using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
 @inject CreateActivityViewModel _createActivityViewModel
 
 <h1>Create New Activity</h1>
@@ -10,7 +10,7 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummary Exercise="exercise"></ExerciseSummary>
+        <ExerciseSummaryComponent Exercise="exercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
