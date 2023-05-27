@@ -1,0 +1,41 @@
+﻿@using MyoFibril.Contracts.WebAPI.Models;
+@using MyoFibril.MAUIBlazorApp.Components.TypeaheadList.Models;
+<div>
+    <div class="card-body border-bottom py-2" @onclick="ClickedListItem">
+        <h5 class="card-title">
+            @{
+                var containsMatch = ExerciseSearchResultItem.MatchingSubstrings.TryDequeue(out var matchingSubstring);
+                for (var i = 0; i < ExerciseSearchResultItem.Exercise.ExerciseName.Length; i++)
+                {
+                    if (containsMatch && i == matchingSubstring!.EndingIndex) containsMatch = ExerciseSearchResultItem.MatchingSubstrings.TryDequeue(out matchingSubstring);
+                    if (containsMatch && i >= matchingSubstring!.StartingIndex && i < matchingSubstring!.EndingIndex)
+                    {
+                        <b>@ExerciseSearchResultItem.Exercise.ExerciseName[i]</b>
+                    }
+                    else
+                    {
+                        @ExerciseSearchResultItem.Exercise.ExerciseName[i]
+                    }
+                }
+            }
+        </h5>
+        <h6 class="card-subtitle my-1 text-body-secondary">
+            @foreach (var bg in ExerciseSearchResultItem.Exercise.MuscleGroups)
+            {
+                <span class="badge text-bg-success me-2">@bg.Name</span>
+            }
+        </h6>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ExerciseSearchResultItem ExerciseSearchResultItem { get; set; } = default!;
+    [Parameter]
+    public EventCallback<ExerciseDto> OnClickCallback { get; set; }
+
+    public async Task ClickedListItem()
+    {
+        await OnClickCallback.InvokeAsync(ExerciseSearchResultItem.Exercise);
+    }
+}
