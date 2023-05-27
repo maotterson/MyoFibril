@@ -4,7 +4,8 @@ using MyoFibril.Domain.Entities;
 namespace MyoFibril.MAUIBlazorApp.Services;
 public class AddExerciseService : IAddExerciseService
 {
-    private bool _modalOpen = false;
+    private bool _modalOpen = false;]
+    public bool IsExerciseSelected { get; set; } = false;
     public event Action OnModalStateChanged;
 
     private List<ExerciseEntity> _exercises;

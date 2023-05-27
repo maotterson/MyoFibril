@@ -4,11 +4,17 @@ using MyoFibril.Domain.Entities;
 namespace MyoFibril.MAUIBlazorApp.Services;
 public interface IAddExerciseService
 {
+    // properties
+    bool IsExerciseSelected { get; set; }
+    ExerciseEntity SelectedExercise { get; set; }
     event Action OnModalStateChanged;
+
+    // modal
     void OpenModal();
     void CloseModal();
     bool IsModalOpen();
-    ExerciseEntity SelectedExercise { get; set; }
+
+    // methods
     Task<List<ExerciseEntity>> GetExercisesListAsync();
     Task AddExerciseToList(ExerciseEntity exerciseDto);
 }
