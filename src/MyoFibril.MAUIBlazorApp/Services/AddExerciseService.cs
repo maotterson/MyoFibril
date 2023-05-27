@@ -45,5 +45,16 @@ public class AddExerciseService : IAddExerciseService
         _exercises.Add(exercise);
         OnModalStateChanged.Invoke();
     }
-    
+
+    public void CancelSelectedExercise()
+    {
+        SelectedExercise = NO_EXERCISE_SELECTED;
+    }
+
+    public void AddPerformedExercise(PerformedExerciseEntity performedExercise)
+    {
+        // todo
+    }
+
+
 }
