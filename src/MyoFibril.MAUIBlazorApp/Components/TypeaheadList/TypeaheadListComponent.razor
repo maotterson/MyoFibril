@@ -1,4 +1,5 @@
 ﻿@using MyoFibril.Contracts.WebAPI.Models;
+@using MyoFibril.Domain.Entities;
 @using MyoFibril.MAUIBlazorApp.Components.TypeaheadList.Models;
 @using MyoFibril.MAUIBlazorApp.Components.TypeaheadList.Utils;
 @using MyoFibril.MAUIBlazorApp.Services;
@@ -16,7 +17,7 @@
     [Parameter]
     public bool ShowAllByDefault { get; set; } = true;
 
-    private List<ExerciseDto> _allExercises => _exerciseService.GetExercisesList();
+    private List<ExerciseEntity> _allExercises; 
     private static List<ExerciseSearchResultItem> EMPTY_SEARCH_RESULTS = new List<ExerciseSearchResultItem>();
     private List<ExerciseSearchResultItem> _filtered = EMPTY_SEARCH_RESULTS;
     private string _search = string.Empty;
@@ -24,13 +25,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await _exerciseService.GetExercisesList();
+        _allExercises = await _exerciseService.GetExercisesListAsync();
         if (ShowAllByDefault) SearchChanged(new() { Value = "" });
     }
 
-    private void ClickedListItem(ExerciseDto ex)
+    private void ClickedListItem(ExerciseEntity ex)
     {
-        Console.WriteLine(ex.ExerciseName + " to parent component");
+        Console.WriteLine(ex.Name + " to parent component");
     }
 
     private void SearchChanged(ChangeEventArgs args)
@@ -46,18 +47,18 @@
         }
 
         var filteredEnumerable = _allExercises
-                .Where(e => e.ExerciseName.Contains(_search));
+                .Where(e => e.Name.Contains(_search));
 
         _numMatches = filteredEnumerable.Count();
 
-        var filteredBegins = filteredEnumerable.Where(e => e.ExerciseName.StartsWith(_search)).OrderBy(e => e.ExerciseName);
-        var filteredNotBegins = filteredEnumerable.Where(e => !e.ExerciseName.StartsWith(_search)).OrderBy(e => e.ExerciseName);
+        var filteredBegins = filteredEnumerable.Where(e => e.Name.StartsWith(_search)).OrderBy(e => e.Name);
+        var filteredNotBegins = filteredEnumerable.Where(e => !e.Name.StartsWith(_search)).OrderBy(e => e.Name);
         var filteredOrdered = filteredBegins.Concat(filteredNotBegins).Take(10);
         _filtered = filteredOrdered.Select(e => {
             var item = new ExerciseSearchResultItem
             {
                 Exercise = e,
-                MatchingSubstrings = ExerciseSearchUtils.GetMatchingSubstrings(e.ExerciseName, _search)
+                    MatchingSubstrings = ExerciseSearchUtils.GetMatchingSubstrings(e.Name, _search)
                 };
             return item;
         }).ToList();

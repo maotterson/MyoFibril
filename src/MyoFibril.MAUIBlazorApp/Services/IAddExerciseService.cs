@@ -9,6 +9,6 @@ public interface IAddExerciseService
     void OpenModal();
     void CloseModal();
     bool IsModalOpen();
-    List<ExerciseEntity> GetExercisesList();
-    void AddExerciseToList(ExerciseEntity exerciseDto);
+    Task<List<ExerciseEntity>> GetExercisesListAsync();
+    Task AddExerciseToList(ExerciseEntity exerciseDto);
 }
