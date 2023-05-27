@@ -36,7 +36,6 @@ public static class WeightInfoUtils
                 throw new Exception($"Unknown {typeof(WeightInfoUnit)}: {unit}");
         }
 
-        set.Weight!.Value 
         set.Weight!.Units = unit;
     }
 }
