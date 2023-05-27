@@ -1,13 +1,12 @@
-﻿namespace MyoFibril.MAUIBlazorApp.Services;
+﻿using MyoFibril.Contracts.WebAPI.Models;
+
+namespace MyoFibril.MAUIBlazorApp.Services;
 public class AddExerciseService : IAddExerciseService
 {
-    private List<string> _exercises = new List<string>()
-    {
-        "Box squat", "Deadlift", "Bench Press", "Overhead Press", "Pull-ups"
-    };
+    private List<ExerciseDto> _exercises;
     private bool _modalOpen = false;
     public event Action OnModalStateChanged;
-    private string _selectedExercise = string.Empty;
+    private ExerciseDto _selectedExercise = new ExerciseDto();
     public string SelectedExercise 
     {
         get => _selectedExercise;
