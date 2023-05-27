@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\MyoFibril.Domain\MyoFibril.Domain.csproj" />
+    <ProjectReference Include="..\MyoFibril.Domain\MyoFibril.Domain.csproj" />
   </ItemGroup>
 
 </Project>
