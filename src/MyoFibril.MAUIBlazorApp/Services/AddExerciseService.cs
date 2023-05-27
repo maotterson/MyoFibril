@@ -4,12 +4,13 @@ using MyoFibril.Domain.Entities;
 namespace MyoFibril.MAUIBlazorApp.Services;
 public class AddExerciseService : IAddExerciseService
 {
-    private bool _modalOpen = false;]
-    public bool IsExerciseSelected { get; set; } = false;
+    private bool _modalOpen = false;
+    public bool IsExerciseSelected => _selectedExercise == NO_EXERCISE_SELECTED;
     public event Action OnModalStateChanged;
 
     private List<ExerciseEntity> _exercises;
-    private ExerciseEntity _selectedExercise = new ExerciseEntity();
+    private static ExerciseEntity NO_EXERCISE_SELECTED = new ExerciseEntity();
+    private ExerciseEntity _selectedExercise = NO_EXERCISE_SELECTED;
     public ExerciseEntity SelectedExercise 
     {
         get => _selectedExercise;

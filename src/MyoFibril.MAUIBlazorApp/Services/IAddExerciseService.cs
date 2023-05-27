@@ -5,7 +5,7 @@ namespace MyoFibril.MAUIBlazorApp.Services;
 public interface IAddExerciseService
 {
     // properties
-    bool IsExerciseSelected { get; set; }
+    bool IsExerciseSelected { get; }
     ExerciseEntity SelectedExercise { get; set; }
     event Action OnModalStateChanged;
 
