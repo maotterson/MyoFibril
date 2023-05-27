@@ -5,6 +5,7 @@
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject CreateActivityViewModel _createActivityViewModel
 @inject IAddExerciseService _addExerciseService
+@inject IBuildActivityService _buildActivityService;
 
 <h1>Create New Activity</h1>
 
@@ -36,6 +37,7 @@
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
@@ -49,5 +51,6 @@
     public void Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
     }
 }
