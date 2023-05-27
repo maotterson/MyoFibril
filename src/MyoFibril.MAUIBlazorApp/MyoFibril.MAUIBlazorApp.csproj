@@ -50,13 +50,27 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Resources\Raw\exercises.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiAsset Remove="Resources\Raw\exercises.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Resources\Raw\exercises.json" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="bootstrap" Version="5.2.3" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\MyoFibril.SharedData\MyoFibril.SharedData.csproj" />
       <ProjectReference Include="..\MyoFibril.Contracts\MyoFibril.Contracts.csproj" />
+      <ProjectReference Include="..\MyoFibril.Domain\MyoFibril.Domain.csproj" />
     </ItemGroup>
 
 </Project>

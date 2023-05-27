@@ -1,11 +1,14 @@
-﻿namespace MyoFibril.MAUIBlazorApp.Services;
+﻿using MyoFibril.Contracts.WebAPI.Models;
+using MyoFibril.Domain.Entities;
+
+namespace MyoFibril.MAUIBlazorApp.Services;
 public interface IAddExerciseService
 {
     event Action OnModalStateChanged;
-    string SelectedExercise { get; set; }
+    ExerciseEntity SelectedExercise { get; set; }
     void OpenModal();
     void CloseModal();
     bool IsModalOpen();
-    List<string> GetExercisesList();
-    void AddExerciseToList(string exercise);
+    Task<List<ExerciseEntity>> GetExercisesListAsync();
+    Task AddExerciseToList(ExerciseEntity exerciseDto);
 }

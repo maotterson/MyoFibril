@@ -1,0 +1,158 @@
+﻿[
+  {
+    "name": "bench press",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "close-grip bench",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "incline bench",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "dips",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "chest press machine",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "tricep pushdown",
+    "muscle-groups": [ "triceps" ]
+  },
+  {
+    "name": "flyes",
+    "muscle-groups": [ "pectorals" ]
+  },
+  {
+    "name": "dumbbell bench",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "dumbbell incline",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "overhead press",
+    "muscle-groups": [ "deltoids", "triceps" ]
+  },
+  {
+    "name": "dumbbell overhead press",
+    "muscle-groups": [ "deltoids", "triceps" ]
+  },
+  {
+    "name": "dumbbell ohp",
+    "muscle-groups": [ "deltoids", "triceps" ]
+  },
+  {
+    "name": "bicep curls",
+    "muscle-groups": [ "biceps" ]
+  },
+  {
+    "name": "hammer curls",
+    "muscle-groups": [ "biceps" ]
+  },
+  {
+    "name": "spider curls",
+    "muscle-groups": [ "biceps" ]
+  },
+  {
+    "name": "preacher curls",
+    "muscle-groups": [ "biceps" ]
+  },
+  {
+    "name": "cable curls",
+    "muscle-groups": [ "biceps" ]
+  },
+  {
+    "name": "shoulder raises",
+    "muscle-groups": [ "deltoids" ]
+  },
+  {
+    "name": "shoulder press machine",
+    "muscle-groups": [ "deltoids" ]
+  },
+  {
+    "name": "shrugs",
+    "muscle-groups": [ "trapezius" ]
+  },
+  {
+    "name": "deadlifts",
+    "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
+  },
+  {
+    "name": "romanian deadlifts",
+    "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
+  },
+  {
+    "name": "leg curls",
+    "muscle-groups": [ "hamstrings" ]
+  },
+  {
+    "name": "leg press",
+    "muscle-groups": [ "quadriceps" ]
+  },
+  {
+    "name": "squats",
+    "muscle-groups": [ "quadriceps", "glutes" ]
+  },
+  {
+    "name": "front squats",
+    "muscle-groups": [ "quadriceps", "abdominals" ]
+  },
+  {
+    "name": "ab wheel",
+    "muscle-groups": [ "abdominals" ]
+  },
+  {
+    "name": "calf raises",
+    "muscle-groups": [ "calves" ]
+  },
+  {
+    "name": "leg extensions",
+    "muscle-groups": [ "quadriceps" ]
+  },
+  {
+    "name": "bulgarian split squads",
+    "muscle-groups": [ "quadriceps", "glutes" ]
+  },
+  {
+    "name": "lunges",
+    "muscle-groups": [ "quadriceps", "glutes" ]
+  },
+  {
+    "name": "45 degree extensions",
+    "muscle-groups": [ "hamstrings", "glutes" ]
+  },
+  {
+    "name": "hip thrusts",
+    "muscle-groups": [ "glutes" ]
+  },
+  {
+    "name": "hip abductions",
+    "muscle-groups": [ "glutes" ]
+  },
+  {
+    "name": "cable rows",
+    "muscle-groups": [ "lats" ]
+  },
+  {
+    "name": "pull-ups",
+    "muscle-groups": [ "lats", "biceps" ]
+  },
+  {
+    "name": "barbell rows",
+    "muscle-groups": [ "lats", "spinal-erectors" ]
+  },
+  {
+    "name": "dumbbell rows",
+    "muscle-groups": [ "lats" ]
+  },
+  {
+    "name": "good mornings",
+    "muscle-groups": ["hamstrings", "spinal-erectors", "glutes"]
+  }
+]

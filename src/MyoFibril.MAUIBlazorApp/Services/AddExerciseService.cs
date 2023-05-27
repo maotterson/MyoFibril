@@ -1,14 +1,15 @@
-﻿namespace MyoFibril.MAUIBlazorApp.Services;
+﻿using MyoFibril.Contracts.WebAPI.Models;
+using MyoFibril.Domain.Entities;
+
+namespace MyoFibril.MAUIBlazorApp.Services;
 public class AddExerciseService : IAddExerciseService
 {
-    private List<string> _exercises = new List<string>()
-    {
-        "Box squat", "Deadlift", "Bench Press", "Overhead Press", "Pull-ups"
-    };
     private bool _modalOpen = false;
     public event Action OnModalStateChanged;
-    private string _selectedExercise = string.Empty;
-    public string SelectedExercise 
+
+    private List<ExerciseEntity> _exercises;
+    private ExerciseEntity _selectedExercise = new ExerciseEntity();
+    public ExerciseEntity SelectedExercise 
     {
         get => _selectedExercise;
         set
@@ -32,12 +33,12 @@ public class AddExerciseService : IAddExerciseService
         return _modalOpen;
     }
 
-    public List<string> GetExercisesList()
+    public async Task<List<ExerciseEntity>> GetExercisesListAsync()
     {
         return _exercises;
     }
 
-    public void AddExerciseToList(string exercise)
+    public async Task AddExerciseToList(ExerciseEntity exercise)
     {
         _exercises.Add(exercise);
         OnModalStateChanged.Invoke();

@@ -17,7 +17,7 @@
 
 
 @code {
-    List<string> Exercises => _addExerciseService.GetExercisesList();
+    List<string> Exercises => _addExerciseService.GetExercisesListAsync();
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
