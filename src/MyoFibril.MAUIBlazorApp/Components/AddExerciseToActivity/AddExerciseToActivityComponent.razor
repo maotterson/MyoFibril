@@ -10,8 +10,10 @@
                 <h4 class="modal-title">Add Exercise</h4>
             </div>
             <div class="modal-body">
-                @if(SelectedExercise )
-                <TypeaheadListComponent></TypeaheadListComponent>
+                @if (_exerciseNotSelected)
+                {
+                    <TypeaheadListComponent></TypeaheadListComponent>
+                }
             </div>
             <span>Selected exercise: @SelectedExercise</span>
             <div class="modal-footer">
@@ -22,7 +24,8 @@
 </div>
 
 @code {
-    ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
+    private bool _exerciseNotSelected => !_addExerciseService.IsExerciseSelected;
+    private ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
