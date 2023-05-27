@@ -20,6 +20,11 @@ public class AddExerciseService : IAddExerciseService
             OnModalStateChanged.Invoke();
         }
     }
+
+    public AddExerciseService()
+    {
+        
+    }
     public void OpenModal()
     {
         _modalOpen = true;
@@ -51,12 +56,5 @@ public class AddExerciseService : IAddExerciseService
     {
         SelectedExercise = NO_EXERCISE_SELECTED;
     }
-
-    public void AddPerformedExercise(PerformedExerciseEntity performedExercise)
-    {
-        // todo
-    }
-
-
 
 }

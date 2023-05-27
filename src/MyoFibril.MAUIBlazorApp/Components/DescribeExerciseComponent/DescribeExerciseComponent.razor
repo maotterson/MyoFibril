@@ -2,6 +2,7 @@
 @using MyoFibril.MAUIBlazorApp.Services;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IAddExerciseService _addExerciseService;
+@inject IBuildActivityService _buildActivityService;
 <p>Selected Exercise: @SelectedExerciseType</p>
 <button @onclick="ClickedCancelSelectedExercise">Cancel</button>
 
@@ -19,7 +20,7 @@
     {
         // todo build performedExercise object
         var performedExercise = new PerformedExerciseEntity();
-        _addExerciseService.AddPerformedExercise(performedExercise);
+        _buildActivityService.AddPerformedExercise(performedExercise);
     }
 
     public void ClickedCancelSelectedExercise()

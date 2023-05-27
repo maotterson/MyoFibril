@@ -43,6 +43,7 @@ public static class MauiProgram
                return clientHandler;
            });
 
+        // add api-oriented services
         builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
 
@@ -50,8 +51,9 @@ public static class MauiProgram
         builder.Services.AddSharedData();
         builder.Services.AddScoped<IFileSystemService, StreamFileSystemService>();
 
-        // add ui-related services
+        // add services to manage local state
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
+        builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
 
         return builder.Build();
     }

@@ -18,5 +18,4 @@ public interface IAddExerciseService
     Task<List<ExerciseEntity>> GetExercisesListAsync();
     Task AddExerciseToList(ExerciseEntity exerciseDto);
     void CancelSelectedExercise();
-    void AddPerformedExercise(PerformedExerciseEntity performedExercise);
 }
