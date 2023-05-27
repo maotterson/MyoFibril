@@ -12,6 +12,10 @@
                 {
                     <span>@set.Weight.Value @DisplayUnits(set.Weight.Units)</span>
                 }
+                @if (set.Reps is not null)
+                {
+                    <span> x @set.Reps reps</span>
+                }
             </p>
         }
     <a href="#" class="btn btn-primary">Go somewhere</a>
