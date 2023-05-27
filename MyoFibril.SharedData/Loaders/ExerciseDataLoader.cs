@@ -16,7 +16,7 @@ public class ExerciseDataLoader
 
     public async Task Load()
     {
-        var path = "/Data/exercises.json";
+        string path = "exercises.json";
         var jsonContent = await _fileSystemService.LoadFileAsStringAsync(path);
         var exerciseDtos = JsonSerializer.Deserialize<List<LoadExerciseDto>>(jsonContent) ?? throw new Exception();
 
