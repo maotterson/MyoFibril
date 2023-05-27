@@ -7,9 +7,8 @@ namespace MyoFibril.SharedData;
 
 public static class DependencyInjection
 {
-    public static void LoadData(this IServiceCollection services)
+    public static void AddSharedData(this IServiceCollection services)
     {
-        services.AddScoped<IFileSystemService, StreamFileSystemService>();
         services.AddScoped<ExerciseDataLoader>();
     }
 }

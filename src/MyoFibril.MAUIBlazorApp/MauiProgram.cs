@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Options;
 using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
 using MyoFibril.MAUIBlazorApp.Services;
+using MyoFibril.SharedData.Services;
+using MyoFibril.SharedData;
 using System.Net;
 using System.Net.Http;
 using System.Security.Authentication;
@@ -41,6 +43,10 @@ public static class MauiProgram
 
         builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
+
+        // add load data services
+        builder.Services.AddSharedData();
+        builder.Services.AddScoped<IFileSystemService, StreamFileSystemService>();
 
         // add ui-related services
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
