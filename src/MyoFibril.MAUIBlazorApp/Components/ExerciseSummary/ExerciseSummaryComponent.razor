@@ -1,13 +1,25 @@
 ﻿@using MyoFibril.Contracts.WebAPI.Models;
+@using MyoFibril.Domain.Entities;
+@using MyoFibril.Domain.Enums;
+@using MyoFibril.Domain.Models;
 <div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">@Exercise.ExerciseName</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h5 class="card-title">@PerformedExercise.Exercise.Name</h5>
+        @foreach(var set in PerformedExercise.Sets)
+        {
+            <p class="card-text">@set.Weight.Value @DisplayUnits(set.Weight.Units)</p>
+        }
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 
 @code {
     [Parameter]
-    public ExerciseDto Exercise { get; set; }
+    public PerformedExerciseEntity PerformedExercise { get; set; }
+    private string DisplayUnits(WeightInfoUnit unit) => unit switch
+    {
+        WeightInfoUnit.Pounds => "lbs",
+        WeightInfoUnit.Kilograms => "kg",
+        _ => throw new Exception($"Exception in {nameof(DisplayUnits)}: unknown unit")
+    };
 }
