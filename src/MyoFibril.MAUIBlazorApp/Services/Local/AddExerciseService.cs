@@ -27,6 +27,7 @@ public class AddExerciseService : IAddExerciseService
     }
     public void CloseModal()
     {
+        CancelSelectedExercise();
         _modalOpen = false;
         OnModalStateChanged.Invoke();
     }
@@ -55,6 +56,7 @@ public class AddExerciseService : IAddExerciseService
     {
         // todo
     }
+
 
 
 }
