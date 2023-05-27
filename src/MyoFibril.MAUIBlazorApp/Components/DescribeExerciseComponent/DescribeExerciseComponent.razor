@@ -1,8 +1,11 @@
 ﻿@using MyoFibril.Domain.Entities;
 @using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IAddExerciseService _addExerciseService;
 <p>Selected Exercise: @SelectedExerciseType</p>
-<button @onclick="ClickedSelectNewExercise">X</button>
+<button @onclick="ClickedCancelSelectedExercise">Cancel</button>
+
+
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
@@ -19,7 +22,7 @@
         _addExerciseService.AddPerformedExercise(performedExercise);
     }
 
-    public void ClickedSelectNewExercise()
+    public void ClickedCancelSelectedExercise()
     {
         _addExerciseService.CancelSelectedExercise();
     }

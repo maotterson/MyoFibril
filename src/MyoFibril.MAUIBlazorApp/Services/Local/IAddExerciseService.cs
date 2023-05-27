@@ -1,7 +1,7 @@
 ﻿using MyoFibril.Contracts.WebAPI.Models;
 using MyoFibril.Domain.Entities;
 
-namespace MyoFibril.MAUIBlazorApp.Services;
+namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public interface IAddExerciseService
 {
     // properties

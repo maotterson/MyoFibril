@@ -1,7 +1,7 @@
 ﻿using MyoFibril.Contracts.WebAPI.Models;
 using MyoFibril.Domain.Entities;
 
-namespace MyoFibril.MAUIBlazorApp.Services;
+namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class AddExerciseService : IAddExerciseService
 {
     private bool _modalOpen = false;
@@ -11,7 +11,7 @@ public class AddExerciseService : IAddExerciseService
     private List<ExerciseEntity> _exercises;
     private static ExerciseEntity NO_EXERCISE_SELECTED = new ExerciseEntity();
     private ExerciseEntity _selectedExercise = NO_EXERCISE_SELECTED;
-    public ExerciseEntity SelectedExercise 
+    public ExerciseEntity SelectedExercise
     {
         get => _selectedExercise;
         set

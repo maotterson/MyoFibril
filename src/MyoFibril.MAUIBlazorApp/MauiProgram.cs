@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
+using MyoFibril.MAUIBlazorApp.Services.Local;
+using MyoFibril.MAUIBlazorApp.Services.Api;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram

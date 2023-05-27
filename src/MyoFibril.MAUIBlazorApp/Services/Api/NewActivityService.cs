@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text;
 
-namespace MyoFibril.MAUIBlazorApp.Services;
+namespace MyoFibril.MAUIBlazorApp.Services.Api;
 public class NewActivityService : INewActivityService
 {
     private readonly IHttpClientFactory _httpClientFactory;
