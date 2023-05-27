@@ -5,10 +5,10 @@ namespace MyoFibril.MAUIBlazorApp.Services;
 public interface IAddExerciseService
 {
     event Action OnModalStateChanged;
-    ExerciseEntity SelectedExercise { get; set; }
     void OpenModal();
     void CloseModal();
     bool IsModalOpen();
+    ExerciseEntity SelectedExercise { get; set; }
     Task<List<ExerciseEntity>> GetExercisesListAsync();
     Task AddExerciseToList(ExerciseEntity exerciseDto);
 }

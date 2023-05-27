@@ -1,4 +1,6 @@
-﻿@using MyoFibril.MAUIBlazorApp.Services;
+﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Components.TypeaheadList
+@using MyoFibril.MAUIBlazorApp.Services;
 @inject IAddExerciseService _addExerciseService
 
 <div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
@@ -8,7 +10,7 @@
                 <h4 class="modal-title">Add Exercise</h4>
             </div>
             <div class="modal-body">
-                <AddExerciseTypeDropdownComponent></AddExerciseTypeDropdownComponent>
+                <TypeaheadListComponent></TypeaheadListComponent>
             </div>
             <span>Selected exercise: @SelectedExercise</span>
             <div class="modal-footer">
@@ -19,7 +21,7 @@
 </div>
 
 @code {
-    string SelectedExercise => _addExerciseService.SelectedExercise;
+    ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
