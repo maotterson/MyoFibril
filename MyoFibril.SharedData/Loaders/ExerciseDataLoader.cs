@@ -1,6 +1,4 @@
 ﻿namespace MyoFibril.SharedData;
-
-public class Class1
+public class ExerciseLoader
 {
-
 }
