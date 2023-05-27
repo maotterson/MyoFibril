@@ -14,6 +14,9 @@
                 {
                     <TypeaheadListComponent></TypeaheadListComponent>
                 }
+                @else{
+                    <DescribeExerciseComponent ChosenExerciseType="SelectedExercise"></DescribeExerciseComponent>
+                }
             </div>
             <span>Selected exercise: @SelectedExercise</span>
             <div class="modal-footer">
