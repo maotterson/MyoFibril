@@ -1,6 +1,6 @@
 ﻿using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.Models;
-using MyoFibril.MAUIBlazorApp.Services;
+using MyoFibril.MAUIBlazorApp.Services.Api;
 
 namespace MyoFibril.MAUIBlazorApp.Components.CreateActivity;
 public class CreateActivityViewModel

@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
+using MyoFibril.MAUIBlazorApp.Services.Local;
+using MyoFibril.MAUIBlazorApp.Services.Api;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -41,6 +43,10 @@ public static class MauiProgram
                return clientHandler;
            });
 
+        // add options-related services
+        builder.Services.AddScoped<ILocalOptionsService, LocalOptionsService>();
+
+        // add api-oriented services
         builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
 
@@ -48,8 +54,9 @@ public static class MauiProgram
         builder.Services.AddSharedData();
         builder.Services.AddScoped<IFileSystemService, StreamFileSystemService>();
 
-        // add ui-related services
+        // add services to manage local state
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
+        builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
 
         return builder.Build();
     }

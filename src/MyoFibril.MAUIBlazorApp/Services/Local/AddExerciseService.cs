@@ -1,15 +1,17 @@
 ﻿using MyoFibril.Contracts.WebAPI.Models;
 using MyoFibril.Domain.Entities;
 
-namespace MyoFibril.MAUIBlazorApp.Services;
+namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class AddExerciseService : IAddExerciseService
 {
     private bool _modalOpen = false;
+    public bool IsExerciseSelected => _selectedExercise == NO_EXERCISE_SELECTED;
     public event Action OnModalStateChanged;
 
     private List<ExerciseEntity> _exercises;
-    private ExerciseEntity _selectedExercise = new ExerciseEntity();
-    public ExerciseEntity SelectedExercise 
+    private static ExerciseEntity NO_EXERCISE_SELECTED = new ExerciseEntity();
+    private ExerciseEntity _selectedExercise = NO_EXERCISE_SELECTED;
+    public ExerciseEntity SelectedExercise
     {
         get => _selectedExercise;
         set
@@ -18,6 +20,11 @@ public class AddExerciseService : IAddExerciseService
             OnModalStateChanged.Invoke();
         }
     }
+
+    public AddExerciseService()
+    {
+        
+    }
     public void OpenModal()
     {
         _modalOpen = true;
@@ -25,6 +32,7 @@ public class AddExerciseService : IAddExerciseService
     }
     public void CloseModal()
     {
+        CancelSelectedExercise();
         _modalOpen = false;
         OnModalStateChanged.Invoke();
     }
@@ -43,5 +51,10 @@ public class AddExerciseService : IAddExerciseService
         _exercises.Add(exercise);
         OnModalStateChanged.Invoke();
     }
-    
+
+    public void CancelSelectedExercise()
+    {
+        SelectedExercise = NO_EXERCISE_SELECTED;
+    }
+
 }

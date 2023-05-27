@@ -1,4 +1,8 @@
-﻿@using MyoFibril.MAUIBlazorApp.Services;
+﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Components.DescribeExerciseComponent
+@using MyoFibril.MAUIBlazorApp.Components.TypeaheadList
+@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IAddExerciseService _addExerciseService
 
 <div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
@@ -8,9 +12,15 @@
                 <h4 class="modal-title">Add Exercise</h4>
             </div>
             <div class="modal-body">
-                <AddExerciseTypeDropdownComponent></AddExerciseTypeDropdownComponent>
+                @if (_exerciseNotSelected)
+                {
+                    <TypeaheadListComponent></TypeaheadListComponent>
+                }
+                else
+                {
+                    <DescribeExerciseComponent SelectedExerciseType="SelectedExercise"></DescribeExerciseComponent>
+                }
             </div>
-            <span>Selected exercise: @SelectedExercise</span>
             <div class="modal-footer">
                 <button class="btn btn-primary" @onclick="CloseModal">Close</button>
             </div>
@@ -19,7 +29,8 @@
 </div>
 
 @code {
-    string SelectedExercise => _addExerciseService.SelectedExercise;
+    private bool _exerciseNotSelected => !_addExerciseService.IsExerciseSelected;
+    private ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;

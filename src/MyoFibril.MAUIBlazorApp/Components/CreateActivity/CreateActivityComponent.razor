@@ -1,9 +1,12 @@
-﻿@using MyoFibril.Contracts.WebAPI.Models;
+﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.Contracts.WebAPI.Models;
 @using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
 @using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
-@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject CreateActivityViewModel _createActivityViewModel
 @inject IAddExerciseService _addExerciseService
+@inject IBuildActivityService _buildActivityService;
 
 <h1>Create New Activity</h1>
 
@@ -18,7 +21,7 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummaryComponent Exercise="exercise"></ExerciseSummaryComponent>
+        <ExerciseSummaryComponent Exercise="exercise" OnClickRemoveCallback="RemovePerformedExercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
@@ -29,12 +32,13 @@
 
 @code {
     private bool _modalOpen => _addExerciseService.IsModalOpen();
-    private List<ExerciseDto> _exercises => _createActivityViewModel.Exercises;
+    private List<PerformedExerciseEntity> _exercises => _buildActivityService.GetPerformedExercises();
     public string InputName { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
@@ -48,5 +52,10 @@
     public void Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
+    }
+    public void RemovePerformedExercise(PerformedExerciseEntity performedExercise)
+    {
+        _buildActivityService.RemovePerformedExercise(performedExercise);
     }
 }

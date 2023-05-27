@@ -1,0 +1,12 @@
+﻿@using MyoFibril.Domain.Entities;
+<ul>
+    @foreach(var set in IncompletePerformedExercise.Sets)
+    {
+       // display set info on summary component
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public PerformedExerciseEntity IncompletePerformedExercise  { get; set; }
+}
