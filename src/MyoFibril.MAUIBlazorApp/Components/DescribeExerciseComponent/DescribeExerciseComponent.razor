@@ -7,7 +7,7 @@
 <p>Selected Exercise: @SelectedExerciseType</p>
 <button @onclick="ClickedCancelSelectedExercise">Cancel</button>
 
-<SetSummaryListComponent></SetSummaryListComponent>
+<SetSummaryListComponent IncompletePerfromedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
@@ -15,6 +15,7 @@
 @code {
     [Parameter]
     public ExerciseEntity SelectedExerciseType { get; set; }
+    private PerformedExerciseEntity _incompletePerformedExercise = new PerformedExerciseEntity();
     private string _submitPerformedExerciseButtonLabel = "Add Exercise";
 
     public void ClickedSubmitPerformedExercise()
