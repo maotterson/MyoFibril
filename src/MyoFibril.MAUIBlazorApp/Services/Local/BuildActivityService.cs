@@ -12,4 +12,8 @@ public class BuildActivityService : IBuildActivityService
         _performedExercises.Add(performedExercise);
         OnBuildActivityStateChanged.Invoke();
     }
+    public List<PerformedExerciseEntity> GetPerformedExercises()
+    {
+        return _performedExercises;
+    }
 }
