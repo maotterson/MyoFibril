@@ -33,12 +33,12 @@ public class AddExerciseService : IAddExerciseService
         return _modalOpen;
     }
 
-    public List<ExerciseEntity> GetExercisesList()
+    public async Task<List<ExerciseEntity>> GetExercisesListAsync()
     {
         return _exercises;
     }
 
-    public void AddExerciseToList(ExerciseEntity exercise)
+    public async Task AddExerciseToList(ExerciseEntity exercise)
     {
         _exercises.Add(exercise);
         OnModalStateChanged.Invoke();
