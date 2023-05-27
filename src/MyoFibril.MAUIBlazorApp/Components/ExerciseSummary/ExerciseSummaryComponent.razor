@@ -7,7 +7,12 @@
     <h5 class="card-title">@PerformedExercise.Exercise.Name</h5>
         @foreach(var set in PerformedExercise.Sets)
         {
-            <p class="card-text">@set.Weight.Value @DisplayUnits(set.Weight.Units)</p>
+            <p class ="card-text">
+                @if(set.Weight is not null)
+                {
+                    <span>@set.Weight.Value @DisplayUnits(set.Weight.Units)</span>
+                }
+            </p>
         }
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
