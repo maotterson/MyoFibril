@@ -12,6 +12,11 @@ public class BuildActivityService : IBuildActivityService
         _performedExercises.Add(performedExercise);
         OnBuildActivityStateChanged.Invoke();
     }
+    public void RemovePerformedExercise(PerformedExerciseEntity performedExercise)
+    {
+        _performedExercises.Remove(performedExercise);
+        OnBuildActivityStateChanged.Invoke();
+    }
     public List<PerformedExerciseEntity> GetPerformedExercises()
     {
         return _performedExercises;

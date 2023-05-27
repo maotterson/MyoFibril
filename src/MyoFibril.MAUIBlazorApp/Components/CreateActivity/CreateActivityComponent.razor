@@ -21,7 +21,7 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummaryComponent Exercise="exercise"></ExerciseSummaryComponent>
+        <ExerciseSummaryComponent Exercise="exercise" OnClickRemoveCallback="RemovePerformedExercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
@@ -53,5 +53,9 @@
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
         _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
+    }
+    public void RemovePerformedExercise(PerformedExerciseEntity performedExercise)
+    {
+        _buildActivityService.RemovePerformedExercise(performedExercise);
     }
 }
