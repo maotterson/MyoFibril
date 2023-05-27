@@ -3,10 +3,11 @@
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IAddExerciseService _addExerciseService;
 @inject IBuildActivityService _buildActivityService;
+@inject ILocalOptionsService _localOptionsService;
 <p>Selected Exercise: @SelectedExerciseType</p>
 <button @onclick="ClickedCancelSelectedExercise">Cancel</button>
 
-
+<SetSummaryListComponent></SetSummaryListComponent>
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 

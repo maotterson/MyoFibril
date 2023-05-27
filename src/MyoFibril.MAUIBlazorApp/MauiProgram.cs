@@ -43,6 +43,9 @@ public static class MauiProgram
                return clientHandler;
            });
 
+        // add options-related services
+        builder.Services.AddScoped<ILocalOptionsService, LocalOptionsService>();
+
         // add api-oriented services
         builder.Services.AddScoped<CreateActivityViewModel>();
         builder.Services.AddScoped<INewActivityService, NewActivityService>();
