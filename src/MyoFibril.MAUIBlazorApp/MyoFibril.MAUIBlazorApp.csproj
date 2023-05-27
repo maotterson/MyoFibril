@@ -56,6 +56,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\MyoFibril.SharedData\MyoFibril.SharedData.csproj" />
       <ProjectReference Include="..\MyoFibril.Contracts\MyoFibril.Contracts.csproj" />
       <ProjectReference Include="..\MyoFibril.Domain\MyoFibril.Domain.csproj" />
     </ItemGroup>
