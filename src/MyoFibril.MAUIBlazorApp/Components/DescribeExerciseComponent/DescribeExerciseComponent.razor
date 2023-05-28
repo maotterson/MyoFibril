@@ -5,7 +5,7 @@
 @inject IAddExerciseService _addExerciseService;
 @inject IBuildActivityService _buildActivityService;
 @inject ILocalOptionsService _localOptionsService;
-<p>Selected Exercise: @SelectedExerciseType</p>
+<p>Selected Exercise: @SelectedExerciseType.Name</p>
 <button @onclick="ClickedCancelSelectedExercise">Cancel</button>
 
 <SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
@@ -16,14 +16,21 @@
 @code {
     [Parameter]
     public ExerciseEntity SelectedExerciseType { get; set; }
-    private PerformedExerciseEntity _incompletePerformedExercise = new PerformedExerciseEntity();
-    private string _submitPerformedExerciseButtonLabel = "Add Exercise";
+    private PerformedExerciseEntity _incompletePerformedExercise;
+    public DescribeExerciseComponent()
+    {
+        _incompletePerformedExercise = new PerformedExerciseEntity
+            {
+                Exercise = SelectedExerciseType
+            };
+    }
+
+    private string _submitPerformedExerciseButtonLabel = "Add";
 
     public void ClickedSubmitPerformedExercise()
     {
-        // todo build performedExercise object
-        var performedExercise = new PerformedExerciseEntity();
-        _buildActivityService.AddPerformedExercise(performedExercise);
+        
+        _buildActivityService.AddPerformedExercise(_incompletePerformedExercise);
     }
 
     public void ClickedCancelSelectedExercise()
