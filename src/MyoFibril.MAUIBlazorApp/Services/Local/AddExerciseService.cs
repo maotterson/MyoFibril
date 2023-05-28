@@ -1,5 +1,4 @@
-﻿using AudioUnit;
-using MyoFibril.Contracts.WebAPI.Models;
+﻿using MyoFibril.Contracts.WebAPI.Models;
 using MyoFibril.Domain.Entities;
 using MyoFibril.SharedData.Loaders;
 
