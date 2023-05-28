@@ -6,7 +6,7 @@ namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class AddExerciseService : IAddExerciseService
 {
     private bool _modalOpen = false;
-    public bool IsExerciseSelected => _selectedExercise == NO_EXERCISE_SELECTED;
+    public bool IsExerciseSelected => _selectedExercise != NO_EXERCISE_SELECTED;
     public event Action OnModalStateChanged;
 
     private ExerciseDataLoader _exerciseDataLoader;
