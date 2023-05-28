@@ -5,6 +5,7 @@
 @inject IAddExerciseService _addExerciseService;
 @inject IBuildActivityService _buildActivityService;
 @inject ILocalOptionsService _localOptionsService;
+
 <p>Selected Exercise: @SelectedExerciseType.Name</p>
 <button @onclick="ClickedCancelSelectedExercise">Cancel</button>
 
@@ -12,25 +13,24 @@
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
-
 @code {
     [Parameter]
     public ExerciseEntity SelectedExerciseType { get; set; }
     private PerformedExerciseEntity _incompletePerformedExercise;
-    public DescribeExerciseComponent()
+    protected override void OnInitialized()
     {
         _incompletePerformedExercise = new PerformedExerciseEntity
-            {
-                Exercise = SelectedExerciseType
-            };
+        {
+            Exercise = SelectedExerciseType
+        };
     }
 
     private string _submitPerformedExerciseButtonLabel = "Add";
 
     public void ClickedSubmitPerformedExercise()
     {
-        
         _buildActivityService.AddPerformedExercise(_incompletePerformedExercise);
+        _addExerciseService.CloseModal();
     }
 
     public void ClickedCancelSelectedExercise()

@@ -21,7 +21,7 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummaryComponent Exercise="exercise" OnClickRemoveCallback="RemovePerformedExercise"></ExerciseSummaryComponent>
+        <ExerciseSummaryComponent PerformedExercise="exercise" OnClickRemoveCallback="RemovePerformedExercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
