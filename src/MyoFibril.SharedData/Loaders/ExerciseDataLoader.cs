@@ -8,22 +8,24 @@ namespace MyoFibril.SharedData.Loaders;
 public class ExerciseDataLoader
 {
     private readonly IFileSystemService _fileSystemService;
-    public List<ExerciseEntity> Exercises = new List<ExerciseEntity>();
+    private List<ExerciseEntity> _exercises = new List<ExerciseEntity>();
     public ExerciseDataLoader(IFileSystemService fileSystemService)
     {
         _fileSystemService = fileSystemService;
     }
 
-    public async Task Load()
+    public async Task<List<ExerciseEntity>> LoadExerciseList()
     {
         string path = "exercises.json";
         var jsonContent = await _fileSystemService.LoadFileAsStringAsync(path);
         var exerciseDtos = JsonSerializer.Deserialize<List<LoadExerciseDto>>(jsonContent) ?? throw new Exception();
 
-        Exercises = exerciseDtos.Select(edto =>
+        _exercises = exerciseDtos.Select(edto =>
         {
             var exercise = new ExerciseEntity { Name = edto.ExerciseName, MuscleGroups = MuscleGroupCategoryUtils.GetMuscleGroupsFromSlugs(edto.MuscleGroupSlugs) };
             return exercise;
         }).ToList();
+
+        return _exercises;
     }
 }

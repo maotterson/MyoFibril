@@ -1,5 +1,7 @@
-﻿using MyoFibril.Contracts.WebAPI.Models;
+﻿using AudioUnit;
+using MyoFibril.Contracts.WebAPI.Models;
 using MyoFibril.Domain.Entities;
+using MyoFibril.SharedData.Loaders;
 
 namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class AddExerciseService : IAddExerciseService
@@ -8,6 +10,7 @@ public class AddExerciseService : IAddExerciseService
     public bool IsExerciseSelected => _selectedExercise == NO_EXERCISE_SELECTED;
     public event Action OnModalStateChanged;
 
+    private ExerciseDataLoader _exerciseDataLoader;
     private List<ExerciseEntity> _exercises;
     private static ExerciseEntity NO_EXERCISE_SELECTED = new ExerciseEntity();
     private ExerciseEntity _selectedExercise = NO_EXERCISE_SELECTED;
@@ -21,9 +24,13 @@ public class AddExerciseService : IAddExerciseService
         }
     }
 
-    public AddExerciseService()
+    public AddExerciseService(ExerciseDataLoader exerciseDataLoader)
     {
-        
+        _exerciseDataLoader = exerciseDataLoader;
+    }
+    public async void LoadDataAsync()
+    {
+        await _exerciseDataLoader.Load();
     }
     public void OpenModal()
     {
