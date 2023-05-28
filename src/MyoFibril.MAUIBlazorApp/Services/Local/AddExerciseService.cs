@@ -11,7 +11,7 @@ public class AddExerciseService : IAddExerciseService
     public event Action OnModalStateChanged;
 
     private ExerciseDataLoader _exerciseDataLoader;
-    private List<ExerciseEntity> _exercises;
+    private List<ExerciseEntity> _allExercises;
     private static ExerciseEntity NO_EXERCISE_SELECTED = new ExerciseEntity();
     private ExerciseEntity _selectedExercise = NO_EXERCISE_SELECTED;
     public ExerciseEntity SelectedExercise
@@ -28,9 +28,9 @@ public class AddExerciseService : IAddExerciseService
     {
         _exerciseDataLoader = exerciseDataLoader;
     }
-    public async void LoadDataAsync()
+    public async Task LoadExerciseListAsync()
     {
-        await _exerciseDataLoader.Load();
+        _allExercises = await _exerciseDataLoader.LoadExerciseList();
     }
     public void OpenModal()
     {
@@ -50,12 +50,13 @@ public class AddExerciseService : IAddExerciseService
 
     public async Task<List<ExerciseEntity>> GetExercisesListAsync()
     {
-        return _exercises;
+        if (_allExercises is null) await LoadExerciseListAsync();
+        return _allExercises;
     }
 
     public async Task AddExerciseToList(ExerciseEntity exercise)
     {
-        _exercises.Add(exercise);
+        _allExercises.Add(exercise);
         OnModalStateChanged.Invoke();
     }
 
