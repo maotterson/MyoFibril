@@ -58,7 +58,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Resources\Raw\exercises.json" />
+      <EmbeddedResource Include="Resources\Raw\exercises.json" />
     </ItemGroup>
 
     <ItemGroup>
