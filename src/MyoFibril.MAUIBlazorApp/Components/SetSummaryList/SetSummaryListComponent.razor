@@ -1,22 +1,25 @@
 ﻿@using MyoFibril.Domain.Entities;
 @using MyoFibril.Domain.Enums;
-<ul>
-    @foreach(var set in IncompletePerformedExercise.Sets.Select((value, i) => new { i, value}))
-    {
-        var setNumber = set.i + 1;
-        <li>Set @setNumber 
-            @if (set.value.Weight is not null)
-            {
-                <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)</span>
-            }
-            @if (set.value.Reps is not null)
-            {
-                <span>x @set.value.Reps</span>
-            }
+@foreach(var set in IncompletePerformedExercise.Sets.Select((value, i) => new { i, value}))
+{
+    var setNumber = set.i + 1;
+    <div>
+        <span>Set @setNumber:&nbsp;</span>
+        @if(set.value.Weight is null && set.value.Reps is null)
+        {
+            <span>No information</span>
+        }
+        else if (set.value.Weight is not null)
+        {
+            <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)&nbsp;</span>
+        }
+        @if (set.value.Reps is not null)
+        {
+            <span>x @set.value.Reps reps</span>
+        }
 
-        </li>
-    }
-</ul>
+    </div>
+}
 
 @code {
     [Parameter]

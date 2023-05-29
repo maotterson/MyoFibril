@@ -9,13 +9,18 @@
         {
             var setNumber = set.i + 1;
             <p class ="card-text">
+                <span>Set #@setNumber:&nbsp;</span>
+                @if (set.value.Weight is null && set.value.Reps is null)
+                {
+                    <span>No information</span>
+                }
                 @if(set.value.Weight is not null)
                 {
-                    <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)</span>
+                    <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)&nbsp;</span>
                 }
                 @if (set.value.Reps is not null)
                 {
-                    <span> x @set.value.Reps reps</span>
+                    <span>x @set.value.Reps reps</span>
                 }
             </p>
         }
