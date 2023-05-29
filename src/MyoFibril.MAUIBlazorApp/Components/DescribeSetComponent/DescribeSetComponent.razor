@@ -6,15 +6,15 @@
 <div class="card">
     <div>
         <label>Weight</label>
-        <input @bind="WeightInput" type="number" />
+        <input @bind="WeightInput" type="text" />
     </div>
     <div>
         <label>Reps</label>
-        <input @bind="RepsInput" type="number" />
+        <input @bind="RepsInput" type="text" />
     </div>
     <div>
         <label>Additional Notes</label>
-        <textarea @bind="NotesInput"></textarea>
+        <textarea style="resize: none;" @bind="NotesInput"></textarea>
     </div>
     <button @onclick="ClickedCancel">Cancel</button>
     <button @onclick="ClickedSaveSet">Save</button>
@@ -37,7 +37,7 @@
             var setInfo = new SetInfo
                 {
                     AdditionalDetails = string.IsNullOrEmpty(NotesInput) ? null : NotesInput,
-                    Reps = string.IsNullOrEmpty(NotesInput) ? null : int.Parse(RepsInput),
+                    Reps = string.IsNullOrEmpty(RepsInput) ? null : int.Parse(RepsInput),
                     Weight = string.IsNullOrEmpty(WeightInput) ? null : new WeightInfo
                     {
                         Units = _options.SelectedUnit,

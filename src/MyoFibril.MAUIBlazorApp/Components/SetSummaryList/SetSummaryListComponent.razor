@@ -3,7 +3,8 @@
 <ul>
     @foreach(var set in IncompletePerformedExercise.Sets.Select((value, i) => new { i, value}))
     {
-        <li>Set @set.i:
+        var setNumber = set.i + 1;
+        <li>Set @setNumber 
             @if (set.value.Weight is not null)
             {
                 <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)</span>
