@@ -6,4 +6,5 @@ public class ActivityEntity
     public string Name { get; set; } = string.Empty;
     public DateTimeOffset DateCreated { get; set; }
     public long? StravaActivityId { get; set; }
+    public List<PerformedExerciseEntity>? PerformedExercises { get; set; }
 }

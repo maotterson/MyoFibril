@@ -46,7 +46,13 @@
     }
     private async Task CreateButtonClicked()
     {
-        await _createActivityViewModel.CreateActivity(InputName);
+        var activity = new ActivityEntity
+            {
+                Guid = Guid.NewGuid(),
+                Name = InputName,
+                PerformedExercises = _exercises
+            };
+        await _createActivityViewModel.CreateActivity(activity);
         StateHasChanged();
     }
     public void Dispose()
