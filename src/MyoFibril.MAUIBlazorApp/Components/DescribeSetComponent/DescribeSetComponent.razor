@@ -27,7 +27,7 @@
     public string RepsInput { get; set; }
     public string NotesInput { get; set; }
 
-    private void ClickedSaveSet()
+    private async Task ClickedSaveSet()
     {
         try
         {
@@ -41,6 +41,8 @@
                         Value = int.Parse(WeightInput)
                     }
                 };
+            await OnCompletedSet.InvokeAsync(setInfo);
+
         }
         catch(Exception ex)
         {
