@@ -1,12 +1,29 @@
 ﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.Domain.Enums;
 <ul>
-    @foreach(var set in IncompletePerformedExercise.Sets)
+    @foreach(var set in IncompletePerformedExercise.Sets.Select((value, i) => new { i, value}))
     {
-       // display set info on summary component
+        <li>Set @set.i:
+            @if (set.value.Weight is not null)
+            {
+                <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)</span>
+            }
+            @if (set.value.Reps is not null)
+            {
+                <span>x @set.value.Reps</span>
+            }
+
+        </li>
     }
 </ul>
 
 @code {
     [Parameter]
     public PerformedExerciseEntity IncompletePerformedExercise  { get; set; }
+    private string DisplayUnits(WeightInfoUnit unit) => unit switch
+    {
+        WeightInfoUnit.Pounds => "lbs",
+        WeightInfoUnit.Kilograms => "kg",
+        _ => throw new Exception($"Exception in {nameof(DisplayUnits)}: unknown unit")
+    };
 }
