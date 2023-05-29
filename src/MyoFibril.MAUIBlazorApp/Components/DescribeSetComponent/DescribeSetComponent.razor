@@ -16,12 +16,15 @@
         <label>Additional Notes</label>
         <textarea @bind="NotesInput"></textarea>
     </div>
+    <button @onclick="ClickedCancel">Cancel</button>
     <button @onclick="ClickedSaveSet">Save</button>
 </div>
 
 @code {
     [Parameter]
-    public EventCallback<SetInfo> OnCompletedSet { get; set; };
+    public EventCallback<SetInfo> OnCompletedSet { get; set; }
+    [Parameter]
+    public EventCallback OnCanceled { get; set; }
 
     public string WeightInput { get; set; }
     public string RepsInput { get; set; }
@@ -49,5 +52,10 @@
             // todo handle invalid inputs
         }
 
+    }
+
+    private async Task ClickedCancel()
+    {
+        await OnCanceled.InvokeAsync();
     }
 }
