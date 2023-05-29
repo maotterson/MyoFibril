@@ -5,16 +5,22 @@
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">@PerformedExercise.Exercise?.Name</h5>
-        @foreach(var set in PerformedExercise.Sets)
+        @foreach(var set in PerformedExercise.Sets.Select((value, i) => new { i, value}))
         {
+            var setNumber = set.i + 1;
             <p class ="card-text">
-                @if(set.Weight is not null)
+                <span>Set #@setNumber:&nbsp;</span>
+                @if (set.value.Weight is null && set.value.Reps is null)
                 {
-                    <span>@set.Weight.Value @DisplayUnits(set.Weight.Units)</span>
+                    <span>No information</span>
                 }
-                @if (set.Reps is not null)
+                @if(set.value.Weight is not null)
                 {
-                    <span> x @set.Reps reps</span>
+                    <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)&nbsp;</span>
+                }
+                @if (set.value.Reps is not null)
+                {
+                    <span>x @set.value.Reps reps</span>
                 }
             </p>
         }

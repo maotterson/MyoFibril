@@ -1,4 +1,6 @@
 ﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.Domain.Models;
+@using MyoFibril.MAUIBlazorApp.Components.DescribeSetComponent
 @using MyoFibril.MAUIBlazorApp.Components.SetSummaryList
 @using MyoFibril.MAUIBlazorApp.Services;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
@@ -6,10 +8,24 @@
 @inject IBuildActivityService _buildActivityService;
 @inject ILocalOptionsService _localOptionsService;
 
-<p>Selected Exercise: @SelectedExerciseType.Name</p>
-<button @onclick="ClickedCancelSelectedExercise">Cancel</button>
+<p>
+    Selected Exercise: 
+    <span @onclick="ClickedCancelSelectedExercise">
+        @SelectedExerciseType.Name
+        <span class="oi oi-x" ></span>
+    </span>
+</p>
 
-<SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
+@if (!_isAddingSet)
+{
+    <div class="border p-3 text-center">
+        <span class="oi oi-plus border p-3 rounded-circle" @onclick="ClickedAddSet"></span>
+    </div>
+    <SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
+}
+else{
+    <DescribeSetComponent OnCompletedSet="HandleCompletedSet" OnCanceled="HandleCancelAddSet"></DescribeSetComponent>
+}
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
@@ -17,6 +33,7 @@
     [Parameter]
     public ExerciseEntity SelectedExerciseType { get; set; }
     private PerformedExerciseEntity _incompletePerformedExercise;
+    private bool _isAddingSet = false;
     protected override void OnInitialized()
     {
         _incompletePerformedExercise = new PerformedExerciseEntity
@@ -25,7 +42,11 @@
         };
     }
 
-    private string _submitPerformedExerciseButtonLabel = "Add";
+    private string _submitPerformedExerciseButtonLabel = "Save";
+    public void ClickedAddSet()
+    {
+        _isAddingSet = true;
+    }
 
     public void ClickedSubmitPerformedExercise()
     {
@@ -36,5 +57,18 @@
     public void ClickedCancelSelectedExercise()
     {
         _addExerciseService.CancelSelectedExercise();
+    }
+
+    public void HandleCompletedSet(SetInfo set)
+    {
+        _incompletePerformedExercise.Sets.Add(set);
+        _isAddingSet = false;
+        StateHasChanged();
+    }
+
+    public void HandleCancelAddSet()
+    {
+        _isAddingSet = false;
+        StateHasChanged();
     }
 }
