@@ -6,12 +6,17 @@
 @inject IBuildActivityService _buildActivityService;
 @inject ILocalOptionsService _localOptionsService;
 
-<p @onclick="ClickedCancelSelectedExercise">
-    Selected Exercise: @SelectedExerciseType.Name 
-    <span class="oi oi-x" ></span>
+<p>
+    Selected Exercise: 
+    <span @onclick="ClickedCancelSelectedExercise">
+        @SelectedExerciseType.Name
+        <span class="oi oi-x" ></span>
+    </span>
 </p>
 
-<button @onclick="ClickedAddSet">Add Set</button>
+<div class="border p-3 text-center">
+    <span class="oi oi-plus border p-3 rounded-circle" @onclick="ClickedAddSet"></span>
+</div>
 <SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
 
 <button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
