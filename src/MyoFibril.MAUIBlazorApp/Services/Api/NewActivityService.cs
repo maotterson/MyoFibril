@@ -1,5 +1,6 @@
 ﻿using MyoFibril.Contracts.WebAPI.CreateActivity;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace MyoFibril.MAUIBlazorApp.Services.Api;
@@ -16,7 +17,6 @@ public class NewActivityService : INewActivityService
         var requestUri = "http://localhost:5230/Activity";
         var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(createActivityRequest), Encoding.UTF8, "application/json");
 
-        Console.WriteLine();
         var response = await httpClient.PostAsync(requestUri, jsonContent);
 
         // Check if the response is successful
