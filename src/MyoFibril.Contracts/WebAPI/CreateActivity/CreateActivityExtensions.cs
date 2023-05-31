@@ -33,27 +33,28 @@ public static class CreateActivityExtensions
         // Squats: 225x15 (note), x10 (note), N/A (note)
         foreach (var ex in request.PerformedExercises)
         {
-            sb.Append($"{ex.Exercise.Name})");
+            sb.Append($"{ex.Exercise.Name}");
             if (ex.Sets.Count == 0)
             {
                 sb.Append($"\n");
                 continue;
             }
+            sb.Append($": ");
 
             // output each set detail
             foreach (var set in ex.Sets)
             {
                 if (set.Reps is null || set.Reps == 0)
                 {
-                    sb.Append($": N/A");
+                    sb.Append($"N/A");
                 }
                 else if (set.Weight is null)
                 {
-                    sb.Append($": x{set.Reps}");
+                    sb.Append($"x{set.Reps}");
                 }
                 else
                 {
-                    sb.Append($": {set.Weight}x{set.Reps}");
+                    sb.Append($"{set.Weight.Value}x{set.Reps}");
                 }
 
                 if(set.AdditionalDetails is not null && !string.IsNullOrEmpty(set.AdditionalDetails))
@@ -65,7 +66,7 @@ public static class CreateActivityExtensions
             }
 
             // trim trailing space and comma and go to new line
-            sb.Remove(sb.Length - 1, 2);
+            sb.Remove(sb.Length - 2, 2);
             sb.Append('\n');
         }
         return sb.ToString();
