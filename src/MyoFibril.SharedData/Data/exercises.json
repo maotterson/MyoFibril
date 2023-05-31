@@ -16,6 +16,10 @@
     "muscle-groups": [ "pectorals", "triceps" ]
   },
   {
+    "name": "lat pulldown",
+    "muscle-groups": [ "lats" ]
+  },
+  {
     "name": "chest press machine",
     "muscle-groups": [ "pectorals", "triceps" ]
   },
@@ -24,7 +28,7 @@
     "muscle-groups": [ "triceps" ]
   },
   {
-    "name": "flyes",
+    "name": "flys",
     "muscle-groups": [ "pectorals" ]
   },
   {
@@ -153,6 +157,6 @@
   },
   {
     "name": "good mornings",
-    "muscle-groups": ["hamstrings", "spinal-erectors", "glutes"]
+    "muscle-groups": [ "hamstrings", "spinal-erectors", "glutes" ]
   }
 ]
