@@ -28,9 +28,14 @@
     <button class="btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
 
     <button @onclick="CreateButtonClicked">Create</button>
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <p>Error creating activity: @_error</p>
+    }
 </div>
 
 @code {
+    private string _error = string.Empty;
     private bool _modalOpen => _addExerciseService.IsModalOpen();
     private List<PerformedExerciseEntity> _exercises => _buildActivityService.GetPerformedExercises();
     public string InputName { get; set; } = string.Empty;
@@ -46,14 +51,30 @@
     }
     private async Task CreateButtonClicked()
     {
-        var activity = new ActivityEntity
+        try
+        {
+            if(InputName == string.Empty)
             {
-                DateCreated = DateTimeOffset.UtcNow,
-                Name = InputName,
-                PerformedExercises = _exercises
-            };
-        await _createActivityViewModel.CreateActivity(activity);
-        StateHasChanged();
+                _error = "Activity must have a name.";
+                return;
+            }
+            var activity = new ActivityEntity
+                {
+                    DateCreated = DateTimeOffset.UtcNow,
+                    Name = InputName,
+                    PerformedExercises = _exercises
+                };
+            var response = await _createActivityViewModel.CreateActivity(activity);
+            _error = string.Empty;
+        }
+        catch(HttpRequestException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            StateHasChanged();
+        }
     }
     public void Dispose()
     {
