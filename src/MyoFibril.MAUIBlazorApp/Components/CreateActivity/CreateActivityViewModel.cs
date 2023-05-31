@@ -16,8 +16,12 @@ public class CreateActivityViewModel
     {
         var createActivityRequest = new CreateActivityRequest
         {
-            Name = activity.Name
+            Name = activity.Name,
+            DateCreated = activity.DateCreated,
+            PerformedExercises = activity.PerformedExercises
         };
+
+        // using entity, if necessary can implement CreateActivityDto
         var createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
     }
 }
