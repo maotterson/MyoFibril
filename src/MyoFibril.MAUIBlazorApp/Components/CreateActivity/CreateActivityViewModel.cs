@@ -12,7 +12,7 @@ public class CreateActivityViewModel
     {
         _newActivityService = newActivityService;
     }
-    public async Task CreateActivity(ActivityEntity activity)
+    public async Task<CreateActivityResponse> CreateActivity(ActivityEntity activity)
     {
         var createActivityRequest = new CreateActivityRequest
         {
@@ -23,5 +23,6 @@ public class CreateActivityViewModel
 
         // using entity, if necessary can implement CreateActivityDto
         var createdActivity = await _newActivityService.CreateActivity(createActivityRequest);
+        return createdActivity;
     }
 }
