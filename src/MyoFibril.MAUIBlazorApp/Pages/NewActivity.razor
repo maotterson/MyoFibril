@@ -1,0 +1,32 @@
+﻿@page "/NewActivity"
+@using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
+@using MyoFibril.MAUIBlazorApp.Services;
+@using MyoFibril.Contracts.WebAPI.CreateActivity;
+@using MyoFibril.MAUIBlazorApp.Components
+@using MyoFibril.MAUIBlazorApp.Services.Api;
+
+@inject INewActivityService _newActivityService
+@inject CreateActivityViewModel _createActivityViewModel
+
+<CreateActivityComponent></CreateActivityComponent>
+
+@if (_createdActivity is not null)
+{
+    <p>Activity created!</p>
+    <div>
+        <p>>@_createdActivity.Id</p>
+        <p>@_createdActivity.Name</p>
+        <p>@_createdActivity.StravaActivity.StartDateLocal</p>
+    </div>
+}
+
+@if (_error is not null)
+{
+    <p>@_error</p>
+}
+
+
+@code{
+    private CreateActivityResponse? _createdActivity;
+    private string _error;
+}
