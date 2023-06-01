@@ -10,6 +10,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Exercise</h4>
+                <div>
+                    <button class="btn btn-primary" @onclick="CloseModal">Close</button>
+                </div>
             </div>
             <div class="modal-body">
                 @if (_exerciseNotSelected)
@@ -20,9 +23,6 @@
                 {
                     <DescribeExerciseComponent SelectedExerciseType="SelectedExercise"></DescribeExerciseComponent>
                 }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" @onclick="CloseModal">Close</button>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 using MyoFibril.MAUIBlazorApp.Services.Local;
 using MyoFibril.MAUIBlazorApp.Services.Api;
+using MyoFibril.MAUIBlazorApp.Services.UI;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -57,6 +58,9 @@ public static class MauiProgram
         // add services to manage local state
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
+
+        // add ui-related services
+        builder.Services.AddScoped<IAppBarService, AppBarService>();
 
         return builder.Build();
     }

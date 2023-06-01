@@ -2,6 +2,8 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: rgb(45, 45, 45);
+    color:aliceblue;
 }
 
 h1:focus {
@@ -9,7 +11,17 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: darkorange;
+    text-decoration:none;
+}
+
+.active {
+    color: orangered !important;
+}
+
+.app-bar {
+    background-color: rgb(54, 54, 54);
+    color: white;
 }
 
 .btn-primary {

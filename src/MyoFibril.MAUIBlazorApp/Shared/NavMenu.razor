@@ -1,29 +1,25 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<nav class="ps-3 navbar fixed-bottom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">MyoFibril.MAUIBlazorApp</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <NavLink class="nav-item text-center" href="" Match="NavLinkMatch.All">
+            <div class="nav-item">
+                <p class="oi oi-home fs-1" aria-hidden="true"></p>
+                <p class="fs-navtitle">Home</p>
+            </div>
+        </NavLink>
+        <NavLink class="nav-item text-center" href="/NewActivity" Match="NavLinkMatch.All">
+            <div class="nav-item ">
+                <p class="oi oi-plus fs-1" aria-hidden="true"></p>
+                <p class="fs-navtitle">New Activity</p>
+            </div>
+        </NavLink>
+        <NavLink class="nav-item text-center" href="/Activities" Match="NavLinkMatch.All">
+            <div class="nav-item">
+                <p class="oi oi-bar-chart fs-1" aria-hidden="true"></p>
+                <p class="fs-navtitle">View Activities</p>
+            </div>
+        </NavLink>
     </div>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-    </nav>
-</div>
+</nav>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
