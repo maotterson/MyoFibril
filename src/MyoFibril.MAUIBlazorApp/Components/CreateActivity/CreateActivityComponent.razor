@@ -8,7 +8,7 @@
 @inject IAddExerciseService _addExerciseService
 @inject IBuildActivityService _buildActivityService;
 
-<h1>Create New Activity</h1>
+<h1>New Activity</h1>
 
 @if (_modalOpen)
 {
@@ -16,8 +16,7 @@
 }
 
 <div>
-    <span>Name</span>
-    <input @bind="InputName" />
+    <input type="text" class="form-control" @bind="InputName" placeholder="Activity Name" />
 
     @foreach (var exercise in _exercises)
     {
@@ -27,7 +26,7 @@
     <!-- Add button to add a new input -->
     <button class="btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
 
-    <button @onclick="CreateButtonClicked">Create</button>
+    <button class="btn btn-primary" @onclick="CreateButtonClicked">Done</button>
     @if (!string.IsNullOrEmpty(_error))
     {
         <p>Error creating activity: @_error</p>
