@@ -1,13 +1,45 @@
-﻿@inherits LayoutComponentBase
+﻿@using MyoFibril.MAUIBlazorApp.Services.UI;
+@inherits LayoutComponentBase
+@inject IAppBarService _appBarService
+@inject NavigationManager _navigationManager;
 
 <div class="page">
+    @if (_isAppBarVisible)
+    {
+        <AppBar Header="@_header"/>
+    }
+
     <NavMenu />
 
-    <AppBar />
-
-    <main>
+    <main style="@GetPageSpecificStyle()">
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+
+@code{
+    bool _isAppBarVisible => _appBarService.IsAppBarVisible();
+    string _header => _appBarService.GetAppBarTitle();
+
+    private string GetPageSpecificStyle()
+    {
+        if (!_appBarService.IsAppBarVisible()) return "";
+        return "padding-top:50px;"; // todo determine height of app bar to set padding using interop js
+    }
+
+    protected override void OnInitialized()
+    {
+        _navigationManager.LocationChanged += HandleLocationChange;
+    }
+
+    private void HandleLocationChange(object sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _navigationManager.LocationChanged -= HandleLocationChange;
+    }
+}

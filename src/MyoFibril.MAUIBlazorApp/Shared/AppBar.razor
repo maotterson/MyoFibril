@@ -1,14 +1,10 @@
 ﻿@using MyoFibril.MAUIBlazorApp.Services.UI;
-@inject IAppBarService _appBarService;
 
-@(_isVisible){
-    <div class="app-bar">
-        <h1>@_siteHeader</h1>
-    </div>
-}
+<div class="navbar app-bar container-fluid fixed-top">
+    <h1>@Header</h1>
+</div>
 
 @code {
-    bool _isVisible = _appBarService.IsAppBarVisible();
-    string _siteHeader = _appBarService.GetCurrentSiteHeader();
-
+    [Parameter]
+    public string Header { get; set; }
 }
