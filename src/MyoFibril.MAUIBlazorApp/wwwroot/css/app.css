@@ -22,6 +22,7 @@ a, .btn-link {
 .app-bar {
     background-color: rgb(54, 54, 54);
     color: white;
+    height:4rem;
 }
 
 .btn-primary {
