@@ -5,11 +5,22 @@ html, body {
     background-color: rgb(45, 45, 45);
     color:aliceblue;
 }
+.x-btn{
+    position:absolute;
+    top:0;
+    right:0;
+    padding-right:.9em;
+    padding-top:.9em;
+    color:darkred !important;
+}
 
 h1:focus {
     outline: none;
 }
-
+.modal-content{
+    background-color:rgb(50, 50, 50);
+    height:97vh;
+}
 a, .btn-link {
     color: darkorange;
     text-decoration:none;
@@ -22,6 +33,7 @@ a, .btn-link {
 .app-bar {
     background-color: rgb(54, 54, 54);
     color: white;
+    height:4rem;
 }
 
 .btn-primary {

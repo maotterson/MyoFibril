@@ -6,12 +6,12 @@
 @inject IAddExerciseService _addExerciseService
 
 <div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered bg-black">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Exercise</h4>
+                <h4 class="modal-title">@ExerciseName</h4>
                 <div>
-                    <button class="btn btn-primary" @onclick="CloseModal">Close</button>
+                    <span class="fs-5 oi oi-x col text-danger x-btn" @onclick="CloseModal"></span>
                 </div>
             </div>
             <div class="modal-body">
@@ -29,6 +29,14 @@
 </div>
 
 @code {
+    private string ExerciseName
+    {
+        get
+        {
+            if (_exerciseNotSelected) return "Add Exercise";
+            return SelectedExercise.Name;
+        }
+    }
     private bool _exerciseNotSelected => !_addExerciseService.IsExerciseSelected;
     private ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
@@ -43,5 +51,5 @@
     {
         _addExerciseService.CloseModal();
     }
-    
+
 }
