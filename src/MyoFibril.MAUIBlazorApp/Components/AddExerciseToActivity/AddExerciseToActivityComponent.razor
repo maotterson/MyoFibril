@@ -37,7 +37,6 @@
             return SelectedExercise.Name;
         }
     }
-    private string _search;
     private bool _exerciseNotSelected => !_addExerciseService.IsExerciseSelected;
     private ExerciseEntity SelectedExercise => _addExerciseService.SelectedExercise;
     protected override void OnInitialized()
@@ -51,10 +50,6 @@
     private void CloseModal()
     {
         _addExerciseService.CloseModal();
-    }
-    private void SearchChanged()
-    {
-        
     }
 
 }
