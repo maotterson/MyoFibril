@@ -45,6 +45,7 @@
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
@@ -80,5 +81,6 @@
     void IDisposable.Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
+        _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
     }
 }
