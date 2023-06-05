@@ -8,6 +8,8 @@
 @inject IAddExerciseService _addExerciseService
 @inject IBuildActivityService _buildActivityService;
 
+@implements IDisposable
+
 <div class="title-bar">Add Activity</div>
 
 @if (_modalOpen)
@@ -74,7 +76,7 @@
             StateHasChanged();
         }
     }
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }

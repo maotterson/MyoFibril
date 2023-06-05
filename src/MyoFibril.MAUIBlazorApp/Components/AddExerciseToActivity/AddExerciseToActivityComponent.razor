@@ -5,6 +5,8 @@
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IAddExerciseService _addExerciseService
 
+@implements IDisposable
+
 <div class="modal fade show d-block" style="background-color: rgba(0, 0, 0, 0.5);">
     <div class="modal-dialog modal-dialog-centered bg-black">
         <div class="modal-content">
@@ -43,7 +45,7 @@
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
     }
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
     }
