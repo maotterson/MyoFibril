@@ -7,12 +7,15 @@
 @inject IAddExerciseService _exerciseService;
 @inject IJSRuntime JSRuntime
 
-<input class="form-control mb-3" @bind="@_search" type="text" @oninput="SearchChanged"/>
+<input class="fs-5 form-control mb-3 py-2" @bind="@_search" type="text" placeholder="Exercise name" @oninput="SearchChanged"/>
 
-@foreach (var item in _filtered)
-{
-    <TypeaheadListItemComponent ExerciseSearchResultItem="item" OnClickCallback="ClickedListItem"></TypeaheadListItemComponent>
-}
+<div>
+    @foreach (var item in _filtered)
+    {
+        <TypeaheadListItemComponent ExerciseSearchResultItem="item" OnClickCallback="ClickedListItem"></TypeaheadListItemComponent>
+    }
+</div>
+
 
 @code {
     [Parameter]

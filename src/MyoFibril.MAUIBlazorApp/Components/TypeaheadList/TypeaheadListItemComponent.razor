@@ -11,7 +11,7 @@
                     if (containsMatch && i == matchingSubstring!.EndingIndex) containsMatch = ExerciseSearchResultItem.MatchingSubstrings.TryDequeue(out matchingSubstring);
                     if (containsMatch && i >= matchingSubstring!.StartingIndex && i < matchingSubstring!.EndingIndex)
                     {
-                        <b>@ExerciseSearchResultItem.Exercise.Name[i]</b>
+                        <strong><u>@ExerciseSearchResultItem.Exercise.Name[i]</u></strong>
                     }
                     else
                     {
