@@ -16,17 +16,20 @@
 }
 
 <div>
-    <input type="text" class="form-control" @bind="InputName" placeholder="Activity Name" />
+    <input type="text" class="form-control activity-input" @bind="InputName" placeholder="Activity Name" />
+    <button class="form-control btn btn-success" @onclick="CreateButtonClicked">Done</button>
+    <hr class="mt-1 mb-1" />
 
-    @foreach (var exercise in _exercises)
-    {
-        <ExerciseSummaryComponent PerformedExercise="exercise"></ExerciseSummaryComponent>
-    }
-
-    <!-- Add button to add a new input -->
-    <button class="btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
-
-    <button class="btn btn-primary" @onclick="CreateButtonClicked">Done</button>
+    <div class="card">
+        <div class="card-body list-group list-group-flush">
+        @foreach (var exercise in _exercises)
+        {
+            <ExerciseSummaryComponent PerformedExercise="exercise"></ExerciseSummaryComponent>
+        }
+        </div>
+    </div>
+    <button class="form-control btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
+    
     @if (!string.IsNullOrEmpty(_error))
     {
         <p>Error creating activity: @_error</p>

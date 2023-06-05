@@ -4,9 +4,7 @@
 @using MyoFibril.Domain.Models;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IBuildActivityService _buildActivityService;
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
+<div class="list-group-item">
     <h5 class="card-title">@PerformedExercise.Exercise?.Name</h5>
         @foreach(var set in PerformedExercise.Sets.Select((value, i) => new { i, value}))
         {
@@ -28,7 +26,6 @@
             </p>
         }
     <button class="btn btn-primary" @onclick="ClickedRemovePerformedExercise">Remove</button>
-  </div>
 </div>
 
 @code {
