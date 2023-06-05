@@ -2,6 +2,9 @@
 @using MyoFibril.Domain.Entities;
 @using MyoFibril.Domain.Enums;
 @using MyoFibril.Domain.Models;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
+@inject IBuildActivityService _buildActivityService;
+
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">@PerformedExercise.Exercise?.Name</h5>
@@ -29,10 +32,11 @@
 </div>
 
 @code {
+
     [Parameter]
     public PerformedExerciseEntity PerformedExercise { get; set; }
     [Parameter]
-    public EventCallback<PerformedExerciseEntity> OnClickRemoveCallback { get; set; }
+    public Action<PerformedExerciseEntity> OnClickRemoveCallback { get; set; }
     private string DisplayUnits(WeightInfoUnit unit) => unit switch
     {
         WeightInfoUnit.Pounds => "lbs",
@@ -40,8 +44,15 @@
         _ => throw new Exception($"Exception in {nameof(DisplayUnits)}: unknown unit")
     };
 
-    private async Task ClickedRemovePerformedExercise()
+    private void ClickedRemovePerformedExercise()
     {
-        await OnClickRemoveCallback.InvokeAsync(PerformedExercise);
+        RemovePerformedExercise(PerformedExercise);
     }
+
+    public void RemovePerformedExercise(PerformedExerciseEntity performedExercise)
+    {
+        _buildActivityService.RemovePerformedExercise(performedExercise);
+    }
+
+
 }

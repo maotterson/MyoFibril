@@ -1,11 +1,16 @@
 ﻿@page "/NewActivity"
+
+@implements IDisposable
+
 @using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
 @using MyoFibril.MAUIBlazorApp.Services;
 @using MyoFibril.Contracts.WebAPI.CreateActivity;
 @using MyoFibril.MAUIBlazorApp.Components
 @using MyoFibril.MAUIBlazorApp.Services.Api;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 
 @inject INewActivityService _newActivityService
+@inject IBuildActivityService _buildActivityService;
 @inject CreateActivityViewModel _createActivityViewModel
 
 <CreateActivityComponent></CreateActivityComponent>
@@ -29,4 +34,14 @@
 @code{
     private CreateActivityResponse? _createdActivity;
     private string _error;
+
+    protected override void OnInitialized()
+    {
+        _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
+    }
 }

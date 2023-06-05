@@ -20,7 +20,7 @@
 
     @foreach (var exercise in _exercises)
     {
-        <ExerciseSummaryComponent PerformedExercise="exercise" OnClickRemoveCallback="RemovePerformedExercise"></ExerciseSummaryComponent>
+        <ExerciseSummaryComponent PerformedExercise="exercise"></ExerciseSummaryComponent>
     }
 
     <!-- Add button to add a new input -->
@@ -42,7 +42,6 @@
     protected override void OnInitialized()
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
-        _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
@@ -78,10 +77,5 @@
     public void Dispose()
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
-        _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
-    }
-    public void RemovePerformedExercise(PerformedExerciseEntity performedExercise)
-    {
-        _buildActivityService.RemovePerformedExercise(performedExercise);
     }
 }
