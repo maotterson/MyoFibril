@@ -37,7 +37,7 @@
 
     private void SearchChanged(ChangeEventArgs args)
     {
-        _search = args!.Value!.ToString()!;
+        _search = args!.Value!.ToString()!.ToLower();
 
         if (string.IsNullOrEmpty(_search) && ShowAllByDefault == false)
         {
