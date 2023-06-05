@@ -28,7 +28,11 @@
     "muscle-groups": [ "triceps" ]
   },
   {
-    "name": "flyes",
+    "name": "push-ups",
+    "muscle-groups": [ "pectorals", "triceps" ]
+  },
+  {
+    "name": "flys",
     "muscle-groups": [ "pectorals" ]
   },
   {
@@ -88,11 +92,23 @@
     "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
   },
   {
+    "name": "dumbbell deadlifts",
+    "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
+  },
+  {
     "name": "romanian deadlifts",
     "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
   },
   {
-    "name": "leg curls",
+    "name": "dumbbell romanian deadlifts",
+    "muscle-groups": [ "hamstrings", "glutes", "spinal-erectors", "trapezius" ]
+  },
+  {
+    "name": "hamstring curls",
+    "muscle-groups": [ "hamstrings" ]
+  },
+  {
+    "name": "nordic curls",
     "muscle-groups": [ "hamstrings" ]
   },
   {
@@ -120,7 +136,7 @@
     "muscle-groups": [ "quadriceps" ]
   },
   {
-    "name": "bulgarian split squads",
+    "name": "bulgarian split squats",
     "muscle-groups": [ "quadriceps", "glutes" ]
   },
   {
