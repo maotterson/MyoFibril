@@ -20,15 +20,15 @@
     <button class="form-control btn btn-success" @onclick="CreateButtonClicked">Done</button>
     <hr class="mt-1 mb-1" />
 
-    <div class="card">
-        <div class="card-body list-group list-group-flush">
+    <div class="card text-white bg-dark">
+        <div class="list-group list-group-flush">
         @foreach (var exercise in _exercises)
         {
             <ExerciseSummaryComponent PerformedExercise="exercise"></ExerciseSummaryComponent>
         }
         </div>
+        <button class="form-control btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
     </div>
-    <button class="form-control btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
     
     @if (!string.IsNullOrEmpty(_error))
     {

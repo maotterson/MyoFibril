@@ -4,28 +4,36 @@
 @using MyoFibril.Domain.Models;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IBuildActivityService _buildActivityService;
-<div class="list-group-item">
-    <h5 class="card-title">@PerformedExercise.Exercise?.Name</h5>
-        @foreach(var set in PerformedExercise.Sets.Select((value, i) => new { i, value}))
-        {
-            var setNumber = set.i + 1;
-            <p class ="card-text">
-                <span>Set #@setNumber:&nbsp;</span>
-                @if (set.value.Weight is null && set.value.Reps is null)
-                {
-                    <span>No information</span>
-                }
-                @if(set.value.Weight is not null)
-                {
-                    <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)&nbsp;</span>
-                }
-                @if (set.value.Reps is not null)
-                {
-                    <span>x @set.value.Reps reps</span>
-                }
-            </p>
-        }
-    <button class="btn btn-primary" @onclick="ClickedRemovePerformedExercise">Remove</button>
+<div class="list-group-item bg-dark text-light">
+    <div class="container-fluid">
+        <div class="row">
+            <h5 class="col">@PerformedExercise.Exercise!.Name</h5>
+            <div>
+                <span class="fs-5 oi oi-x col text-danger x-btn mt-0 pt-2" @onclick="ClickedRemovePerformedExercise"></span>
+            </div>
+        </div>
+    </div>
+    
+    @foreach(var set in PerformedExercise.Sets.Select((value, i) => new { i, value}))
+    {
+        var setNumber = set.i + 1;
+        <p class ="card-text">
+            <span>Set #@setNumber:&nbsp;</span>
+            @if (set.value.Weight is null && set.value.Reps is null)
+            {
+                <span>No information</span>
+            }
+            @if(set.value.Weight is not null)
+            {
+                <span>@set.value.Weight.Value @DisplayUnits(set.value.Weight.Units)&nbsp;</span>
+            }
+            @if (set.value.Reps is not null)
+            {
+                <span>x @set.value.Reps reps</span>
+            }
+        </p>
+    }
+   
 </div>
 
 @code {
