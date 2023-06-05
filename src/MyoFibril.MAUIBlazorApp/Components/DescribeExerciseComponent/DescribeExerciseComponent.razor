@@ -10,16 +10,14 @@
 
 @if (!_isAddingSet)
 {
-    <div class="border p-3 text-center">
-        <span class="oi oi-plus border p-3 rounded-circle" @onclick="ClickedAddSet"></span>
-    </div>
+    <button class="form-control btn btn-info" @onclick="ClickedAddSet">Add Set</button>
     <SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
 }
 else{
     <DescribeSetComponent OnCompletedSet="HandleCompletedSet" OnCanceled="HandleCancelAddSet"></DescribeSetComponent>
 }
 
-<button @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
+<button class="form-control btn btn-success" @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
 @code {
     [Parameter]
