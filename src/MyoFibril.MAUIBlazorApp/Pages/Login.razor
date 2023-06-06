@@ -27,5 +27,7 @@
         var isSuccessfulLogin = await _userService.CheckLoginCredentials(_username, _password);
 
         if (!isSuccessfulLogin) _error = "Username and password do not match.";
+
+        StateHasChanged();
     }
 }

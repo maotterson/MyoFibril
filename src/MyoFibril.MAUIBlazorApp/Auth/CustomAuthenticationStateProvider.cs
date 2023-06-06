@@ -37,6 +37,12 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         return false;
     }
 
+    public async Task Logout()
+    {
+        SecureStorage.Remove("accounttoken");
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+    }
+
     private async Task<string> GetTokenWithUserCredentials((string, string) userCredentials)
     {
         // todo: user credentials flow implementation

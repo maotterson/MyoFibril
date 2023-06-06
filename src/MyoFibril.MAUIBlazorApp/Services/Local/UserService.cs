@@ -7,6 +7,7 @@ public class UserService : IUserService
     public UserService(CustomAuthenticationStateProvider authenticationProvider)
     {
         _authenticationProvider = authenticationProvider;
+        
     }
 
     public async Task<bool> CheckLoginCredentials(string username, string password)
@@ -14,9 +15,8 @@ public class UserService : IUserService
         var isSuccessfulLogin = await _authenticationProvider.Login(username, password);
         return isSuccessfulLogin;
     }
-
-    public bool IsLoggedIn()
+    public async Task Logout()
     {
-        return false;
+        _authenticationProvider.Logout();
     }
 }

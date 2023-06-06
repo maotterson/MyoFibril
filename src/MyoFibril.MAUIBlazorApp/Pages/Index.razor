@@ -1,9 +1,15 @@
 ﻿@page "/"
 @attribute [Authorize]
+@inject IUserService _userService;
 
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 
-<h2>Home Page</h2>
+<button @onclick="HandleLogoutClick">Log out</button>
 
 @code {
+    public async Task HandleLogoutClick()
+    {
+        await _userService.Logout();
+        StateHasChanged();
+    }
 }
