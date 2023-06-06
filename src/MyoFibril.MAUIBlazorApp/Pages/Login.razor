@@ -6,7 +6,7 @@
 
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
-    <input type="hidden" class="form-control" placeholder="Password" @bind="_password" />
+    <input type="password" class="form-control" placeholder="Password" @bind="_password" />
     <button class="btn btn-primary form-control" @onclick="HandleLoginClick">Login</button>
 
     <p>Don't have an account? <a href="/Register">Create new account.</a></p>
@@ -20,18 +20,21 @@
 @code {
     private string _username;
     private string _password;
+    private bool _isHandlingLogin = false;
 
     private string _error;
 
     private async Task HandleLoginClick()
     {
+        if (_isHandlingLogin) return;
+        _isHandlingLogin = true;
         var isSuccessfulLogin = await _userService.CheckLoginCredentials(_username, _password);
+        _isHandlingLogin = false;
 
         if (!isSuccessfulLogin)
         {
             _error = "Username and password do not match.";
             return;
-            
         }
         _navigationManager.NavigateTo("/");
     }
