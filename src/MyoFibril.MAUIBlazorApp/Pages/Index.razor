@@ -1,6 +1,9 @@
 ﻿@page "/"
+@attribute [AuthorizeAttribute]
 @using MyoFibril.MAUIBlazorApp.Components.LoginForm
 @using MyoFibril.MAUIBlazorApp.Services.Local;
+@using MyoFibril.MAUIBlazorApp.Auth;
+
 <h2>Home Page</h2>
 
 @code {
