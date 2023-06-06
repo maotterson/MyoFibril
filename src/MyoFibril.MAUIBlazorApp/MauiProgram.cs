@@ -8,6 +8,8 @@ using MyoFibril.MAUIBlazorApp.Services.Local;
 using MyoFibril.MAUIBlazorApp.Services.Api;
 using MyoFibril.MAUIBlazorApp.Services.UI;
 using Microsoft.AspNetCore.Components;
+using MyoFibril.MAUIBlazorApp.Auth;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -56,7 +58,10 @@ public static class MauiProgram
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
 
-        builder.Services.AddSingleton<NavigationManager>();
+        // auth
+        builder.Services.AddAuthorizationCore();
+        builder.Services.AddScoped<CustomAuthenticationStateProvider>();
+        builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationStateProvider>());
 
         // add ui-related services
         builder.Services.AddScoped<IAppBarService, AppBarService>();

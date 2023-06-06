@@ -1,0 +1,45 @@
+﻿@using MyoFibril.MAUIBlazorApp.Services.UI;
+@inherits LayoutComponentBase
+@inject IAppBarService _appBarService
+@inject NavigationManager _navigationManager
+
+<div class="page">
+    @if (_isAppBarVisible)
+    {
+        <AppBar Header="@_header" />
+    }
+
+    <main>
+        <article style="@_mainHeightStyle" class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    bool _isAppBarVisible => _appBarService.IsAppBarVisible();
+    string _header => _appBarService.GetAppBarTitle();
+    string _mainHeightStyle
+    {
+        get
+        {
+            if (!_isAppBarVisible) return "";
+            return "padding-top:4.5rem;";
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _navigationManager.LocationChanged += HandleLocationChange;
+    }
+
+    private void HandleLocationChange(object sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _navigationManager.LocationChanged -= HandleLocationChange;
+    }
+}
