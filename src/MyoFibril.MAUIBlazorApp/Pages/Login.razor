@@ -1,15 +1,31 @@
 ﻿@page "/Login"
-@using MyoFibril.MAUIBlazorApp.Components.LoginForm
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 @layout LoggedOutLayout
+@inject IUserService _userService
 
 <div>
-    <input type="text" class="form-control" placeholder="Username" />
-    <input type="text" class="form-control" placeholder="Password" />
-    <button class="btn btn-primary form-control">Login</button>
+    <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
+    <input type="hidden" class="form-control" placeholder="Password" @bind="_password" />
+    <button class="btn btn-primary form-control" @onclick="HandleLoginClick">Login</button>
 
     <p>Don't have an account? <a href="/Register">Create new account.</a></p>
 </div>
 
-@code {
+@if (!string.IsNullOrEmpty(_error))
+{
+    <p class="text-danger">@_error</p>
+}
 
+@code {
+    private string _username;
+    private string _password;
+
+    private string _error;
+
+    private async Task HandleLoginClick()
+    {
+        var isSuccessfulLogin = _userService.CheckLoginCredentials(_username, _password);
+
+        if (!isSuccessfulLogin) _error = "Username and password do not match.";
+    }
 }
