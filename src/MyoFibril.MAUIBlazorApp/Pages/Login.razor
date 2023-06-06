@@ -2,6 +2,7 @@
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @layout LoggedOutLayout
 @inject IUserService _userService
+@inject NavigationManager _navigationManager
 
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
@@ -26,8 +27,12 @@
     {
         var isSuccessfulLogin = await _userService.CheckLoginCredentials(_username, _password);
 
-        if (!isSuccessfulLogin) _error = "Username and password do not match.";
-
-        StateHasChanged();
+        if (!isSuccessfulLogin)
+        {
+            _error = "Username and password do not match.";
+            return;
+            
+        }
+        _navigationManager.NavigateTo("/");
     }
 }
