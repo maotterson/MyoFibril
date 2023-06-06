@@ -58,7 +58,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DivertR.DynamicProxy" Version="4.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.5" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Xamarin.CommunityToolkit.MauiCompat" Version="2.0.2-preview1013" />

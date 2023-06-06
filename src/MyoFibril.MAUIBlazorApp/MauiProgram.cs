@@ -4,14 +4,10 @@ using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
 using MyoFibril.MAUIBlazorApp.Services;
 using MyoFibril.SharedData.Services;
 using MyoFibril.SharedData;
-using System.Net;
-using System.Net.Http;
-using System.Security.Authentication;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Linq;
 using MyoFibril.MAUIBlazorApp.Services.Local;
 using MyoFibril.MAUIBlazorApp.Services.Api;
 using MyoFibril.MAUIBlazorApp.Services.UI;
+using Microsoft.AspNetCore.Components;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -59,6 +55,8 @@ public static class MauiProgram
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
+
+        builder.Services.AddSingleton<NavigationManager>();
 
         // add ui-related services
         builder.Services.AddScoped<IAppBarService, AppBarService>();

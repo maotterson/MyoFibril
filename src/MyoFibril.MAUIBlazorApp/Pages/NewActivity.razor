@@ -1,5 +1,5 @@
 ﻿@page "/NewActivity"
-@attribute [AuthorizeAttribute]
+@attribute [Authorize]
 @implements IDisposable
 
 @using MyoFibril.MAUIBlazorApp.Components.CreateActivity;
@@ -8,7 +8,6 @@
 @using MyoFibril.MAUIBlazorApp.Components
 @using MyoFibril.MAUIBlazorApp.Services.Api;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
-@using MyoFibril.MAUIBlazorApp.Auth;
 
 @inject INewActivityService _newActivityService
 @inject IBuildActivityService _buildActivityService;
