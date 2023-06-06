@@ -2,7 +2,13 @@
 @using MyoFibril.MAUIBlazorApp.Components.LoginForm
 @layout LoggedOutLayout
 
-<LoginFormComponent></LoginFormComponent>
+<div>
+    <input type="text" class="form-control" placeholder="Username" />
+    <input type="text" class="form-control" placeholder="Password" />
+    <button class="btn btn-primary form-control">Login</button>
+
+    <p>Don't have an account? <a href="/Register">Create new account.</a></p>
+</div>
 
 @code {
 

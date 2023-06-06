@@ -8,7 +8,8 @@ public class AppBarService : IAppBarService
     {
         { "", "" },
         { "NewActivity", "New Activity" },
-        { "Activities", "View Activities" }
+        { "Activities", "View Activities" },
+        { "Login", "Login" }
     };
     public AppBarService(NavigationManager navManager)
     {
