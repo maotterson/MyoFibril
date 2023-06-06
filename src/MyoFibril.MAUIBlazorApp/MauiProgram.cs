@@ -56,6 +56,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IFileSystemService, StreamFileSystemService>();
 
         // add services to manage local state
+        builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
 
