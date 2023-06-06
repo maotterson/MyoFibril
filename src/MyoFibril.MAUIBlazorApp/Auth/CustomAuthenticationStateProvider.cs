@@ -1,17 +1,46 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
-using MyoFibril.MAUIBlazorApp.Services.Local;
 using System.Security.Claims;
 
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
-    private readonly IUserService _userService;
-    public CustomAuthenticationStateProvider(IUserService userService)
-    {
-        _userService = userService;
-    }
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        return new AuthenticationState(new ClaimsPrincipal());
+        var identity = new ClaimsIdentity();
+        try
+        {
+            var userInfo = await SecureStorage.GetAsync("accounttoken");
+            if (userInfo is not null)
+            {
+                var claims = new[] { new Claim(ClaimTypes.Name, "user") };
+                identity = new ClaimsIdentity(claims, "Server authentication");
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Request failed:" + ex.ToString());
+        }
+
+        return new AuthenticationState(new ClaimsPrincipal(identity));
+    }
+
+    public async Task<bool> Login(string username, string password)
+    {
+        var userCredentials = (Username: username, Password: password); // todo: replace user credentials tuple with class
+        var token = await GetTokenWithUserCredentials(userCredentials);
+        if(token is not null)
+        {
+            await SecureStorage.SetAsync("accounttoken", token);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            return true;
+        }
+        return false;
+    }
+
+    private async Task<string> GetTokenWithUserCredentials((string, string) userCredentials)
+    {
+        // todo: user credentials flow implementation
+        await Task.Delay(3000);
+        return "validtoken";
     }
 }
