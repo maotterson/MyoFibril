@@ -4,11 +4,5 @@
 @inject IUserService _userService;
 <h2>Home Page</h2>
 
-@if(!_isLoggedIn)
-{
-    <LoginFormComponent></LoginFormComponent>
-}
-
 @code {
-    private bool _isLoggedIn => _userService.IsLoggedIn();
 }

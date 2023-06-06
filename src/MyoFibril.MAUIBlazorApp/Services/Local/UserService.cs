@@ -3,6 +3,6 @@ public class UserService : IUserService
 {
     public bool IsLoggedIn()
     {
-        return true;
+        return false;
     }
 }
