@@ -10,6 +10,9 @@ using MyoFibril.MAUIBlazorApp.Services.UI;
 using Microsoft.AspNetCore.Components;
 using MyoFibril.MAUIBlazorApp.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using MyoFibril.MAUIBlazorApp.Settings;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -65,6 +68,9 @@ public static class MauiProgram
 
         // add ui-related services
         builder.Services.AddScoped<IAppBarService, AppBarService>();
+
+        // configuration settings
+        builder.Configuration.AddAppSettings();
 
         return builder.Build();
     }

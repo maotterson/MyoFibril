@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
+using MyoFibril.Contracts.WebAPI.Auth;
+using MyoFibril.Contracts.WebAPI.Auth.Models;
+using System.Net.Http.Json;
 using System.Security.Claims;
 
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
+    private readonly IHttpClientFactory _httpClientFactory;
+    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory)
+    {
+        _httpClientFactory = httpClientFactory;
+    }
+
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         var identity = new ClaimsIdentity();
@@ -26,7 +35,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task<bool> Login(string username, string password)
     {
-        var userCredentials = (Username: username, Password: password); // todo: replace user credentials tuple with class
+        var userCredentials = new UserCredentials { Username = username, Password = password}; // todo: replace user credentials tuple with class
         var token = await GetTokenWithUserCredentials(userCredentials);
         if(token is not null)
         {
@@ -43,8 +52,19 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
-    private async Task<string> GetTokenWithUserCredentials((string, string) userCredentials)
+    private async Task<string> GetTokenWithUserCredentials(UserCredentials userCredentials)
     {
+        var http = _httpClientFactory.CreateClient();
+        var requestUri = new Uri();
+        var requestBody = new GetTokenWithUserCredentialsRequest
+        {
+            Username = userCredentials.Username,
+            Password = userCredentials.Password
+        };
+
+        var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
+
+
         // todo: user credentials flow implementation
         return "validtoken";
     }
