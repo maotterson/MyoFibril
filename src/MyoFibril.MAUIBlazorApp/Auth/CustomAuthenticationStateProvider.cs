@@ -61,7 +61,32 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
-    private async Task<GetTokenWithUserCredentialsResponse> GetTokenWithUserCredentials(UserCredentials userCredentials)
+    private async Task<GetAccessTokenResponse> GetTokenWithRefreshToken(string refreshToken)
+    {
+        var http = _httpClientFactory.CreateClient();
+
+        var requestBaseUri = _configuration["Settings:API:BaseUri"];
+        var requestUriBuilder = new UriBuilder(requestBaseUri);
+        requestUriBuilder.Path = "authorize";
+        requestUriBuilder.Query = "grant_type=refreshtoken";
+        var requestUri = requestUriBuilder.Uri;
+
+        var requestBody = new GetTokenWithRefreshTokenRequest
+        {
+            RefreshToken = refreshToken,
+        };
+
+        var response = await http.PostAsJsonAsync<GetTokenWithRefreshTokenRequest>(requestUri, requestBody);
+        response.EnsureSuccessStatusCode();
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+        var getAccessTokenResponse = JsonSerializer.Deserialize<GetAccessTokenResponse>(responseBody);
+
+        return getAccessTokenResponse;
+    }
+
+
+    private async Task<GetAccessTokenResponse> GetTokenWithUserCredentials(UserCredentials userCredentials)
     {
         var http = _httpClientFactory.CreateClient();
 
@@ -77,13 +102,21 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             Password = userCredentials.Password
         };
 
-         var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
+        /*
+         * todo: for future development once implemented in api layer
+        var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
         response.EnsureSuccessStatusCode();
 
         var responseBody = await response.Content.ReadAsStringAsync();
         var getTokenResponse = JsonSerializer.Deserialize<GetTokenWithUserCredentialsResponse>(responseBody);
+        */
 
-
-        return getTokenResponse;
+        var getAccessTokenResponse = new GetAccessTokenResponse
+        {
+            AccessToken = "myaccesstoken",
+            RefreshToken = "myrefreshtoken",
+            ExpiresAt = 0
+        };
+        return getAccessTokenResponse;
     }
 }
