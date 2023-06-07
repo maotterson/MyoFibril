@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
 using System.Net.Http.Json;
@@ -8,6 +9,7 @@ namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IConfiguration _configuration;
     public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory)
     {
         _httpClientFactory = httpClientFactory;
@@ -55,7 +57,13 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     private async Task<string> GetTokenWithUserCredentials(UserCredentials userCredentials)
     {
         var http = _httpClientFactory.CreateClient();
-        var requestUri = new Uri();
+
+        var requestBaseUri = _configuration["Settings:API:BaseUri"];
+        var requestUriBuilder = new UriBuilder(requestBaseUri);
+        requestUriBuilder.Path = "authorize";
+        requestUriBuilder.Query = "grant_type=accesstoken";
+        var requestUri = requestUriBuilder.Uri;
+
         var requestBody = new GetTokenWithUserCredentialsRequest
         {
             Username = userCredentials.Username,
