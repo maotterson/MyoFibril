@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
 using MyoFibril.MAUIBlazorApp.Services.Local;
+using MyoFibril.MAUIBlazorApp.Storage.Models;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
@@ -23,25 +24,38 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         var identity = new ClaimsIdentity();
+        var emptyAuthState = new AuthenticationState(new ClaimsPrincipal(identity));
         try
         {
-            var userInfo = await SecureStorage.GetAsync("access-token");
-            if (userInfo is not null)
-            {
+            var tokenInfo = await _storageService.GetItemAsync<TokenInfo>("token_info");
 
-                var claims = new[] { 
-                    new Claim(ClaimTypes.Name, "user")
-                };
-                identity = new ClaimsIdentity(claims, "Server authentication");
-            }
+            // check if a token exists
+            if (tokenInfo is null) return emptyAuthState;
+
+            // check validity of token
+            var isValidToken = await VerifyToken(tokenInfo);
+            if (!isValidToken) return emptyAuthState;
+
+            var claims = new[] { 
+                new Claim("access_token", tokenInfo.AccessToken),
+                new Claim("refresh_token", tokenInfo.RefreshToken),
+            };
+            identity = new ClaimsIdentity(claims, "Server authentication");
+            return new AuthenticationState(new ClaimsPrincipal(identity));
         }
         catch (HttpRequestException ex)
         {
             Console.WriteLine("Request failed:" + ex.ToString());
+            return emptyAuthState;
         }
-
-        return new AuthenticationState(new ClaimsPrincipal(identity));
     }
+
+    private async Task<bool> VerifyToken(TokenInfo tokenInfo)
+    {
+        // todo: implement verification check for token
+        return true;
+    }
+
 
     public async Task<bool> Login(string username, string password)
     {
@@ -49,9 +63,14 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var tokenResponse = await GetTokenWithUserCredentials(userCredentials);
         if(tokenResponse is not null)
         {
-            await SecureStorage.SetAsync("access-token", tokenResponse.AccessToken);
-            await SecureStorage.SetAsync("refresh-token", tokenResponse.RefreshToken);
-            await SecureStorage.SetAsync("access-token-expiration", tokenResponse.ExpiresAt.ToString());
+            var tokenInfo = new TokenInfo
+            {
+                AccessToken = tokenResponse.AccessToken,
+                RefreshToken = tokenResponse.RefreshToken,
+                ExpiresAt = tokenResponse.ExpiresAt
+            };
+
+            await _storageService.StoreItemAsync("token_info", tokenInfo);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return true;
         }
@@ -60,9 +79,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task Logout()
     {
-        SecureStorage.Remove("access-token");
-        SecureStorage.Remove("refresh-token");
-        SecureStorage.Remove("refresh-token-expiration");
+        _storageService.RemoveItem("token_info");
+        _storageService.RemoveItem("user_info");
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
