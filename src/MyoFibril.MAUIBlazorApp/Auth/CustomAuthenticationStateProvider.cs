@@ -10,9 +10,10 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
-    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory)
+    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _httpClientFactory = httpClientFactory;
+        _configuration = configuration;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
