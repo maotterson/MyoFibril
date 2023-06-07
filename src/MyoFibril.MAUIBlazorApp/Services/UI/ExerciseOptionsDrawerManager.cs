@@ -5,9 +5,12 @@ public class ExerciseOptionsDrawerManager : IExerciseOptionsDrawerManager
 {
     private PerformedExerciseEntity _performedExercise = null;
 
+    public event Action OnDrawerStateChanged;
+
     public void OpenDrawer(PerformedExerciseEntity performedExercise)
     {
         _performedExercise = performedExercise;
+        OnDrawerStateChanged?.Invoke();
     }
 
     public bool IsDrawerOpen()
@@ -18,5 +21,6 @@ public class ExerciseOptionsDrawerManager : IExerciseOptionsDrawerManager
     public void CloseDrawer()
     {
         _performedExercise = null;
+        OnDrawerStateChanged?.Invoke();
     }
 }

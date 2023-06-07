@@ -1,4 +1,5 @@
 ﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Components.ExerciseOptionsDrawer
 @using MyoFibril.MAUIBlazorApp.Services;
 @using MyoFibril.Contracts.WebAPI.Models;
 @using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
@@ -13,9 +14,15 @@
 
 @implements IDisposable
 
-@if (_isModalOpen)
+@if(_isModalOpen)
 {
     <AddExerciseToActivityComponent></AddExerciseToActivityComponent>
+}
+
+
+@if (_isExerciseOptionsDrawerOpen)
+{
+    <ExerciseOptionsDrawerComponent></ExerciseOptionsDrawerComponent>
 }
 
 <div>
@@ -39,10 +46,6 @@
     }
 </div>
 
-@if (_isExerciseOptionsDrawerOpen)
-{
-    
-}
 
 @code {
     private string _error = string.Empty;
@@ -55,6 +58,7 @@
     {
         _addExerciseService.OnModalStateChanged += StateHasChanged;
         _buildActivityService.OnBuildActivityStateChanged += StateHasChanged;
+        _exerciseOptionsDrawerManager.OnDrawerStateChanged += StateHasChanged;
     }
     private void AddExerciseButtonClicked()
     {
@@ -63,7 +67,7 @@
 
     private void HandleClickExerciseSettings(PerformedExerciseEntity exercise)
     {
-        
+        _exerciseOptionsDrawerManager.OpenDrawer(exercise);
     }
 
     private async Task CreateButtonClicked()
@@ -97,5 +101,6 @@
     {
         _addExerciseService.OnModalStateChanged -= StateHasChanged;
         _buildActivityService.OnBuildActivityStateChanged -= StateHasChanged;
+        _exerciseOptionsDrawerManager.OnDrawerStateChanged -= StateHasChanged;
     }
 }
