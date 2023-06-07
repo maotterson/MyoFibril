@@ -71,10 +71,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             Password = userCredentials.Password
         };
 
-        var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
+        // var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
 
-
-        // todo: user credentials flow implementation
         return "validtoken";
     }
 }
