@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
-using MyoFibril.Contracts.WebAPI.CreateActivity;
+using MyoFibril.MAUIBlazorApp.Services.Local;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
@@ -12,10 +12,12 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
-    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    private readonly IStorageService _storageService;
+    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory, IConfiguration configuration, IStorageService storageService)
     {
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
+        _storageService = storageService;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -23,10 +25,13 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var identity = new ClaimsIdentity();
         try
         {
-            var userInfo = await SecureStorage.GetAsync("accounttoken");
+            var userInfo = await SecureStorage.GetAsync("access-token");
             if (userInfo is not null)
             {
-                var claims = new[] { new Claim(ClaimTypes.Name, "user") };
+
+                var claims = new[] { 
+                    new Claim(ClaimTypes.Name, "user")
+                };
                 identity = new ClaimsIdentity(claims, "Server authentication");
             }
         }
