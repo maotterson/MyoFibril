@@ -4,21 +4,15 @@
 @using MyoFibril.Domain.Models;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @inject IBuildActivityService _buildActivityService;
-<div class="list-group-item bg-dark text-light" @onclick="HandleClickedExercise">
-    @if (_isViewingOptions)
-    {
-        <div class="row">
-            <button class="btn btn-info col">Edit</button>
-            <button class="btn btn-danger col" @onclick="ClickedRemovePerformedExercise">Delete</button>
-        </div>
-    }
-    else
-    {
+<div class="list-group-item bg-dark text-light">
     <div>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col">
+            <div class="d-flex">
+                <div class="me-auto">
                     <h5 class="px-0 ms-0">@PerformedExercise.Exercise!.Name</h5>
+                </div>
+                <div @onclick="HandleClickedExerciseSettings">
+                    <span class="oi oi-ellipses"></span>
                 </div>
             </div>
         </div>
@@ -51,13 +45,12 @@
     [Parameter]
     public PerformedExerciseEntity PerformedExercise { get; set; }
     [Parameter]
-    public Action<PerformedExerciseEntity> OnClickRemoveCallback { get; set; }
+    public Action<PerformedExerciseEntity> OnClickExerciseSettings { get; set; }
 
-    private bool _isViewingOptions = false;
 
-    private void HandleClickedExercise()
+    private void HandleClickedExerciseSettings()
     {
-        _isViewingOptions = _isViewingOptions ? false : true;
+        OnClickExerciseSettings(PerformedExercise);
     }
 
     private string DisplayUnits(WeightInfoUnit unit) => unit switch

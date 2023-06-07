@@ -69,6 +69,7 @@ public static class MauiProgram
 
         // add ui-related services
         builder.Services.AddScoped<IAppBarService, AppBarService>();
+        builder.Services.AddScoped<IExerciseOptionsDrawerManager, ExerciseOptionsDrawerManager>();
 
         // configuration settings
         builder.Configuration.AddAppSettings();

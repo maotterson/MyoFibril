@@ -4,10 +4,12 @@
 @using MyoFibril.MAUIBlazorApp.Components.AddExerciseToActivity
 @using MyoFibril.MAUIBlazorApp.Components.ExerciseSummary;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
+@using MyoFibril.MAUIBlazorApp.Services.UI;
 @using Xamarin.CommunityToolkit;
 @inject CreateActivityViewModel _createActivityViewModel
 @inject IAddExerciseService _addExerciseService
-@inject IBuildActivityService _buildActivityService;
+@inject IBuildActivityService _buildActivityService
+@inject IExerciseOptionsDrawerManager _exerciseOptionsDrawerManager
 
 @implements IDisposable
 
@@ -25,7 +27,7 @@
         <div class="list-group list-group-flush">
         @foreach (var exercise in _exercises)
         {
-            <ExerciseSummaryComponent PerformedExercise="exercise"></ExerciseSummaryComponent>
+            <ExerciseSummaryComponent OnClickExerciseSettings="HandleClickExerciseSettings" PerformedExercise="exercise"></ExerciseSummaryComponent>
         }
         </div>
         <button class="form-control btn btn-primary" @onclick="AddExerciseButtonClicked">Add Exercise</button>
@@ -37,9 +39,12 @@
     }
 </div>
 
+@if (_activityOptionsDrawerOpen)
+
 @code {
     private string _error = string.Empty;
     private bool _modalOpen => _addExerciseService.IsModalOpen();
+    private bool _activityOptionsDrawerOpen => 
     private List<PerformedExerciseEntity> _exercises => _buildActivityService.GetPerformedExercises();
     public string InputName { get; set; } = string.Empty;
 
@@ -52,6 +57,12 @@
     {
         _addExerciseService.OpenModal();
     }
+
+    private void HandleClickExerciseSettings(PerformedExerciseEntity exercise)
+    {
+        
+    }
+
     private async Task CreateButtonClicked()
     {
         try

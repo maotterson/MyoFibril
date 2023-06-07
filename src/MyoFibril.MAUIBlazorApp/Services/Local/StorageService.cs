@@ -1,5 +1,4 @@
-﻿using CoreData;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class StorageService : IStorageService
