@@ -7,9 +7,6 @@ public class StreamFileSystemService : IFileSystemService
     public async Task<string> LoadFileAsStringAsync(string path)
     {
         var assembly = Assembly.GetExecutingAssembly();
-
-        var res = assembly.GetManifestResourceNames();
-
         var resourcePath = $"{assembly.GetName().Name}.Resources.Raw.{path}";
         using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
         {
