@@ -13,7 +13,7 @@
 
 @implements IDisposable
 
-@if (_modalOpen)
+@if (_isModalOpen)
 {
     <AddExerciseToActivityComponent></AddExerciseToActivityComponent>
 }
@@ -39,12 +39,15 @@
     }
 </div>
 
-@if (_activityOptionsDrawerOpen)
+@if (_isExerciseOptionsDrawerOpen)
+{
+    
+}
 
 @code {
     private string _error = string.Empty;
-    private bool _modalOpen => _addExerciseService.IsModalOpen();
-    private bool _activityOptionsDrawerOpen => 
+    private bool _isModalOpen => _addExerciseService.IsModalOpen();
+    private bool _isExerciseOptionsDrawerOpen => _exerciseOptionsDrawerManager.IsDrawerOpen();
     private List<PerformedExerciseEntity> _exercises => _buildActivityService.GetPerformedExercises();
     public string InputName { get; set; } = string.Empty;
 
