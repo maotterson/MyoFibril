@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
+using MyoFibril.Contracts.WebAPI.CreateActivity;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
@@ -39,10 +41,12 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     public async Task<bool> Login(string username, string password)
     {
         var userCredentials = new UserCredentials { Username = username, Password = password}; // todo: replace user credentials tuple with class
-        var token = await GetTokenWithUserCredentials(userCredentials);
-        if(token is not null)
+        var tokenResponse = await GetTokenWithUserCredentials(userCredentials);
+        if(tokenResponse is not null)
         {
-            await SecureStorage.SetAsync("accounttoken", token);
+            await SecureStorage.SetAsync("access-token", tokenResponse.AccessToken);
+            await SecureStorage.SetAsync("refresh-token", tokenResponse.RefreshToken);
+            await SecureStorage.SetAsync("access-token-expiration", tokenResponse.ExpiresAt.ToString());
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return true;
         }
@@ -51,11 +55,13 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task Logout()
     {
-        SecureStorage.Remove("accounttoken");
+        SecureStorage.Remove("access-token");
+        SecureStorage.Remove("refresh-token");
+        SecureStorage.Remove("refresh-token-expiration");
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
-    private async Task<string> GetTokenWithUserCredentials(UserCredentials userCredentials)
+    private async Task<GetTokenWithUserCredentialsResponse> GetTokenWithUserCredentials(UserCredentials userCredentials)
     {
         var http = _httpClientFactory.CreateClient();
 
@@ -71,8 +77,13 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             Password = userCredentials.Password
         };
 
-        // var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
+         var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
+        response.EnsureSuccessStatusCode();
 
-        return "validtoken";
+        var responseBody = await response.Content.ReadAsStringAsync();
+        var getTokenResponse = JsonSerializer.Deserialize<GetTokenWithUserCredentialsResponse>(responseBody);
+
+
+        return getTokenResponse;
     }
 }
