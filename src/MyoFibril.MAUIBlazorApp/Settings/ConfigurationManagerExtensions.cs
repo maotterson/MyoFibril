@@ -8,7 +8,8 @@ public static class ConfigurationManagerExtensions
     {
 
         var a = Assembly.GetExecutingAssembly();
-        using var stream = a.GetManifestResourceStream("MyoFibril.MAUIBlazorApp.appsettings.json");
+        var resourcePath = $"{a.GetName().Name}.Resources.Raw.appsettings.json";
+        using var stream = a.GetManifestResourceStream(resourcePath);
 
         var config = new ConfigurationBuilder()
                     .AddJsonStream(stream)
