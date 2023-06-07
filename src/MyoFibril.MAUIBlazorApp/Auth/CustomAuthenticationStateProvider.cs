@@ -46,7 +46,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     private async Task<string> GetTokenWithUserCredentials((string, string) userCredentials)
     {
         // todo: user credentials flow implementation
-        await Task.Delay(3000);
         return "validtoken";
     }
 }
