@@ -4,8 +4,11 @@
 
 <div class="offcanvas show offcanvas-bottom" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
     <div class="card">
-        <div class="card-header">
-            <h3>@_selectedExercise.Exercise.Name</h3>
+        <div class="card-header container-fluid">
+            <div>
+                <h3 class="card-title">@_selectedExercise.Exercise.Name</h3>
+            </div>
+            <button type="button" class="btn-close" @onclick="_drawerManager.CloseDrawer" aria-label="Close"></button>
         </div>
         <div class="card-content list-group list-group-flush">
             <div class="list-group-item">
@@ -19,7 +22,8 @@
             </div>
         </div>
     </div>
-    
+</div>
+<div class="offcanvas-overlay" @onclick="_drawerManager.CloseDrawer">
 </div>
 
 @code {
