@@ -2,6 +2,6 @@
 
 namespace MyoFibril.WebAPI.Services;
 
-public class AuthService : IAuthService
+public class AuthorizeService : IAuthorizeService
 {
 }
