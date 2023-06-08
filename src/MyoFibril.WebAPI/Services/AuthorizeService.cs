@@ -1,5 +1,6 @@
 ﻿using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
+using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Services;
@@ -19,6 +20,7 @@ public class AuthorizeService : IAuthorizeService
 
     public Task<GetAccessTokenResponse> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
     {
-        var userCredentials = new UserCredentials(request.Username, request.Password);
+        var salt = ""; // todo: retrieve user-specific salt
+        var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, salt);
     }
 }
