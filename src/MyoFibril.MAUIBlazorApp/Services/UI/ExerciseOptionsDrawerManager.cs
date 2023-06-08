@@ -3,24 +3,34 @@
 namespace MyoFibril.MAUIBlazorApp.Services.UI;
 public class ExerciseOptionsDrawerManager : IExerciseOptionsDrawerManager
 {
-    private PerformedExerciseEntity _performedExercise = null;
+    public PerformedExerciseEntity SelectedExercise { get; private set; }
 
     public event Action OnDrawerStateChanged;
 
     public void OpenDrawer(PerformedExerciseEntity performedExercise)
     {
-        _performedExercise = performedExercise;
+        SelectedExercise = performedExercise;
         OnDrawerStateChanged?.Invoke();
+    }
+
+    public void ToggleDrawer(PerformedExerciseEntity performedExercise)
+    {
+        if (IsDrawerOpen())
+        {
+            CloseDrawer();
+            return;
+        }
+        OpenDrawer(performedExercise);
     }
 
     public bool IsDrawerOpen()
     {
-        return _performedExercise is not null;
+        return SelectedExercise is not null;
     }
 
     public void CloseDrawer()
     {
-        _performedExercise = null;
+        SelectedExercise = null;
         OnDrawerStateChanged?.Invoke();
     }
 }

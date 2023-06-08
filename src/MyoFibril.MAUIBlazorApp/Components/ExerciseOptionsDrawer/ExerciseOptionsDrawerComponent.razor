@@ -1,13 +1,20 @@
-﻿<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Services.UI;
+@inject IExerciseOptionsDrawerManager _drawerManager;
+
+<div class="offcanvas show offcanvas-bottom" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
+    <p>@_selectedExercise.Exercise.Name</p>
+    <div class="row">
+        <span>View set summary</span>
     </div>
-    <div class="offcanvas-body small">
-        ...
+    <div class="row">
+        <span>Add new set</span>
+    </div>
+    <div class="row">
+        <span>Delete exercise</span>
     </div>
 </div>
 
 @code {
-
+    private PerformedExerciseEntity _selectedExercise => _drawerManager.SelectedExercise;
 }
