@@ -29,7 +29,7 @@ html, body {
 
 .exercise-summary{
     overflow:auto;
-    max-height:50vh;
+    max-height:60vh;
 }
 
 .offcanvas {
