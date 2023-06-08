@@ -2,24 +2,34 @@
 @using MyoFibril.MAUIBlazorApp.Services.UI;
 @inject IExerciseOptionsDrawerManager _drawerManager;
 
-<div class="offcanvas show offcanvas-bottom" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
+<div class="offcanvas show offcanvas-bottom offcanvas-size-xl" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
     <div class="card">
-        <div class="card-header container-fluid">
-            <div>
-                <h3 class="card-title">@_selectedExercise.Exercise.Name</h3>
+        <div class="card-header container-fluid row">
+            <div class="col">
+                <h3>@_selectedExercise.Exercise.Name</h3>
             </div>
-            <button type="button" class="btn-close" @onclick="_drawerManager.CloseDrawer" aria-label="Close"></button>
+            <div>
+                <span class="fs-5 oi oi-x col text-danger x-btn" @onclick="_drawerManager.CloseDrawer" aria-label="Close"></span>
+            </div>
         </div>
         <div class="card-content list-group list-group-flush">
-            <div class="list-group-item">
+            <div class="list-group-item row py-2">
                 <i class="bi-card-list"></i>
                 <span>View set summary</span>
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item row py-2">
                 <i class="bi-file-earmark-plus"></i>
                 <span>Add new set</span>
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item row py-2">
+                <i class="bi-trash"></i>
+                <span>Delete exercise</span>
+            </div>
+            <div class="list-group-item row py-2">
+                <i class="bi-trash"></i>
+                <span>Delete exercise</span>
+            </div>
+            <div class="list-group-item row py-2">
                 <i class="bi-trash"></i>
                 <span>Delete exercise</span>
             </div>

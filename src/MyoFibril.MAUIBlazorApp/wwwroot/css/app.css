@@ -23,6 +23,14 @@ html, body {
     top:0;
     left:0;
 }
+.offcanvas.offcanvas-bottom{
+    height:fit-content;
+}
+
+.exercise-summary{
+    overflow:auto;
+    max-height:50vh;
+}
 
 .offcanvas {
     background-color: rgb(57, 57, 57);
