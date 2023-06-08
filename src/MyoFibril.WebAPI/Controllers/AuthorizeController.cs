@@ -21,9 +21,9 @@ public class AuthorizeController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest getTokenWithUserCredentialsRequest)
+    public async Task<ActionResult> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
     {
-        var response = _authorizeService.GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest);
+        var response = await _authorizeService.GetAccessTokenWithUserCredentials(request);
 
         if(response is null)
         {
@@ -38,9 +38,9 @@ public class AuthorizeController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> GetAccessTokenWithRefreshToken(AuthorizeTokenRequest authorizeTokenRequest)
+    public async Task<ActionResult> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
     {
-        var isAuthorized = _authorizeService.GetAccessTokenWithRefreshToken(authorizeTokenRequest);
+        var isAuthorized = await _authorizeService.GetAccessTokenWithRefreshToken(request);
 
         return Ok(true);
     }
@@ -48,9 +48,9 @@ public class AuthorizeController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> AuthorizeToken(AuthorizeTokenRequest authorizeTokenRequest)
+    public async Task<ActionResult> AuthorizeToken(AuthorizeTokenRequest request)
     {
-        var isAuthorized = _authorizeService.AuthorizeToken(authorizeTokenRequest);
+        var isAuthorized = await _authorizeService.AuthorizeToken(request);
 
         return Ok(true);
     }
