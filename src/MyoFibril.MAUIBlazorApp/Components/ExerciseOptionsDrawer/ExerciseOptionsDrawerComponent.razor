@@ -3,16 +3,23 @@
 @inject IExerciseOptionsDrawerManager _drawerManager;
 
 <div class="offcanvas show offcanvas-bottom" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
-    <p>@_selectedExercise.Exercise.Name</p>
-    <div class="row">
-        <span>View set summary</span>
+    <div class="card">
+        <div class="card-header">
+            <h3>@_selectedExercise.Exercise.Name</h3>
+        </div>
+        <div class="card-content list-group list-group-flush">
+            <div class="list-group-item">
+                <span>View set summary</span>
+            </div>
+            <div class="list-group-item">
+                <span>Add new set</span>
+            </div>
+            <div class="list-group-item">
+                <span>Delete exercise</span>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <span>Add new set</span>
-    </div>
-    <div class="row">
-        <span>Delete exercise</span>
-    </div>
+    
 </div>
 
 @code {

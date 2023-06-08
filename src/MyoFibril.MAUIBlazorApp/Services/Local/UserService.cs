@@ -17,6 +17,6 @@ public class UserService : IUserService
     }
     public async Task Logout()
     {
-        _authenticationProvider.Logout();
+        await _authenticationProvider.Logout();
     }
 }

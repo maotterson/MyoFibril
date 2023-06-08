@@ -6,12 +6,12 @@
 @inject IBuildActivityService _buildActivityService;
 <div class="list-group-item bg-dark text-light">
     <div>
-        <div class="container-fluid">
+        <div class="container-fluid" @onclick="HandleClickedExerciseSettings">
             <div class="d-flex">
                 <div class="me-auto">
                     <h5 class="px-0 ms-0">@PerformedExercise.Exercise!.Name</h5>
                 </div>
-                <div @onclick="HandleClickedExerciseSettings">
+                <div>
                     <span class="oi oi-ellipses"></span>
                 </div>
             </div>
