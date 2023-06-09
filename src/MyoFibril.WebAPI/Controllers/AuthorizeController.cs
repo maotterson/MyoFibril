@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.Auth;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.WebAPI.Services.Interfaces;
 using System.ComponentModel;
 
@@ -20,36 +21,89 @@ public class AuthorizeController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
     {
-        var response = await _authorizeService.GetAccessTokenWithUserCredentials(request);
-
-        if(response is null)
+        try
         {
-            _logger.LogError("Response not found");
-            return NotFound();
+            var response = await _authorizeService.GetAccessTokenWithUserCredentials(request);
+
+            if(response is null)
+            {
+                _logger.LogError("Response not found");
+                throw new NullReferenceException();
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+                                    ex is InvalidRefreshTokenException ||
+                                    ex is InvalidCredentialsException)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return BadRequest();
         }
 
-
-        return Ok(response);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
     {
-        var response = await _authorizeService.GetAccessTokenWithRefreshToken(request);
+        try
+        {
+            var response = await _authorizeService.GetAccessTokenWithRefreshToken(request);
 
-        return Ok(true);
+            if (response is null)
+            {
+                _logger.LogError("Response not found");
+                throw new NullReferenceException();
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex) when (ex is InvalidRefreshTokenException) 
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+        
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthorizeTokenResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> AuthorizeToken(AuthorizeTokenRequest request)
     {
-        var response = await _authorizeService.AuthorizeToken(request);
+        try
+        {
+            var response = await _authorizeService.AuthorizeToken(request);
+
+            if (response is null)
+            {
+                _logger.LogError("Response not found");
+                throw new NullReferenceException();
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException || 
+                                    ex is InvalidRefreshTokenException || 
+                                    ex is InvalidCredentialsException)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
     }
 }
