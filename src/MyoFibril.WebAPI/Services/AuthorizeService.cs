@@ -9,17 +9,21 @@ namespace MyoFibril.WebAPI.Services;
 
 public class AuthorizeService : IAuthorizeService
 {
-    public IAuthorizeRepository _authorizeRepository;
+    private readonly IAuthorizeRepository _authorizeRepository;
+    private readonly ICredentialsRepository _credentialsRepository;
 
-    public AuthorizeService(IAuthorizeRepository authorizeRepository)
+    public AuthorizeService(IAuthorizeRepository authorizeRepository, ICredentialsRepository credentialsRepository)
     {
         _authorizeRepository = authorizeRepository;
+        _credentialsRepository = credentialsRepository;
     }
 
     public async Task<AuthorizeTokenResponse> AuthorizeToken(AuthorizeTokenRequest authorizeTokenRequest)
     {
         var tokenToAuthorize = authorizeTokenRequest.AccessToken;
         var refreshTokenToAuthorize = authorizeTokenRequest.RefreshToken;
+
+        if (string.IsNullOrEmpty(tokenToAuthorize) || string.IsNullOrEmpty(refreshTokenToAuthorize)) throw new InvalidAuthorizeTokenRequestException();
 
         GetAccessTokenResponse? tokenInfo = default;
         UserInfo? userInfo = default;
@@ -62,7 +66,7 @@ public class AuthorizeService : IAuthorizeService
 
     }
 
-    public Task<GetAccessTokenResponse> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
+    public async Task<GetAccessTokenResponse> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
     {
         var refreshToken = request.RefreshToken;
         var accessToken = _jwtService.GetAccessTokenWithRefreshToken(refreshTokenToAuthorize);
@@ -77,10 +81,10 @@ public class AuthorizeService : IAuthorizeService
         };
     }
 
-    public Task<GetAccessTokenResponse> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
+    public async Task<GetAccessTokenResponse> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
     {
-        var credentials = _credentialsRepository.GetCredentialsByUsername(request.Username);
-        var salt = credentials.salt;
+        var credentials = await _credentialsRepository.GetCredentialsForUsername(request.Username);
+        var salt = credentials.Salt;
         var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, salt);
         var validCredentials = _jwtService.VerifyCredentials(credentials, userCredentials);
 
