@@ -1,12 +1,20 @@
 ﻿using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
 using MyoFibril.WebAPI.Models.Auth;
+using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.WebAPI.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Services;
 
 public class AuthorizeService : IAuthorizeService
 {
+    public IAuthorizeRepository _authorizeRepository;
+
+    public AuthorizeService(IAuthorizeRepository authorizeRepository)
+    {
+        _authorizeRepository = authorizeRepository;
+    }
+
     public Task<bool> AuthorizeToken(AuthorizeTokenRequest authorizeTokenRequest)
     {
         var token = authorizeTokenRequest.AccessToken;

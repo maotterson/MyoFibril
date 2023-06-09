@@ -36,7 +36,7 @@ public class AuthorizeController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
     {
@@ -51,7 +51,10 @@ public class AuthorizeController : ControllerBase
     public async Task<ActionResult> AuthorizeToken(AuthorizeTokenRequest request)
     {
         var isAuthorized = await _authorizeService.AuthorizeToken(request);
+        if (isAuthorized)
+        {
+            return Ok(true);
 
-        return Ok(true);
+        }
     }
 }
