@@ -5,4 +5,6 @@ public class UserInfo
 {
     [JsonPropertyName("username")]
     public string Username { get; set; } = default!;
+    [JsonPropertyName("email")]
+    public string Email { get; set; } = default!;
 }
