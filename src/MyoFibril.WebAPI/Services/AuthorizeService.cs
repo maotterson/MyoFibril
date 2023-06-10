@@ -12,7 +12,7 @@ public class AuthorizeService : IAuthorizeService
     private readonly ICredentialsRepository _credentialsRepository;
     private readonly IJwtService _jwtService;
 
-    public AuthorizeService(IAuthorizeRepository authorizeRepository, ICredentialsRepository credentialsRepository, IJwtService jwtService)
+    public AuthorizeService(ICredentialsRepository credentialsRepository, IJwtService jwtService)
     {
         _credentialsRepository = credentialsRepository;
         _jwtService = jwtService;
@@ -27,7 +27,7 @@ public class AuthorizeService : IAuthorizeService
 
         GetAccessTokenResponse? tokenInfo = default;
         UserInfo? userInfo = default;
-        var isVerified = _jwtService.VerifyToken(tokenToAuthorize);
+        var isVerified = await _jwtService.VerifyToken(tokenToAuthorize);
 
         if (isVerified)
         {
@@ -42,7 +42,7 @@ public class AuthorizeService : IAuthorizeService
             };
         }
 
-        var accessToken = _jwtService.GetAccessTokenWithRefreshToken(refreshTokenToAuthorize);
+        var accessToken = await _jwtService.GetAccessTokenWithRefreshToken(refreshTokenToAuthorize);
         if(accessToken is not null)
         {
             isVerified = true;
@@ -69,11 +69,9 @@ public class AuthorizeService : IAuthorizeService
     public async Task<GetAccessTokenResponse> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
     {
         var refreshToken = request.RefreshToken;
-        var accessToken = _jwtService.GetAccessTokenWithRefreshToken(refreshTokenToAuthorize);
-        if (accessToken is null)
-        {
-            throw new InvalidRefreshTokenException();
-        }
+        var accessToken = await _jwtService.GetAccessTokenWithRefreshToken(refreshToken);
+        if (accessToken is null) throw new InvalidRefreshTokenException();
+
         return new GetAccessTokenResponse
         {
             AccessToken = accessToken,
@@ -85,18 +83,21 @@ public class AuthorizeService : IAuthorizeService
     {
         var credentials = await _credentialsRepository.GetCredentialsForUsername(request.Username);
         var salt = credentials.Salt;
-        var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, credentials.Username);
-        var validCredentials = _jwtService.VerifyCredentials(credentials, userCredentials);
+        var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, salt);
+        var validCredentials = await _jwtService.VerifyCredentials(credentials, userCredentials);
 
         if (!validCredentials) throw new InvalidCredentialsException();
 
-        var newAccessToken = _jwtService.CreateAccessToken();
-        var newRefreshToken = _jwtService.CreateRefreshToken();
+        // grab the rest of the relevant user information for the verified user
+        var credentialsEntity = await _credentialsRepository.GetCredentialsForUsername(request.Username);
+
+        var (accessToken, refreshToken) = await _jwtService.GetTokensWithCredentials(credentialsEntity);
 
         return new GetAccessTokenResponse
         {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            // todo expiry information
         };
     }
 }

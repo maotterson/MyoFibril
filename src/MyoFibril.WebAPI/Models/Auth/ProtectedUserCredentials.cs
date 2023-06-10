@@ -22,7 +22,7 @@ public class ProtectedUserCredentials
         HashedPassword = HashPassword(password, salt);
     }
 
-    private string HashPassword(string password, string salt)
+    private static string HashPassword(string password, string salt)
     {
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
         return hashedPassword;
