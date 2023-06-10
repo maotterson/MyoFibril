@@ -35,7 +35,7 @@ public class CredentialsRepository : ICredentialsRepository
         return credentials!;
     }
 
-    public async Task<UserCredentialsEntity> RegisterNewUserWithProtectedCredentials(ProtectedUserCredentials protectedUserCredentials)
+    public async Task RegisterNewUserWithProtectedCredentials(ProtectedUserCredentials protectedUserCredentials)
     {
         var userCredentials = new UserCredentialsEntity
         {
@@ -44,8 +44,5 @@ public class CredentialsRepository : ICredentialsRepository
             Salt = protectedUserCredentials.Salt,
         };
         await _credentialsCollection.InsertOneAsync(userCredentials);
-
-        var createdCredentials = await GetCredentialsForUsername(userCredentials.Username);
-        return createdCredentials!;
     }
 }

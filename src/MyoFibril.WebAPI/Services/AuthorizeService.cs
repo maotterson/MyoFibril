@@ -9,13 +9,13 @@ namespace MyoFibril.WebAPI.Services;
 
 public class AuthorizeService : IAuthorizeService
 {
-    private readonly IAuthorizeRepository _authorizeRepository;
     private readonly ICredentialsRepository _credentialsRepository;
+    private readonly IJwtService _jwtService;
 
-    public AuthorizeService(IAuthorizeRepository authorizeRepository, ICredentialsRepository credentialsRepository)
+    public AuthorizeService(IAuthorizeRepository authorizeRepository, ICredentialsRepository credentialsRepository, IJwtService jwtService)
     {
-        _authorizeRepository = authorizeRepository;
         _credentialsRepository = credentialsRepository;
+        _jwtService = jwtService;
     }
 
     public async Task<AuthorizeTokenResponse> AuthorizeToken(AuthorizeTokenRequest authorizeTokenRequest)
@@ -85,7 +85,7 @@ public class AuthorizeService : IAuthorizeService
     {
         var credentials = await _credentialsRepository.GetCredentialsForUsername(request.Username);
         var salt = credentials.Salt;
-        var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, salt);
+        var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, credentials.Username);
         var validCredentials = _jwtService.VerifyCredentials(credentials, userCredentials);
 
         if (!validCredentials) throw new InvalidCredentialsException();
