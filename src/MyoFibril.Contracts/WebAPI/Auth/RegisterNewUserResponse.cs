@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.WebAPI.Auth;
-public class AuthorizeTokenResponse
+public class RegisterNewUserResponse
 {
     [JsonPropertyName("success")]
     public bool Success { get; set; }

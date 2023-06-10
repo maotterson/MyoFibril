@@ -59,7 +59,7 @@ public class AuthorizeService : IAuthorizeService
 
         return new AuthorizeTokenResponse
         {
-            IsAuthorized = isVerified,
+            Success = isVerified,
             TokenInfo = tokenInfo,
             UserInfo = userInfo
         };
