@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using MyoFibril.Contracts.Strava.Static;
 using MyoFibril.WebAPI.Repositories;
 using MyoFibril.WebAPI.Repositories.Interfaces;
@@ -12,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,6 +22,8 @@ builder.Services.AddMemoryCache();
 // Add local api services
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddSingleton<IActivityRepository, ActivityInMemoryRepository>();
+builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
+builder.Services.AddScoped<ICredentialsRepository, CredentialsRepository>();
 
 
 // Register Strava services
@@ -30,6 +33,11 @@ builder.Services
   .AddRefitClient<IStravaApi>()
   .ConfigureHttpClient(client => client.BaseAddress = new Uri(StravaEndpoints.API_BASE_URL))
   .AddHttpMessageHandler<AuthHeaderHandler>();
+
+// mongodb client
+builder.Services.AddSingleton<IMongoClient>(s =>
+    new MongoClient(builder.Configuration["Database:ConnectionString"])
+);
 
 var app = builder.Build();
 

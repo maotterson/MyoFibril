@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.Domain.Entities.Auth;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 
@@ -7,15 +8,23 @@ namespace MyoFibril.WebAPI.Repositories;
 public class CredentialsRepository : ICredentialsRepository
 {
     private const string COLLECTION_NAME = "credentials";
-    // todo implement injectable mongodb service
+    private readonly IMongoCollection<UserCredentialsEntity> _credentialsCollection;
+    private readonly IConfiguration _configuration;
 
-    public CredentialsRepository()
+    public CredentialsRepository(IMongoClient mongoClient, IConfiguration configuration)
     {
-        
+        _configuration = configuration;
+        _credentialsCollection = mongoClient.GetDatabase(_configuration["Database:DatabaseName"]).GetCollection<UserCredentialsEntity>(COLLECTION_NAME);
+
     }
 
     public async Task<UserCredentialsEntity> GetCredentialsForUsername(string username)
     {
-        var collection = _mongoService.GetCollection(COLLECTION_NAME);
+        var credentialsQuery = await _credentialsCollection.Find(u => u.Username == username).ToListAsync();
+
+        if (credentialsQuery.Count != 1 || credentialsQuery is null) throw new InvalidCredentialsException();
+        var credentials = credentialsQuery.SingleOrDefault();
+
+        return credentials!;
     }
 }
