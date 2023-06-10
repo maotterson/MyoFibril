@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.Domain.Entities.Auth;
+using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 
 namespace MyoFibril.WebAPI.Repositories;
@@ -32,5 +33,19 @@ public class CredentialsRepository : ICredentialsRepository
         var credentials = credentialsQuery.SingleOrDefault();
 
         return credentials!;
+    }
+
+    public async Task<UserCredentialsEntity> RegisterNewUserWithProtectedCredentials(ProtectedUserCredentials protectedUserCredentials)
+    {
+        var userCredentials = new UserCredentialsEntity
+        {
+            Username = protectedUserCredentials.Username,
+            HashedPassword = protectedUserCredentials.HashedPassword,
+            Salt = protectedUserCredentials.Salt,
+        };
+        await _credentialsCollection.InsertOneAsync(userCredentials);
+
+        var createdCredentials = await GetCredentialsForUsername(userCredentials.Username);
+        return createdCredentials!;
     }
 }
