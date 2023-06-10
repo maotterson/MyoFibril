@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.Auth;
+using MyoFibril.WebAPI.Services;
 using MyoFibril.WebAPI.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Controllers;
@@ -9,11 +10,12 @@ namespace MyoFibril.WebAPI.Controllers;
 public class RegisterController : ControllerBase
 {
     private readonly ILogger<RegisterController> _logger;
-    private readonly IAuthorizeService _authorizeService;
+    private readonly IRegisterService _registerService;
 
-    public RegisterController(ILogger<RegisterController> logger)
+    public RegisterController(ILogger<RegisterController> logger, RegisterService registerService)
     {
         _logger = logger;
+        _registerService = registerService;
     }
 
     [HttpPost]
@@ -23,7 +25,7 @@ public class RegisterController : ControllerBase
     {
         try
         {
-            var response = _registerService.RegisterNewUser(request);
+            var response = await _registerService.RegisterNewUser(request);
 
             if(response is null)
             {
