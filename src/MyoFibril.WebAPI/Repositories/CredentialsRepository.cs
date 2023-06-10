@@ -18,6 +18,12 @@ public class CredentialsRepository : ICredentialsRepository
 
     }
 
+    public async Task<bool> DoesUsernameExist(string username)
+    {
+        var usernameExists = await _credentialsCollection.Find(u => u.Username == username).CountDocumentsAsync() > 0;
+        return usernameExists;
+    }
+
     public async Task<UserCredentialsEntity> GetCredentialsForUsername(string username)
     {
         var credentialsQuery = await _credentialsCollection.Find(u => u.Username == username).ToListAsync();
