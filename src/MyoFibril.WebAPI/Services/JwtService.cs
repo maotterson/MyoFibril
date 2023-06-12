@@ -6,8 +6,6 @@ using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
 using MyoFibril.WebAPI.Utils.Jwt;
 using JWT.Builder;
-using Newtonsoft.Json.Linq;
-using System.Text;
 using JWT.Exceptions;
 
 namespace MyoFibril.WebAPI.Services;
