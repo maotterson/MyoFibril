@@ -6,6 +6,8 @@ using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
 using MyoFibril.WebAPI.Utils.Jwt;
 using JWT.Builder;
+using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -42,13 +44,33 @@ public class JwtService : IJwtService
         return (accessToken, refreshToken);
     }
 
-    public Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
+    public async Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
     {
-        throw new NotImplementedException();
+        if (storedCredentials.Username != credentialsToVerify.Username)
+            return false;
+
+        if (storedCredentials.HashedPassword != credentialsToVerify.HashedPassword)
+            return false;
+
+        return true;
     }
 
-    public Task<bool> VerifyToken(string accessToken)
+    public async Task<bool> VerifyToken(string accessToken)
     {
-        throw new NotImplementedException();
+        var provider = new UtcDateTimeProvider();
+        var serializer = new JsonNetSerializer();
+        var validator = new JwtValidator(serializer, provider);
+        var urlEncoder = new JwtBase64UrlEncoder();
+        var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
+
+        var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
+        var expires = long.Parse(json["expires-at"].ToString()!);
+        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        if (now > expires)
+        {
+            return false;
+        }
+        return true;
     }
 }
