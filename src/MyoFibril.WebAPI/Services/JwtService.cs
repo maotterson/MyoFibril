@@ -8,6 +8,7 @@ using MyoFibril.WebAPI.Utils.Jwt;
 using JWT.Builder;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using JWT.Exceptions;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -57,20 +58,37 @@ public class JwtService : IJwtService
 
     public async Task<bool> VerifyToken(string accessToken)
     {
-        var provider = new UtcDateTimeProvider();
-        var serializer = new JsonNetSerializer();
-        var validator = new JwtValidator(serializer, provider);
-        var urlEncoder = new JwtBase64UrlEncoder();
-        var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
+        try
+        {
+            var provider = new UtcDateTimeProvider();
+            var serializer = new JsonNetSerializer();
+            var validator = new JwtValidator(serializer, provider);
+            var urlEncoder = new JwtBase64UrlEncoder();
+            var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
 
-        var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
-        var expires = long.Parse(json["expires-at"].ToString()!);
-        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
+            var expires = long.Parse(json["expires-at"].ToString()!);
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
-        if (now > expires)
+            if (now > expires)
+            {
+                return false;
+            }
+            return true;
+        }
+        catch (TokenNotYetValidException)
         {
             return false;
         }
-        return true;
+        catch (TokenExpiredException)
+        {
+            return false;
+        }
+        catch (SignatureVerificationException)
+        {
+            return false;
+        }
+
+        
     }
 }
