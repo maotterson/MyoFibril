@@ -9,6 +9,12 @@ namespace MyoFibril.WebAPI.Services;
 
 public class JwtService : IJwtService
 {
+    private IJwtAlgorithm _algorithm;
+    public JwtService(IConfiguration configuration)
+    {
+        var privateKeyPath = configuration["Jwt:PrivateKeyPem"];
+        var publicKeyPath = configuration["Jwt:PublicKeyPem"];
+    }
     public Task<string> GetAccessTokenWithRefreshToken(string refreshToken)
     {
         throw new NotImplementedException();
