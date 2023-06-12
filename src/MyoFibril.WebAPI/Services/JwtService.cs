@@ -4,6 +4,8 @@ using JWT;
 using MyoFibril.Domain.Entities.Auth;
 using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
+using MyoFibril.WebAPI.Utils.Jwt;
+using JWT.Builder;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -12,22 +14,32 @@ public class JwtService : IJwtService
     private IJwtAlgorithm _algorithm;
     public JwtService(IConfiguration configuration)
     {
-        var privateKeyPath = configuration["Jwt:PrivateKeyPem"];
-        var publicKeyPath = configuration["Jwt:PublicKeyPem"];
+        var privateKey = configuration["Jwt:PrivateKeyPem"] ?? throw new NullReferenceException("Missing private key for JWT signing");
+        var publicKey = configuration["Jwt:PublicKeyPem"] ?? throw new NullReferenceException("Missing public key for JWT signing"); ;
+        var publicKeyProvider = JwtUtils.CreatePublicRSAProviderFromPem(publicKey);
+        var privateKeyProvider = JwtUtils.CreatePrivateRSAProviderFromPem(privateKey);
+        _algorithm = new RS256Algorithm(publicKeyProvider, privateKeyProvider);
     }
-    public Task<string> GetAccessTokenWithRefreshToken(string refreshToken)
+    public async Task<string> GetAccessTokenWithRefreshToken(string refreshToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
+    public async Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
     {
-        IJwtAlgorithm algorithm = new RS256Algorithm(certificate);
-        IJsonSerializer serializer = new JsonNetSerializer();
-        IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-        IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+        var accessToken = JwtBuilder.Create()
+                      .WithAlgorithm(_algorithm)
+                      .AddClaim("expires-at", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
+                      .AddClaim("username", credentials.Username)
+                      .AddClaim("email", credentials.Email)
+                      .Encode();
+        var refreshToken = JwtBuilder.Create()
+                      .WithAlgorithm(_algorithm)
+                      .AddClaim("username", credentials.Username)
+                      .AddClaim("email", credentials.Email)
+                      .Encode(); // todo: add implementation to generate a refresh token
 
-        var token = encoder.Encode(credentials);
+        return (accessToken, refreshToken);
     }
 
     public Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
