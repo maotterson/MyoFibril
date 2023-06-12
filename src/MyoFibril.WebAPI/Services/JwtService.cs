@@ -1,4 +1,7 @@
-﻿using MyoFibril.Domain.Entities.Auth;
+﻿using JWT.Algorithms;
+using JWT.Serializers;
+using JWT;
+using MyoFibril.Domain.Entities.Auth;
 using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
 
@@ -13,7 +16,12 @@ public class JwtService : IJwtService
 
     public Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
     {
-        throw new NotImplementedException();
+        IJwtAlgorithm algorithm = new RS256Algorithm(certificate);
+        IJsonSerializer serializer = new JsonNetSerializer();
+        IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+        IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+
+        var token = encoder.Encode(credentials);
     }
 
     public Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
