@@ -3,6 +3,7 @@ using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.Domain.Entities.Auth;
 using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Repositories.Interfaces;
+using System.Xml.Linq;
 
 namespace MyoFibril.WebAPI.Repositories;
 
@@ -46,5 +47,14 @@ public class CredentialsRepository : ICredentialsRepository
             RefreshToken = null
         };
         await _credentialsCollection.InsertOneAsync(userCredentials);
+    }
+
+    public async Task UpdateRefreshTokenForUsername(string username, string refreshToken)
+    {
+        var update = Builders<UserCredentialsEntity>.Update
+            .Set(p => p.RefreshToken, refreshToken);
+
+        var isSuccess = await _credentialsCollection.UpdateOneAsync(u => u.Username == username, update);
+        if (!isSuccess.IsAcknowledged) throw new ErrorUpdatingRefreshTokenException();
     }
 }

@@ -38,6 +38,7 @@ public class RegisterService : IRegisterService
         // use credentials to get an access and refresh token
         var createdCredentials = await _credentialsRepository.GetCredentialsForUsername(protectedCredentials.Username);
         var (accessToken, refreshToken) = await _jwtService.GetTokensWithCredentials(createdCredentials);
+        await _credentialsRepository.UpdateRefreshTokenForUsername(protectedCredentials.Username, refreshToken);
 
         var response = new RegisterNewUserResponse
         {
