@@ -43,6 +43,7 @@ public class CredentialsRepository : ICredentialsRepository
             HashedPassword = protectedUserCredentials.HashedPassword,
             Email = protectedUserCredentials.Email!,
             Salt = protectedUserCredentials.Salt,
+            RefreshToken = null
         };
         await _credentialsCollection.InsertOneAsync(userCredentials);
     }

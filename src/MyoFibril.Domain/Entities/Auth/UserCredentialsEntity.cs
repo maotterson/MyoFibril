@@ -11,4 +11,5 @@ public class UserCredentialsEntity
     public string HashedPassword { get; set; } = default!;
     public string Salt { get; set; } = default!;
     public string Email { get; set; } = default!;
+    public string? RefreshToken { get; set; } = default!;
 }
