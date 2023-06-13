@@ -19,7 +19,7 @@ public class AuthorizeController : ControllerBase
         _authorizeService = authorizeService;
     }
 
-    [HttpPost]
+    [HttpPost("/credentials")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GetAccessTokenWithUserCredentials(GetTokenWithUserCredentialsRequest request)
@@ -49,7 +49,7 @@ public class AuthorizeController : ControllerBase
 
     }
 
-    [HttpPost]
+    [HttpPost("/refresh")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAccessTokenResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GetAccessTokenWithRefreshToken(GetTokenWithRefreshTokenRequest request)
