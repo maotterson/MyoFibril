@@ -7,23 +7,50 @@ using MyoFibril.WebAPI.Services.Interfaces;
 using MyoFibril.WebAPI.Utils.Jwt;
 using JWT.Builder;
 using JWT.Exceptions;
+using Amazon.SecurityToken.Model;
+using MyoFibril.WebAPI.Repositories.Interfaces;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 
 namespace MyoFibril.WebAPI.Services;
 
 public class JwtService : IJwtService
 {
     private IJwtAlgorithm _algorithm;
-    public JwtService(IConfiguration configuration)
+    private ICredentialsRepository _credentialsRepository;
+    public JwtService(IConfiguration configuration, ICredentialsRepository credentialsRepository)
     {
         var privateKey = configuration["Jwt:PrivateKeyPem"] ?? throw new NullReferenceException("Missing private key for JWT signing");
         var publicKey = configuration["Jwt:PublicKeyPem"] ?? throw new NullReferenceException("Missing public key for JWT signing"); ;
         var publicKeyProvider = JwtUtils.CreatePublicRSAProviderFromPem(publicKey);
         var privateKeyProvider = JwtUtils.CreatePrivateRSAProviderFromPem(privateKey);
         _algorithm = new RS256Algorithm(publicKeyProvider, privateKeyProvider);
+        _credentialsRepository = credentialsRepository;
     }
     public async Task<string> GetAccessTokenWithRefreshToken(string refreshToken)
     {
-        throw new NotImplementedException();
+        // decode refresh token
+        var provider = new UtcDateTimeProvider();
+        var serializer = new JsonNetSerializer();
+        var validator = new JwtValidator(serializer, provider);
+        var urlEncoder = new JwtBase64UrlEncoder();
+        var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
+        var json = decoder.DecodeToObject<IDictionary<string, object>>(refreshToken);
+
+        // extract username from refresh token
+        var username = json["username"].ToString() ?? throw new InvalidRefreshTokenException();
+
+        // retrieve credentials required to generate access token
+        var credentials = await _credentialsRepository.GetCredentialsForUsername(username);
+
+        // generate accesstoken
+        var accessToken = JwtBuilder.Create()
+                     .WithAlgorithm(_algorithm)
+                     .AddClaim("expires-at", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
+                     .AddClaim("username", credentials.Username)
+                     .AddClaim("email", credentials.Email)
+                     .Encode();
+
+        return accessToken;
     }
 
     public async Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
@@ -54,7 +81,7 @@ public class JwtService : IJwtService
         return true;
     }
 
-    public async Task<bool> VerifyToken(string accessToken)
+    public async Task<bool> VerifyToken(string token)
     {
         try
         {
@@ -64,7 +91,7 @@ public class JwtService : IJwtService
             var urlEncoder = new JwtBase64UrlEncoder();
             var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
 
-            var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
+            var json = decoder.DecodeToObject<IDictionary<string, object>>(token);
             var expires = long.Parse(json["expires-at"].ToString()!);
             var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
