@@ -41,6 +41,7 @@ public class CredentialsRepository : ICredentialsRepository
         {
             Username = protectedUserCredentials.Username,
             HashedPassword = protectedUserCredentials.HashedPassword,
+            Email = protectedUserCredentials.Email!,
             Salt = protectedUserCredentials.Salt,
         };
         await _credentialsCollection.InsertOneAsync(userCredentials);

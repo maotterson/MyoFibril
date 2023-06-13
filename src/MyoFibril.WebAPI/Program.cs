@@ -40,13 +40,11 @@ builder.Services
 
 // mongodb client
 builder.Services.AddSingleton<IMongoClient>(s =>
-    {
-        var settings = MongoClientSettings.FromConnectionString(builder.Configuration["Database:ConnectionString"]);
-        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-        return new MongoClient(settings);
-    }
-    
-);
+{
+    var settings = MongoClientSettings.FromConnectionString(builder.Configuration["Database:ConnectionString"]);
+    settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+    return new MongoClient(settings);
+});
 
 var app = builder.Build();
 

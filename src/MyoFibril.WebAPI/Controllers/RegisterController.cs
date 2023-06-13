@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using MyoFibril.Contracts.WebAPI.Auth;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.WebAPI.Services;
 using MyoFibril.WebAPI.Services.Interfaces;
 
@@ -37,12 +38,16 @@ public class RegisterController : ControllerBase
 
             return Ok(response);
         }
-        catch(MongoAuthenticationException)
+        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+                                    ex is InvalidRefreshTokenException ||
+                                    ex is InvalidCredentialsException ||
+                                    ex is UsernameExistsException)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
         {
             return StatusCode(500);
-        }
-        catch(Exception ex) {
-            return BadRequest(ex.Message);
         }
     }
 }

@@ -22,7 +22,7 @@ public class RegisterService : IRegisterService
     {
         // verify that username doesnt exist
         var usernameExists = await _credentialsRepository.DoesUsernameExist(request.Username);
-        if (usernameExists) throw new InvalidCredentialsException();
+        if (usernameExists) throw new UsernameExistsException();
 
         // check any other potential rules for registration (e.g. password length, username length etc)
         if (string.IsNullOrEmpty(request.Username) ||
