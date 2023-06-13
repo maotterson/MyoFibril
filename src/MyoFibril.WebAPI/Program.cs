@@ -19,11 +19,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 
-// Add local api services
-builder.Services.AddScoped<IActivityService, ActivityService>();
+// Auth related services
 builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ICredentialsRepository, CredentialsRepository>();
+
+// Add local api services
+builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddSingleton<IActivityRepository, ActivityInMemoryRepository>();
 
 
