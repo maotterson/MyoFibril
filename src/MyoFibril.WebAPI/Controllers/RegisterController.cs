@@ -12,7 +12,7 @@ public class RegisterController : ControllerBase
     private readonly ILogger<RegisterController> _logger;
     private readonly IRegisterService _registerService;
 
-    public RegisterController(ILogger<RegisterController> logger, RegisterService registerService)
+    public RegisterController(ILogger<RegisterController> logger, IRegisterService registerService)
     {
         _logger = logger;
         _registerService = registerService;
