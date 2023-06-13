@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.WebAPI.Services;
 using MyoFibril.WebAPI.Services.Interfaces;
@@ -34,6 +36,10 @@ public class RegisterController : ControllerBase
             }
 
             return Ok(response);
+        }
+        catch(MongoAuthenticationException)
+        {
+            return StatusCode(500);
         }
         catch(Exception ex) {
             return BadRequest(ex.Message);
