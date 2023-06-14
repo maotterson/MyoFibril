@@ -106,4 +106,33 @@ public class AuthorizeController : ControllerBase
         }
 
     }
+
+    [HttpPost("Logout")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthorizeTokenResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> Logout(LogoutRequest request)
+    {
+        try
+        {
+            var response = await _authorizeService.Logout(request);
+
+            if (response is null)
+            {
+                _logger.LogError("Response not found");
+                throw new NullReferenceException();
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+                                    ex is InvalidRefreshTokenException ||
+                                    ex is InvalidCredentialsException)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }
