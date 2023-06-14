@@ -42,6 +42,9 @@ public class JwtService : IJwtService
         // retrieve credentials required to generate access token
         var credentials = await _credentialsRepository.GetCredentialsForUsername(username);
 
+        // compare stored refresh token with supplied refresh token
+        if (credentials.RefreshToken != refreshToken) throw new InvalidRefreshTokenException();
+
         // generate accesstoken
         var accessToken = JwtBuilder.Create()
                      .WithAlgorithm(_algorithm)
