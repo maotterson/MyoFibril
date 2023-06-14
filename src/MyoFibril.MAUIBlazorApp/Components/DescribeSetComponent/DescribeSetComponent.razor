@@ -5,19 +5,16 @@
 
 <div class="card">
     <div>
-        <label>Weight</label>
-        <input @bind="WeightInput" type="text" />
+        <input class="form-control" @bind="WeightInput" placeholder="Weight" type="number" />
     </div>
     <div>
-        <label>Reps</label>
-        <input @bind="RepsInput" type="text" />
+        <input class="form-control" @bind="RepsInput" placeholder="Reps" type="number" />
     </div>
     <div>
-        <label>Additional Notes</label>
-        <textarea style="resize: none;" @bind="NotesInput"></textarea>
+        <textarea class="form-control" style="resize: none;" placeholder="Additional Notes" @bind="NotesInput"></textarea>
     </div>
-    <button @onclick="ClickedCancel">Cancel</button>
-    <button @onclick="ClickedSaveSet">Save</button>
+    <button class="form-control btn btn-danger" @onclick="ClickedCancel">Cancel</button>
+    <button class="form-control btn btn-primary" @onclick="ClickedSaveSet">Save</button>
 </div>
 
 @code {

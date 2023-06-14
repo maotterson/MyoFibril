@@ -12,12 +12,12 @@
 {
     <button class="form-control btn btn-info" @onclick="ClickedAddSet">Add Set</button>
     <SetSummaryListComponent IncompletePerformedExercise="_incompletePerformedExercise"></SetSummaryListComponent>
+    <button class="form-control btn btn-success" @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 }
 else{
     <DescribeSetComponent OnCompletedSet="HandleCompletedSet" OnCanceled="HandleCancelAddSet"></DescribeSetComponent>
 }
 
-<button class="form-control btn btn-success" @onclick="ClickedSubmitPerformedExercise">@_submitPerformedExerciseButtonLabel</button>
 
 @code {
     [Parameter]
