@@ -109,6 +109,8 @@ public class AuthorizeService : IAuthorizeService
 
     public Task<LogoutResponse> Logout(LogoutRequest logoutRequest)
     {
-        // look up login
+        var refreshTokenToRevoke = logoutRequest.RefreshToken;
+
+
     }
 }

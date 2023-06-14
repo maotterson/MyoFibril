@@ -49,6 +49,15 @@ public class CredentialsRepository : ICredentialsRepository
         await _credentialsCollection.InsertOneAsync(userCredentials);
     }
 
+    public async Task RevokeStoredRefreshToken(string refreshToken)
+    {
+        var update = Builders<UserCredentialsEntity>.Update
+            .Set(p => p.RefreshToken, null);
+
+        var isSuccess = await _credentialsCollection.UpdateOneAsync(u => u.RefreshToken == refreshToken, update);
+        if (!isSuccess.IsAcknowledged) throw new ErrorRevokingRefreshTokenException();
+    }
+
     public async Task UpdateRefreshTokenForUsername(string username, string refreshToken)
     {
         var update = Builders<UserCredentialsEntity>.Update

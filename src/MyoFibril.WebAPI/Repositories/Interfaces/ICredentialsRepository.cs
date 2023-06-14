@@ -9,4 +9,5 @@ public interface ICredentialsRepository
     Task<bool> DoesUsernameExist(string username);
     Task RegisterNewUserWithProtectedCredentials(ProtectedUserCredentials protectedUserCredentials);
     Task UpdateRefreshTokenForUsername(string username, string refreshToken);
+    Task RevokeStoredRefreshToken(string refreshToken);
 }
