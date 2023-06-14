@@ -31,6 +31,7 @@ public class AuthorizeService : IAuthorizeService
 
         if (isVerified)
         {
+            var credentials = await _jwtService.GetCredentialsFromAccessToken(tokenToAuthorize);
             tokenInfo = new GetAccessTokenResponse
             {
                 AccessToken = tokenToAuthorize,
@@ -38,7 +39,8 @@ public class AuthorizeService : IAuthorizeService
             };
             userInfo = new UserInfo
             {
-                Username = "todo: get username from user repository"
+                Username = credentials.Username,
+                Email = credentials.Email
             };
         }
 
@@ -46,6 +48,7 @@ public class AuthorizeService : IAuthorizeService
         if(accessToken is not null)
         {
             isVerified = true;
+            var credentials = await _jwtService.GetCredentialsFromAccessToken(tokenToAuthorize);
             tokenInfo = new GetAccessTokenResponse
             {
                 AccessToken = accessToken,
@@ -53,7 +56,8 @@ public class AuthorizeService : IAuthorizeService
             };
             userInfo = new UserInfo
             {
-                Username = "todo: get username from user repository"
+                Username = credentials.Username,
+                Email = credentials.Email
             };
         }
 

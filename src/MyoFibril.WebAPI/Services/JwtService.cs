@@ -56,6 +56,25 @@ public class JwtService : IJwtService
         return accessToken;
     }
 
+    public async Task<UserCredentialsEntity> GetCredentialsFromAccessToken(string accessToken)
+    {
+        // decode access token
+        var provider = new UtcDateTimeProvider();
+        var serializer = new JsonNetSerializer();
+        var validator = new JwtValidator(serializer, provider);
+        var urlEncoder = new JwtBase64UrlEncoder();
+        var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
+        var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
+
+        // extract username from token
+        var username = json["username"].ToString() ?? throw new InvalidRefreshTokenException();
+
+        // retrieve user credentials from repository
+        var credentials = await _credentialsRepository.GetCredentialsForUsername(username);
+
+        return credentials;
+    }
+
     public async Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
     {
         var accessToken = JwtBuilder.Create()
