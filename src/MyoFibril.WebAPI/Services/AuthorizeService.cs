@@ -107,10 +107,23 @@ public class AuthorizeService : IAuthorizeService
         // save refresh token alongside credentials
     }
 
-    public Task<LogoutResponse> Logout(LogoutRequest logoutRequest)
+    public async Task<LogoutResponse> Logout(LogoutRequest logoutRequest)
     {
-        var refreshTokenToRevoke = logoutRequest.RefreshToken;
-
-
+        try
+        {
+            var refreshTokenToRevoke = logoutRequest.RefreshToken;
+            await _credentialsRepository.RevokeStoredRefreshToken(refreshTokenToRevoke);
+            return new LogoutResponse
+            {
+                Success = true
+            };
+        }
+        catch
+        {
+            return new LogoutResponse
+            {
+                Success = false
+            };
+        }
     }
 }
