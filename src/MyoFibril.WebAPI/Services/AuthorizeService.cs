@@ -106,4 +106,9 @@ public class AuthorizeService : IAuthorizeService
 
         // save refresh token alongside credentials
     }
+
+    public Task<LogoutResponse> Logout(LogoutRequest logoutRequest)
+    {
+        // look up login
+    }
 }

@@ -3,6 +3,6 @@
 namespace MyoFibril.Contracts.WebAPI.Auth;
 public class LogoutRequest
 {
-    [JsonPropertyName("login_id")]
-    public Guid LoginId { get; set; }
+    [JsonPropertyName("refresh_token")]
+    public string RefreshToken { get; set; }
 }
