@@ -79,6 +79,24 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task Logout()
     {
+        // send refresh token for revoking
+        var tokens = await _storageService.GetItemAsync<TokenInfo>("token_info");
+        var refreshTokenToRevoke = tokens.RefreshToken;
+
+        var http = _httpClientFactory.CreateClient();
+
+        var requestBaseUri = _configuration["Settings:API:BaseUri"];
+        var requestUriBuilder = new UriBuilder(requestBaseUri);
+        requestUriBuilder.Path = "Authorize/Credentials";
+        var requestUri = requestUriBuilder.Uri;
+
+        var logoutRequestBody = new LogoutRequest
+        {
+            RefreshToken = refreshTokenToRevoke
+        };
+
+        var response = await http.PostAsJsonAsync<LogoutRequest>(requestUri, logoutRequestBody); // todo could handle an error status code
+
         _storageService.RemoveItem("token_info");
         _storageService.RemoveItem("user_info");
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
@@ -90,8 +108,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
         var requestBaseUri = _configuration["Settings:API:BaseUri"];
         var requestUriBuilder = new UriBuilder(requestBaseUri);
-        requestUriBuilder.Path = "authorize";
-        requestUriBuilder.Query = "grant_type=refreshtoken";
+        requestUriBuilder.Path = "Authorize/Refresh";
         var requestUri = requestUriBuilder.Uri;
 
         var requestBody = new GetTokenWithRefreshTokenRequest
@@ -115,8 +132,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
         var requestBaseUri = _configuration["Settings:API:BaseUri"];
         var requestUriBuilder = new UriBuilder(requestBaseUri);
-        requestUriBuilder.Path = "authorize";
-        requestUriBuilder.Query = "grant_type=accesstoken";
+        requestUriBuilder.Path = "Authorize/Credentials";
         var requestUri = requestUriBuilder.Uri;
 
         var requestBody = new GetTokenWithUserCredentialsRequest
