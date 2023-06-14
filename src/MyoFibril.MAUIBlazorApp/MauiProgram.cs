@@ -36,7 +36,7 @@ public static class MauiProgram
 
         // add http client (ignores ssl for use with localhost env)
         builder.Services.AddHttpClient("MyClient", client => {
-            client.Timeout = TimeSpan.FromMinutes(2);
+            client.Timeout = TimeSpan.FromSeconds(10);
            })
            .ConfigurePrimaryHttpMessageHandler(() => {
                HttpClientHandler clientHandler = new HttpClientHandler();
