@@ -97,14 +97,15 @@ public class AuthorizeService : IAuthorizeService
 
         var (accessToken, refreshToken) = await _jwtService.GetTokensWithCredentials(credentialsEntity);
 
+        // save currently issued refresh token alongside credentials
+        await _credentialsRepository.UpdateRefreshTokenForUsername(credentialsEntity.Username, refreshToken);
+
         return new GetAccessTokenResponse
         {
             AccessToken = accessToken,
             RefreshToken = refreshToken,
             // todo expiry information
         };
-
-        // save refresh token alongside credentials
     }
 
     public async Task<LogoutResponse> Logout(LogoutRequest logoutRequest)
