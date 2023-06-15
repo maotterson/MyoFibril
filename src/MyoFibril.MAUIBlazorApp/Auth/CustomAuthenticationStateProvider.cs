@@ -79,27 +79,36 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task Logout()
     {
-        // send refresh token for revoking
-        var tokens = await _storageService.GetItemAsync<TokenInfo>("token_info");
-        var refreshTokenToRevoke = tokens.RefreshToken;
-
-        var http = _httpClientFactory.CreateClient();
-
-        var requestBaseUri = _configuration["Settings:API:BaseUri"];
-        var requestUriBuilder = new UriBuilder(requestBaseUri);
-        requestUriBuilder.Path = "Authorize/Credentials";
-        var requestUri = requestUriBuilder.Uri;
-
-        var logoutRequestBody = new LogoutRequest
+        try
         {
-            RefreshToken = refreshTokenToRevoke
-        };
+            // send refresh token for revoking
+            var tokens = await _storageService.GetItemAsync<TokenInfo>("token_info");
+            var refreshTokenToRevoke = tokens.RefreshToken;
 
-        var response = await http.PostAsJsonAsync<LogoutRequest>(requestUri, logoutRequestBody); // todo could handle an error status code
+            var http = _httpClientFactory.CreateClient();
 
-        _storageService.RemoveItem("token_info");
-        _storageService.RemoveItem("user_info");
-        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            var requestBaseUri = _configuration["Settings:API:BaseUri"];
+            var requestUriBuilder = new UriBuilder(requestBaseUri);
+            requestUriBuilder.Path = "Authorize/Credentials";
+            var requestUri = requestUriBuilder.Uri;
+
+            var logoutRequestBody = new LogoutRequest
+            {
+                RefreshToken = refreshTokenToRevoke
+            };
+
+            var response = await http.PostAsJsonAsync<LogoutRequest>(requestUri, logoutRequestBody); 
+        }
+        catch(Exception ex)
+        {
+            // todo could handle an error status code
+        }
+        finally
+        {
+            _storageService.RemoveItem("token_info");
+            _storageService.RemoveItem("user_info");
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
     }
 
     private async Task<GetAccessTokenResponse> GetTokenWithRefreshToken(string refreshToken)
