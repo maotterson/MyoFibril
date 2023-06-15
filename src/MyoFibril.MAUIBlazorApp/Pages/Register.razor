@@ -1,6 +1,6 @@
 ﻿@page "/Register"
-@    using MyoFibril.Domain.Utils;
-    using MyoFibril.Domain.Common;
+@using MyoFibril.Domain.Utils;
+@using MyoFibril.Domain.Common;
 @layout LoggedOutLayout
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
@@ -8,26 +8,38 @@
     <input type="password" class="form-control" placeholder="Password" @bind="_password" />
     <input type="password" class="form-control" placeholder="Confirm password" @bind="_confirmPassword" />
     <button class="btn btn-primary form-control" @onclick="HandleClickCreateAccount">Create Account</button>
+
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <div class="alert alert-danger" role="alert">
+            <span>@_error</span>
+        </div>
+    }
 </div>
 
 
 @code {
     private string _username = string.Empty;
-    private string _email = string.Empty;;
-    private string _password = string.Empty;;
-    private string _confirmPassword = string.Empty;;
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private string _confirmPassword = string.Empty;
+    private string _error = string.Empty;
 
     public async Task HandleClickCreateAccount()
     {
-        // perform validation
-        CredentialsValidator.ValidateUsername(_username);
-        CredentialsValidator.ValidateEmail(_email);
-        CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
+        _error = string.Empty;
+        var credentialsStatus = IsValidCredentials();
+        if (!credentialsStatus.IsValid)
+        {
+            _error = credentialsStatus.errorMessage;
+        }
+    }
 
-        // create credentials request
-
-        // invoke register method on service layer
-
-        // process result
+    private (bool IsValid, string? errorMessage) IsValidCredentials()
+    {
+        var isValid
+        if(!CredentialsValidator.ValidateUsername(_username))
+            CredentialsValidator.ValidateEmail(_email) &&
+            CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
     }
 }
