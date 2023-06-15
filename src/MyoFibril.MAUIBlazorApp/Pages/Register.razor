@@ -2,11 +2,12 @@
 @using MyoFibril.Contracts.WebAPI.Auth.Models;
 @using MyoFibril.Domain.Utils;
 @using MyoFibril.Domain.Common;
+@using MyoFibril.MAUIBlazorApp.Auth;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @using MyoFibril.MAUIBlazorApp.Storage.Models;
 @layout LoggedOutLayout
 @inject NavigationManager _navigationManager
-@inject IUserService _userService
+@inject CustomAuthenticationStateProvider _authProvider
 @inject IStorageService _storageService
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
@@ -33,39 +34,38 @@
 
     public async Task HandleClickCreateAccount()
     {
-        // validate credentials
-        _error = string.Empty;
-        var credentialsStatus = IsValidCredentials();
-        if (!credentialsStatus.isValid)
+        try
         {
-            _error = credentialsStatus.errorMessage;
-        }
-
-        // process valid credentials
-        var credentials = new UserRegisterCredentials
+            // validate credentials
+            _error = string.Empty;
+            var credentialsStatus = IsValidCredentials();
+            if (!credentialsStatus.isValid)
             {
-                Username = _username,
-                Password = _password,
-                Email = _email
-            };
-        var response = await _userService.CreateAccountWithCredentials(credentials);
-        if (!response.Success)
+                _error = credentialsStatus.errorMessage;
+            }
+
+            // process valid credentials
+            var credentials = new UserRegisterCredentials
+                {
+                    Username = _username,
+                    Password = _password,
+                    Email = _email
+                };
+            var response = await _authProvider.CreateAccountWithCredentials(credentials);
+            if (!response.Success)
+            {
+                throw new Exception("Unsuccessful response code returned from server.");
+            }
+
+            // redirect to main page
+            _navigationManager.NavigateTo("/");
+        }
+        catch
         {
             _error = "Unknown server error. Please try again later.";
             return;
         }
 
-        // store tokens
-        var tokenInfo = new TokenInfo
-            {
-                AccessToken = response.TokenInfo.AccessToken,
-                RefreshToken = response.TokenInfo.RefreshToken,
-                ExpiresAt = response.TokenInfo.ExpiresAt
-            };
-        await _storageService.StoreItemAsync<TokenInfo>("token_info", tokenInfo);
-
-        // redirect to main page
-        _navigationManager.NavigateTo("/");
     }
 
     private (bool isValid, string? errorMessage) IsValidCredentials()

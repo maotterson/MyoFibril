@@ -7,6 +7,7 @@ using MyoFibril.MAUIBlazorApp.Storage.Models;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
+using static Android.Net.Wifi.Hotspot2.Pps.Credential;
 
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
@@ -50,6 +51,40 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         }
     }
 
+    public async Task<RegisterNewUserResponse> CreateAccountWithCredentials(UserRegisterCredentials credentials)
+    {
+        var http = _httpClientFactory.CreateClient();
+
+        var requestBaseUri = _configuration["Settings:API:BaseUri"];
+        var requestUriBuilder = new UriBuilder(requestBaseUri);
+        requestUriBuilder.Path = "Register";
+        var requestUri = requestUriBuilder.Uri;
+
+        var requestBody = new RegisterNewUserRequest
+        {
+            Username = credentials.Username,
+            Password = credentials.Password,
+            Email = credentials.Email
+        };
+
+        var response = await http.PostAsJsonAsync<RegisterNewUserRequest>(requestUri, requestBody);
+        response.EnsureSuccessStatusCode();
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+        var registerNewUserResponse = JsonSerializer.Deserialize<RegisterNewUserResponse>(responseBody);
+
+        // store tokens
+        var tokenInfo = new TokenInfo
+        {
+            AccessToken = registerNewUserResponse.TokenInfo.AccessToken,
+            RefreshToken = registerNewUserResponse.TokenInfo.RefreshToken,
+            ExpiresAt = registerNewUserResponse.TokenInfo.ExpiresAt
+        };
+        await _storageService.StoreItemAsync<TokenInfo>("token_info", tokenInfo);
+
+        return registerNewUserResponse;
+    }
+
     private async Task<bool> VerifyToken(TokenInfo tokenInfo)
     {
         // todo: implement verification check for token
@@ -89,7 +124,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
             var requestBaseUri = _configuration["Settings:API:BaseUri"];
             var requestUriBuilder = new UriBuilder(requestBaseUri);
-            requestUriBuilder.Path = "Authorize/Credentials";
+            requestUriBuilder.Path = "Authorize/Register";
             var requestUri = requestUriBuilder.Uri;
 
             var logoutRequestBody = new LogoutRequest
