@@ -1,4 +1,5 @@
 ﻿@page "/Register"
+@using MyoFibril.Domain.Utils;
 @layout LoggedOutLayout
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
@@ -10,19 +11,22 @@
 
 
 @code {
-    private string _username;
-    private string _email;
-    private string _password;
-    private string _confirmPassword;
+    private string _username = string.Empty;
+    private string _email = string.Empty;;
+    private string _password = string.Empty;;
+    private string _confirmPassword = string.Empty;;
 
     public async Task HandleClickCreateAccount()
     {
         // perform validation
+        CredentialsUtils.ValidateUsername(_username);
+        CredentialsUtils.ValidateEmail(_email);
+        CredentialsUtils.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
 
         // create credentials request
 
         // invoke register method on service layer
-        
+
         // process result
     }
 }
