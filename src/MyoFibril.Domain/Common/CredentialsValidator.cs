@@ -10,7 +10,7 @@ public static class CredentialsValidator
     public static (bool isValid, string? errorMessage) ValidateUsername(string username)
     {
         if (string.IsNullOrEmpty(username)) return (false, INVALID_USERNAME_LENGTH_ERROR);
-        if (username.Length < CredentialsRules.MAX_USERNAME_LENGTH) return (false, INVALID_USERNAME_LENGTH_ERROR);
+        if (username.Length < CredentialsRules.MIN_USERNAME_LENGTH) return (false, INVALID_USERNAME_LENGTH_ERROR);
         if (username.Length > CredentialsRules.MAX_USERNAME_LENGTH) return (false, INVALID_USERNAME_LENGTH_ERROR);
         return (true, null);
     }
