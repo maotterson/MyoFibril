@@ -1,5 +1,6 @@
 ﻿@page "/Register"
-@using MyoFibril.Domain.Utils;
+@    using MyoFibril.Domain.Utils;
+    using MyoFibril.Domain.Common;
 @layout LoggedOutLayout
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
@@ -19,9 +20,9 @@
     public async Task HandleClickCreateAccount()
     {
         // perform validation
-        CredentialsUtils.ValidateUsername(_username);
-        CredentialsUtils.ValidateEmail(_email);
-        CredentialsUtils.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
+        CredentialsValidator.ValidateUsername(_username);
+        CredentialsValidator.ValidateEmail(_email);
+        CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
 
         // create credentials request
 
