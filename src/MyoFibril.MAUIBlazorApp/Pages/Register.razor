@@ -1,17 +1,28 @@
 ﻿@page "/Register"
 @layout LoggedOutLayout
 <div>
-    <input type="text" class="form-control" placeholder="Username" />
-    <input type="email" class="form-control" placeholder="Email address" />
-    <input type="password" class="form-control" placeholder="Password" />
-    <input type="password" class="form-control" placeholder="Confirm password" />
+    <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
+    <input type="email" class="form-control" placeholder="Email address" @bind="_email" />
+    <input type="password" class="form-control" placeholder="Password" @bind="_password" />
+    <input type="password" class="form-control" placeholder="Confirm password" @bind="_confirmPassword" />
     <button class="btn btn-primary form-control" @onclick="HandleClickCreateAccount">Create Account</button>
 </div>
 
 
 @code {
+    private string _username;
+    private string _email;
+    private string _password;
+    private string _confirmPassword;
+
     public async Task HandleClickCreateAccount()
     {
+        // perform validation
+
+        // create credentials request
+
+        // invoke register method on service layer
         
+        // process result
     }
 }
