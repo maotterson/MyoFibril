@@ -1,4 +1,5 @@
 ﻿@page "/Register"
+@using MyoFibril.Contracts.WebAPI.Auth.Models;
 @using MyoFibril.Domain.Utils;
 @using MyoFibril.Domain.Common;
 @layout LoggedOutLayout
@@ -37,6 +38,12 @@
         }
 
         // process valid credentials
+        var credentials = new UserRegisterCredentials
+            {
+                Username = _username,
+                Password = _password,
+                Email = _email
+            };
         var response = _userService.CreateAccountWithCredentials(credentials);
         if (!response.Success)
         {

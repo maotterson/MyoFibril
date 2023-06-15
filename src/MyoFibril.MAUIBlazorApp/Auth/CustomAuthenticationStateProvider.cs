@@ -59,7 +59,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task<bool> Login(string username, string password)
     {
-        var userCredentials = new UserCredentials { Username = username, Password = password}; // todo: replace user credentials tuple with class
+        var userCredentials = new UserLoginCredentials { Username = username, Password = password}; // todo: replace user credentials tuple with class
         var tokenResponse = await GetTokenWithUserCredentials(userCredentials);
         if(tokenResponse is not null)
         {
@@ -135,7 +135,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     }
 
 
-    private async Task<GetAccessTokenResponse> GetTokenWithUserCredentials(UserCredentials userCredentials)
+    private async Task<GetAccessTokenResponse> GetTokenWithUserCredentials(UserLoginCredentials userCredentials)
     {
         var http = _httpClientFactory.CreateClient();
 
