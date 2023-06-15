@@ -3,9 +3,11 @@
 @using MyoFibril.Domain.Utils;
 @using MyoFibril.Domain.Common;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
+@using MyoFibril.MAUIBlazorApp.Storage.Models;
 @layout LoggedOutLayout
 @inject NavigationManager _navigationManager
 @inject IUserService _userService
+@inject IStorageService _storageService
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
     <input type="email" class="form-control" placeholder="Email address" @bind="_email" />
@@ -46,7 +48,7 @@
                 Password = _password,
                 Email = _email
             };
-        var response = _userService.CreateAccountWithCredentials(credentials);
+        var response = await _userService.CreateAccountWithCredentials(credentials);
         if (!response.Success)
         {
             _error = "Unknown server error. Please try again later.";
@@ -54,6 +56,13 @@
         }
 
         // store tokens
+        var tokenInfo = new TokenInfo
+            {
+                AccessToken = response.TokenInfo.AccessToken,
+                RefreshToken = response.TokenInfo.RefreshToken,
+                ExpiresAt = response.TokenInfo.ExpiresAt
+            };
+        await _storageService.StoreItemAsync<TokenInfo>("token_info", tokenInfo);
 
         // redirect to main page
         _navigationManager.NavigateTo("/");
