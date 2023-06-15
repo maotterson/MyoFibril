@@ -2,6 +2,7 @@
 @using MyoFibril.Domain.Utils;
 @using MyoFibril.Domain.Common;
 @layout LoggedOutLayout
+@inject NavigationManager _navigationManager
 <div>
     <input type="text" class="form-control" placeholder="Username" @bind="_username"/>
     <input type="email" class="form-control" placeholder="Email address" @bind="_email" />
@@ -36,6 +37,17 @@
         }
 
         // process valid credentials
+        var response = _userService.CreateAccountWithCredentials(credentials);
+        if (!response.Success)
+        {
+            _error = "Unknown server error. Please try again later.";
+            return;
+        }
+
+        // store tokens
+
+        // redirect to main page
+        _navigationManager.NavigateTo("/");
     }
 
     private (bool isValid, string? errorMessage) IsValidCredentials()
