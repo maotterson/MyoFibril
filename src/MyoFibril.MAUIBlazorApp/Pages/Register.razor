@@ -27,19 +27,32 @@
 
     public async Task HandleClickCreateAccount()
     {
+        // validate credentials
         _error = string.Empty;
         var credentialsStatus = IsValidCredentials();
-        if (!credentialsStatus.IsValid)
+        if (!credentialsStatus.isValid)
         {
             _error = credentialsStatus.errorMessage;
         }
+
+        // process valid credentials
     }
 
-    private (bool IsValid, string? errorMessage) IsValidCredentials()
+    private (bool isValid, string? errorMessage) IsValidCredentials()
     {
-        var isValid
-        if(!CredentialsValidator.ValidateUsername(_username))
-            CredentialsValidator.ValidateEmail(_email) &&
-            CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
+        // validate username
+        var credentialsStatus = CredentialsValidator.ValidateUsername(_username);
+        if (!credentialsStatus.isValid) return credentialsStatus;
+
+        // validate email
+        credentialsStatus = CredentialsValidator.ValidateEmail(_email);
+        if (!credentialsStatus.isValid) return credentialsStatus;
+
+        // validate password
+        credentialsStatus = CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _confirmPassword);
+        if (!credentialsStatus.isValid) return credentialsStatus;
+
+        // passed validation
+        return (true, null);
     }
 }
