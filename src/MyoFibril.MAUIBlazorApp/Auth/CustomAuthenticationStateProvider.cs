@@ -100,22 +100,29 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task<bool> Login(string username, string password)
     {
-        var userCredentials = new UserLoginCredentials { Username = username, Password = password}; // todo: replace user credentials tuple with class
-        var tokenResponse = await GetTokenWithUserCredentials(userCredentials);
-        if(tokenResponse is not null)
+        try
         {
-            var tokenInfo = new TokenInfo
+            var userCredentials = new UserLoginCredentials { Username = username, Password = password };
+            var tokenResponse = await GetTokenWithUserCredentials(userCredentials);
+            if (tokenResponse is not null)
             {
-                AccessToken = tokenResponse.AccessToken,
-                RefreshToken = tokenResponse.RefreshToken,
-                ExpiresAt = tokenResponse.ExpiresAt
-            };
+                var tokenInfo = new TokenInfo
+                {
+                    AccessToken = tokenResponse.AccessToken,
+                    RefreshToken = tokenResponse.RefreshToken,
+                    ExpiresAt = tokenResponse.ExpiresAt
+                };
 
-            await _storageService.StoreItemAsync("token_info", tokenInfo);
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
-            return true;
+                await _storageService.StoreItemAsync("token_info", tokenInfo);
+                NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch
+        {
+            return false; // todo: could add some logging etc
+        }
     }
 
     public async Task Logout()
