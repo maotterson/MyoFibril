@@ -10,6 +10,6 @@ public class UserCredentialsEntity
     public string Username { get; set; } = default!;
     public string HashedPassword { get; set; } = default!;
     public string Salt { get; set; } = default!;
-    public string Email { get; set; } = default!;
+    public string Email { get; set; } = default!; // todo: move this field to user entity
     public string? RefreshToken { get; set; } = default!;
 }
