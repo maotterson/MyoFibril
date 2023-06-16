@@ -1,4 +1,5 @@
-﻿using MyoFibril.Domain.Entities;
+﻿using MyoFibril.Contracts.Common.Exceptions;
+using MyoFibril.Domain.Entities;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 
 namespace MyoFibril.WebAPI.Repositories;
@@ -19,7 +20,7 @@ public class UserInMemoryRepository : IUserRepository
     public async Task<UserEntity> GetUserByUsername(string username)
     {
         var user = _users.FirstOrDefault(a => a.Username == username);
-        if (user is null) throw new Exception($"User {username} not found"); // todo more specific exception
+        if (user is null) throw new UserNotFoundException(username); // todo more specific exception
 
         return user;
     }

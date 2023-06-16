@@ -1,4 +1,5 @@
-﻿using MyoFibril.Contracts.WebAPI.GetUser;
+﻿using MyoFibril.Contracts.Common.Exceptions;
+using MyoFibril.Contracts.WebAPI.GetUser;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.WebAPI.Services.Interfaces;
 
@@ -15,7 +16,7 @@ public class UserService : IUserService
     {
         var userEntity = await _userRepository.GetUserByUsername(username);
 
-        if (userEntity is null) throw new Exception($"User {username} not found.");
+        if (userEntity is null) throw new UserNotFoundException(username);
 
         var response = new GetUserResponse
         {

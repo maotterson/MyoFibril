@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyoFibril.Contracts.Common.Exceptions;
 using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.GetUser;
 using MyoFibril.WebAPI.Services;
@@ -22,15 +23,27 @@ public class UserController : ControllerBase
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> GetUserByUsername(string username)
     {
-        var response = await _userService.GetUserByUsername(username);
-
-        if (response is null)
+        try
         {
-            _logger.LogError("Response not found");
-            return NotFound();
+            var response = await _userService.GetUserByUsername(username);
+
+            if (response is null)
+            {
+                throw new UserNotFoundException(username);
+            }
+            return Ok(response);
         }
-        return Ok(response);
+        catch(UserNotFoundException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return StatusCode(500);
+        }
+        
     }
 }
