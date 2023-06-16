@@ -86,6 +86,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             ExpiresAt = registerNewUserResponse.TokenInfo.ExpiresAt
         };
         await _storageService.StoreItemAsync<TokenInfo>("token_info", tokenInfo);
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
 
         return registerNewUserResponse;
     }
@@ -129,7 +130,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
             var requestBaseUri = _configuration["Settings:API:BaseUri"];
             var requestUriBuilder = new UriBuilder(requestBaseUri);
-            requestUriBuilder.Path = "Logout";
+            requestUriBuilder.Path = "Authorize/Logout";
             var requestUri = requestUriBuilder.Uri;
 
             var logoutRequestBody = new LogoutRequest
