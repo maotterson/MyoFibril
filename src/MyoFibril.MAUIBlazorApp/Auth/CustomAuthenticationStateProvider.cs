@@ -184,21 +184,12 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             Password = userCredentials.Password
         };
 
-        /*
-         * todo: for future development once implemented in api layer
         var response = await http.PostAsJsonAsync<GetTokenWithUserCredentialsRequest>(requestUri, requestBody);
         response.EnsureSuccessStatusCode();
 
         var responseBody = await response.Content.ReadAsStringAsync();
-        var getTokenResponse = JsonSerializer.Deserialize<GetTokenWithUserCredentialsResponse>(responseBody);
-        */
+        var getTokenResponse = JsonSerializer.Deserialize<GetAccessTokenResponse>(responseBody);
 
-        var getAccessTokenResponse = new GetAccessTokenResponse
-        {
-            AccessToken = "myaccesstoken",
-            RefreshToken = "myrefreshtoken",
-            ExpiresAt = 0
-        };
-        return getAccessTokenResponse;
+        return getTokenResponse;
     }
 }
