@@ -34,7 +34,13 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
             // check validity of token
             var isValidToken = await VerifyToken(tokenInfo);
-            if (!isValidToken) return emptyAuthState;
+            if (!isValidToken)
+            {
+                // todo: remove invalidated token first
+                await Logout();
+                return emptyAuthState;
+            }
+
 
             var claims = new[] { 
                 new Claim("access_token", tokenInfo.AccessToken),
@@ -123,7 +129,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
             var requestBaseUri = _configuration["Settings:API:BaseUri"];
             var requestUriBuilder = new UriBuilder(requestBaseUri);
-            requestUriBuilder.Path = "Authorize/Register";
+            requestUriBuilder.Path = "Logout";
             var requestUri = requestUriBuilder.Uri;
 
             var logoutRequestBody = new LogoutRequest
