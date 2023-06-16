@@ -93,8 +93,33 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     private async Task<bool> VerifyToken(TokenInfo tokenInfo)
     {
-        // todo: implement verification check for token
-        return true;
+        try
+        {
+            // todo: implement verification check for token
+            var http = _httpClientFactory.CreateClient();
+
+            var requestBaseUri = _configuration["Settings:API:BaseUri"];
+            var requestUriBuilder = new UriBuilder(requestBaseUri);
+            requestUriBuilder.Path = "Authorize";
+            var requestUri = requestUriBuilder.Uri;
+
+            var authorizeTokenRequestBody = new AuthorizeTokenRequest
+            {
+                RefreshToken = tokenInfo.RefreshToken,
+                AccessToken = tokenInfo.AccessToken
+            };
+
+            var response = await http.PostAsJsonAsync<AuthorizeTokenRequest>(requestUri, authorizeTokenRequestBody);
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
+        catch
+        {
+            await Logout();
+            return false;
+        }
+
+
     }
 
 
