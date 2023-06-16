@@ -15,5 +15,16 @@ public class UserService : IUserService
     {
         var userEntity = await _userRepository.GetUserByUsername(username);
 
+        if (userEntity is null) throw new Exception($"User {username} not found.");
+
+        var response = new GetUserResponse
+        {
+            Username = userEntity.Username,
+            Email = userEntity.Email,
+            StravaAccount = userEntity.StravaAccount
+        };
+
+        return response;
+
     }
 }
