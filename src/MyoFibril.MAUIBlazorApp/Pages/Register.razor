@@ -42,6 +42,7 @@
             if (!credentialsStatus.isValid)
             {
                 _error = credentialsStatus.errorMessage;
+                return;
             }
 
             // process valid credentials

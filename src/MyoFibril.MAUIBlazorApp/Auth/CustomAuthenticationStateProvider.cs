@@ -7,7 +7,6 @@ using MyoFibril.MAUIBlazorApp.Storage.Models;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
-using static Android.Net.Wifi.Hotspot2.Pps.Credential;
 
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
