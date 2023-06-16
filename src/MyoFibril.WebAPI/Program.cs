@@ -27,8 +27,9 @@ builder.Services.AddScoped<ICredentialsRepository, CredentialsRepository>();
 
 // Add local api services
 builder.Services.AddScoped<IActivityService, ActivityService>();
-builder.Services.AddSingleton<IActivityRepository, ActivityInMemoryRepository>();
+builder.Services.AddSingleton<IActivityRepository, ActivityInMemoryRepository>(); // todo: replace with 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserInMemoryRepository>();
 
 
 // Register Strava services
