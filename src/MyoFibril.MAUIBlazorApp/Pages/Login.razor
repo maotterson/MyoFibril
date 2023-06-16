@@ -1,4 +1,5 @@
 ﻿@page "/Login"
+@using MyoFibril.Domain.Common;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 @layout LoggedOutLayout
 @inject IUserService _userService
@@ -26,6 +27,15 @@
 
     private async Task HandleLoginClick()
     {
+        // validate client side
+        var loginStatus = ValidateLogin();
+        if (!loginStatus.isValid)
+        {
+            _error = loginStatus.errorMessage;
+            return;
+        }
+
+        // make call to api
         if (_isHandlingLogin) return;
         _isHandlingLogin = true;
         var isSuccessfulLogin = await _userService.CheckLoginCredentials(_username, _password);
@@ -37,5 +47,22 @@
             return;
         }
         _navigationManager.NavigateTo("/");
+    }
+
+    private (bool isValid, string? errorMessage) ValidateLogin()
+    {
+        var validationStatus = CredentialsValidator.ValidateUsername(_username);
+        if (!validationStatus.isValid)
+        {
+            return validationStatus;
+        }
+
+        validationStatus = CredentialsValidator.ValidatePasswordAndConfirmPassword(_password, _password); // somewhat hacky, could create a separate method without confirm password check
+        if (!validationStatus.isValid)
+        {
+            return validationStatus;
+        }
+
+        return (true, null);
     }
 }
