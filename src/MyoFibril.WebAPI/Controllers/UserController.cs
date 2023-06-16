@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.Auth;
+using MyoFibril.Contracts.WebAPI.GetUser;
+using MyoFibril.WebAPI.Services;
 using MyoFibril.WebAPI.Services.Interfaces;
 
 namespace MyoFibril.WebAPI.Controllers;
@@ -22,5 +24,13 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GetUserByUsername(string username)
     {
+        var response = await _userService.GetUserByUsername(username);
+
+        if (response is null)
+        {
+            _logger.LogError("Response not found");
+            return NotFound();
+        }
+        return Ok(response);
     }
 }
