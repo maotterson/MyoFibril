@@ -56,8 +56,6 @@ public class ActivityService : IActivityService
         return createActivityResponse;
     }
 
-    public async Task<>
-
     public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false)
     {
         var activityEntity = await _activityRepository.GetActivityById(id);
@@ -76,7 +74,8 @@ public class ActivityService : IActivityService
         {
             Id = activityEntity.Id,
             Name = activityEntity.Name,
-            StravaActivity = stravaActivity
+            StravaActivity = stravaActivity,
+            PerformedExercises = activityEntity.PerformedExercises
         };
 
         return getActivityResponse;
@@ -95,7 +94,8 @@ public class ActivityService : IActivityService
         var activitiesResponse = activityList.Select(a => new GetActivityResponse
         {
             Id = a.Id,
-            Name = a.Name
+            Name = a.Name,
+            PerformedExercises = a.PerformedExercises,
         });
 
         return activitiesResponse.ToList();
