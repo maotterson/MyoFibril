@@ -40,7 +40,7 @@ public class ActivityController : ControllerBase
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetActivityResponse>> GetActivitiesForUsername(string username, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
+    public async Task<ActionResult<List<GetActivityResponse>>> GetActivitiesForUsername(string username, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
     {
         try
         {
