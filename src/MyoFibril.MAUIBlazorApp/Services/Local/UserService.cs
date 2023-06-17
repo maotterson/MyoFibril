@@ -1,5 +1,6 @@
 ﻿using MyoFibril.Contracts.WebAPI.Auth;
 using MyoFibril.Contracts.WebAPI.Auth.Models;
+using MyoFibril.Domain.Entities;
 using MyoFibril.MAUIBlazorApp.Auth;
 
 namespace MyoFibril.MAUIBlazorApp.Services.Local;
@@ -21,5 +22,9 @@ public class UserService : IUserService
     public async Task Logout()
     {
         await _authenticationProvider.Logout();
+    }
+    public UserEntity GetLoggedInUser()
+    {
+        
     }
 }

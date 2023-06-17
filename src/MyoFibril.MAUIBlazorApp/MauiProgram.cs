@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using MyoFibril.MAUIBlazorApp.Settings;
+using MyoFibril.MAUIBlazorApp.Services.Local.Activities;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -61,6 +62,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
         builder.Services.AddScoped<IStorageService, StorageService>();
+        builder.Services.AddScoped<IActivitiesListService, ActivitiesListService>();
 
         // auth
         builder.Services.AddAuthorizationCore();
