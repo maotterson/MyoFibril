@@ -21,7 +21,7 @@ public class ActivityInMemoryRepository : IActivityRepository
 
     public async Task<ActivityEntity> GetActivityById(string id)
     {
-        var activity = _activities.FirstOrDefault(a => a.Guid.ToString() == id);
+        var activity = _activities.FirstOrDefault(a => a.Id == id);
         if (activity is null) throw new Exception($"Activity {id} not found"); // todo more specific exception
 
         return activity;
