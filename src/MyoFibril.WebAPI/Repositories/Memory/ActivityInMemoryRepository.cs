@@ -1,7 +1,7 @@
 ﻿using MyoFibril.Domain.Entities;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 
-namespace MyoFibril.WebAPI.Repositories;
+namespace MyoFibril.WebAPI.Repositories.Memory;
 
 public class ActivityInMemoryRepository : IActivityRepository
 {
