@@ -80,4 +80,9 @@ public class ActivityService : IActivityService
 
         return getActivityResponse;
     }
+
+    public async Task<List<GetActivityResponse>> GetActivitiesForUsername(string username, string accessToken, bool includeStrava = false)
+    {
+        var activityList = await _activityRepository.GetActivitiesForUsername(username);
+    }
 }

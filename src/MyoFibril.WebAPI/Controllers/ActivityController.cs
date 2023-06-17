@@ -47,7 +47,7 @@ public class ActivityController : ControllerBase
             // todo could provide validation for access tokens provided id owner against that of the token
             var accessToken = Request.ExtractBearerToken();
 
-            var response = await _activityService.GetActivitiesForUsername(username, accessToken);
+            var response = await _activityService.GetActivitiesForUsername(username, accessToken, includeStrava);
 
             if (response is null)
             {
