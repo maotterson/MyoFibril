@@ -12,5 +12,6 @@ public class CreateActivityRequest
     public DateTimeOffset DateCreated { get; set; }
     [JsonPropertyName("performed-exercises")]
     public List<PerformedExerciseEntity>? PerformedExercises { get; set; }
+    public string? AccessToken { get; set; }
 
 }

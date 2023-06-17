@@ -2,6 +2,7 @@
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
 using MyoFibril.WebAPI.Services.Interfaces;
+using MyoFibril.WebAPI.Utils.Request;
 using System.ComponentModel;
 
 namespace MyoFibril.WebAPI.Controllers;
@@ -41,11 +42,8 @@ public class ActivityController : ControllerBase
     {
         try
         {
-            var accessToken = ExtractBearerTokenFromRequest(Request);
-            var authHeader = Request.Headers["Authentication"].ToString();
-            var authHeaderString = authHeader.Split(" ");
-
-
+            var accessToken = Request.ExtractBearerToken();
+            createActivityRequest.AccessToken = accessToken;
 
             var response = await _activityService.CreateActivity(createActivityRequest);
 
