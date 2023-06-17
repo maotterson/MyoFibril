@@ -27,7 +27,7 @@ builder.Services.AddScoped<ICredentialsRepository, CredentialsRepository>();
 
 // Add local api services
 builder.Services.AddScoped<IActivityService, ActivityService>();
-builder.Services.AddSingleton<IActivityRepository, ActivityInMemoryRepository>(); // todo: replace with 
+builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

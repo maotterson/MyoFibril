@@ -36,7 +36,7 @@ public class ActivityService : IActivityService
             StravaActivityId = stravaResponse.Id
         };
         var isCreated = await _activityRepository.CreateActivity(activityEntity);
-        if (!isCreated) throw new Exception("todo: create activity failed exception message"); // todo better exception message
+        if (!isCreated) throw new Exception("Error creating activity");
 
         // return create activity response
         var createActivityResponse = new CreateActivityResponse
