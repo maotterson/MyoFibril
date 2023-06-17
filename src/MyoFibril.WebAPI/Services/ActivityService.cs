@@ -27,7 +27,7 @@ public class ActivityService : IActivityService
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest request)
     {
         // verify username matches contents of token
-        var isValidUsernameForToken = _jwtService.VerifyTokenAgainstUsername(request.Username);
+        var isValidUsernameForToken = _jwtService.VerifyTokenAgainstUsername(request.AccessToken!, request.Username);
         if (!isValidUsernameForToken) throw new UsernameTokenMismatchException();
 
         // persist to strava
