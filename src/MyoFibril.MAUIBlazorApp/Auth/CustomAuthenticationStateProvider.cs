@@ -41,7 +41,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
                 return emptyAuthState;
             }
 
-
             var claims = new[] { 
                 new Claim("access_token", tokenInfo.AccessToken),
                 new Claim("refresh_token", tokenInfo.RefreshToken),
@@ -108,8 +107,15 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
                 AccessToken = tokenInfo.AccessToken
             };
 
+            // todo persist the user data to local storage
             var response = await http.PostAsJsonAsync<AuthorizeTokenRequest>(requestUri, authorizeTokenRequestBody);
             response.EnsureSuccessStatusCode();
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var authorizeTokenResponse = JsonSerializer.Deserialize<AuthorizeTokenResponse>(responseBody);
+            var userInfo = authorizeTokenResponse.UserInfo;
+            await _storageService.StoreItemAsync("user_info", userInfo);
+
             return true;
         }
         catch
