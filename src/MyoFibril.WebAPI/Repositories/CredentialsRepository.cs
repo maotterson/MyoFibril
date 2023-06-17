@@ -30,7 +30,7 @@ public class CredentialsRepository : ICredentialsRepository
     {
         var credentialsQuery = await _credentialsCollection.Find(u => u.Username == username).ToListAsync();
 
-        if (credentialsQuery.Count != 1 || credentialsQuery is null) throw new InvalidCredentialsException();
+        if (credentialsQuery is null || credentialsQuery.Count != 1) throw new InvalidCredentialsException();
         var credentials = credentialsQuery.SingleOrDefault();
 
         return credentials!;
