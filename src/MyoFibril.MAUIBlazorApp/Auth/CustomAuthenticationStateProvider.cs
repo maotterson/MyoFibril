@@ -11,12 +11,12 @@ using System.Text.Json;
 namespace MyoFibril.MAUIBlazorApp.Auth;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
     private readonly IStorageService _storageService;
-    public CustomAuthenticationStateProvider(IHttpClientFactory httpClientFactory, IConfiguration configuration, IStorageService storageService)
+    public CustomAuthenticationStateProvider(HttpClient httpClient, IConfiguration configuration, IStorageService storageService)
     {
-        _httpClientFactory = httpClientFactory;
+        _httpClient = httpClient;
         _configuration = configuration;
         _storageService = storageService;
     }
@@ -58,7 +58,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task<RegisterNewUserResponse> CreateAccountWithCredentials(UserRegisterCredentials credentials)
     {
-        var http = _httpClientFactory.CreateClient();
+        var http = _httpClient;
 
         var requestBaseUri = _configuration["Settings:API:BaseUri"];
         var requestUriBuilder = new UriBuilder(requestBaseUri);
@@ -95,8 +95,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         try
         {
-            // todo: implement verification check for token
-            var http = _httpClientFactory.CreateClient();
+            var http = _httpClient;
 
             var requestBaseUri = _configuration["Settings:API:BaseUri"];
             var requestUriBuilder = new UriBuilder(requestBaseUri);
@@ -158,7 +157,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             var tokens = await _storageService.GetItemAsync<TokenInfo>("token_info");
             var refreshTokenToRevoke = tokens.RefreshToken;
 
-            var http = _httpClientFactory.CreateClient();
+            var http = _httpClient;
 
             var requestBaseUri = _configuration["Settings:API:BaseUri"];
             var requestUriBuilder = new UriBuilder(requestBaseUri);
@@ -186,7 +185,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     private async Task<GetAccessTokenResponse> GetTokenWithRefreshToken(string refreshToken)
     {
-        var http = _httpClientFactory.CreateClient();
+        var http = _httpClient;
 
         var requestBaseUri = _configuration["Settings:API:BaseUri"];
         var requestUriBuilder = new UriBuilder(requestBaseUri);
@@ -210,7 +209,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
     private async Task<GetAccessTokenResponse> GetTokenWithUserCredentials(UserLoginCredentials userCredentials)
     {
-        var http = _httpClientFactory.CreateClient();
+        var http = _httpClient;
 
         var requestBaseUri = _configuration["Settings:API:BaseUri"];
         var requestUriBuilder = new UriBuilder(requestBaseUri);
