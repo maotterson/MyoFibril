@@ -7,4 +7,5 @@ public interface IActivityService
 {
     Task<CreateActivityResponse> CreateActivity(CreateActivityRequest request);
     Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false);
+    Task<GetActivitiesResponse> GetActivitiesForUsername(string username, string accessToken);
 }
