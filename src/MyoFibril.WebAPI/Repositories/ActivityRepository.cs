@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using MyoFibril.Contracts.Common.Exceptions;
 using MyoFibril.Domain.Entities;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 
@@ -16,13 +17,26 @@ public class ActivityRepository : IActivityRepository
         _activitiesCollection = mongoClient.GetDatabase(_configuration["Database:DatabaseName"]).GetCollection<ActivityEntity>(COLLECTION_NAME);
     }
 
-    public Task<bool> CreateActivity(ActivityEntity activityEntity)
+    public async Task<bool> CreateActivity(ActivityEntity activityEntity)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _activitiesCollection.InsertOneAsync(activityEntity);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
-    public Task<ActivityEntity> GetActivityById(string id)
+    public async Task<ActivityEntity> GetActivityById(string id)
     {
-        throw new NotImplementedException();
+        var activitiesQuery = await _activitiesCollection.Find(a => a.Id == id).ToListAsync();
+
+        if (activitiesQuery is null || activitiesQuery.Count != 1) throw new ActivityNotFoundException();
+        var activity = activitiesQuery.SingleOrDefault();
+
+        return activity!;
     }
 }

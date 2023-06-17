@@ -30,7 +30,6 @@ public class ActivityService : IActivityService
         // persist to repository
         var activityEntity = new ActivityEntity
         {
-            Guid = Guid.NewGuid(),
             Name = request.Name,
             DateCreated = DateTime.Now,
             StravaActivityId = stravaResponse.Id
@@ -41,7 +40,7 @@ public class ActivityService : IActivityService
         // return create activity response
         var createActivityResponse = new CreateActivityResponse
         {
-            Id = activityEntity.Guid,
+            Id = activityEntity.Id,
             Name = activityEntity.Name,
             StravaActivity = stravaResponse
         };
@@ -64,7 +63,7 @@ public class ActivityService : IActivityService
         // return get activity response
         var getActivityResponse = new GetActivityResponse
         {
-            Id = activityEntity.Guid,
+            Id = activityEntity.Id,
             Name = activityEntity.Name,
             StravaActivity = stravaActivity
         };

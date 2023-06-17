@@ -7,7 +7,7 @@ namespace MyoFibril.Contracts.WebAPI.GetActivity;
 public class GetActivityResponse
 {
     [JsonPropertyName("id")]
-    public Guid Id { get; set; }
+    public string Id { get; set; } = default!;
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
     [JsonPropertyName("strava_activity")]

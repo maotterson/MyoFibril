@@ -31,6 +31,6 @@ public class UserRepository : IUserRepository
         if (usersQuery is null || usersQuery.Count != 1) throw new UserNotFoundException(username);
         var user = usersQuery.SingleOrDefault();
 
-        return user;
+        return user!;
     }
 }
