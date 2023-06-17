@@ -25,6 +25,8 @@ public class ActivityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetActivityResponse>> GetActivityById(string id, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
     {
+        // todo could provide validation for access tokens provided id owner against that of the token
+
         var response = await _activityService.GetActivityById(id, includeStrava);
 
         if (response is null)
@@ -35,13 +37,40 @@ public class ActivityController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<GetActivityResponse>> GetActivitiesForUsername(string username, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
+    {
+        try
+        {
+            // todo could provide validation for access tokens provided id owner against that of the token
+            var accessToken = Request.ExtractBearerToken();
+
+            var response = await _activityService.GetActivitiesForUsername(username, accessToken);
+
+            if (response is null)
+            {
+                _logger.LogError("Response not found");
+                return NotFound();
+            }
+            return Ok(response);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateActivityResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateActivity(CreateActivityRequest createActivityRequest)
     {
         try
         {
+            // provide access token with request body contents
             var accessToken = Request.ExtractBearerToken();
             createActivityRequest.AccessToken = accessToken;
 
