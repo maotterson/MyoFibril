@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.Runtime.Internal;
+using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.Strava.Models;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
@@ -83,6 +84,20 @@ public class ActivityService : IActivityService
 
     public async Task<List<GetActivityResponse>> GetActivitiesForUsername(string username, string accessToken, bool includeStrava = false)
     {
+        // verify username matches contents of token
+        var isValidUsernameForToken = _jwtService.VerifyTokenAgainstUsername(accessToken, username);
+        if (!isValidUsernameForToken) throw new UsernameTokenMismatchException();
+
         var activityList = await _activityRepository.GetActivitiesForUsername(username);
+        // todo: could additionally retrieve strava specific information but would simplify/cut down on external calls to forgo it for all activities
+
+        // map entities to response collection
+        var activitiesResponse = activityList.Select(a => new GetActivityResponse
+        {
+            Id = a.Id,
+            Name = a.Name
+        });
+
+        return activitiesResponse.ToList();
     }
 }
