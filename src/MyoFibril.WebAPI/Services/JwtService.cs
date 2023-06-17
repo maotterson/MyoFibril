@@ -10,6 +10,8 @@ using JWT.Exceptions;
 using Amazon.SecurityToken.Model;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
+using Newtonsoft.Json.Linq;
+using MongoDB.Driver;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -137,5 +139,26 @@ public class JwtService : IJwtService
         }
 
         
+    }
+
+    public bool VerifyTokenAgainstUsername(string accessToken, string username)
+    {
+        // decode username from accesstoken
+        var provider = new UtcDateTimeProvider();
+        var serializer = new JsonNetSerializer();
+        var validator = new JwtValidator(serializer, provider);
+        var urlEncoder = new JwtBase64UrlEncoder();
+        var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
+
+        var json = decoder.DecodeToObject<IDictionary<string, object>>(accessToken);
+
+        // validate that a username exists in the token
+        var extractedUsername = json["username"].ToString() ?? throw new InvalidAccessTokenException();
+        if (string.IsNullOrEmpty(extractedUsername)) return false;
+
+        // verify the token against the provided username
+        if (extractedUsername != username) return false;
+
+        return true;
     }
 }
