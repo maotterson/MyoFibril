@@ -8,9 +8,9 @@ public class CreateActivityRequest
     public string Name { get; set; } = string.Empty;
     [JsonPropertyName("username")]
     public string Username { get; set; } = string.Empty;
-    [JsonPropertyName("date-created")]
+    [JsonPropertyName("date_created")]
     public DateTimeOffset DateCreated { get; set; }
-    [JsonPropertyName("performed-exercises")]
+    [JsonPropertyName("performed_exercises")]
     public List<PerformedExerciseEntity>? PerformedExercises { get; set; }
     public string? AccessToken { get; set; }
 
