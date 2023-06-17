@@ -10,4 +10,5 @@ public interface IJwtService
     Task<string> GetAccessTokenWithRefreshToken(string refreshToken);
     Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify);
     Task<UserCredentialsEntity> GetCredentialsFromAccessToken(string accessToken);
+    bool VerifyTokenAgainstUsername(string accessToken, string username);
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.Strava.Models;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
 using MyoFibril.Domain.Entities;
@@ -14,15 +15,21 @@ namespace MyoFibril.WebAPI.Services;
 public class ActivityService : IActivityService
 {
     private readonly IStravaActivityService _stravaActivityService;
+    private readonly IJwtService _jwtService;
     private readonly IActivityRepository _activityRepository;
-    public ActivityService(IStravaActivityService stravaActivityService, IActivityRepository activityRepository)
+    public ActivityService(IStravaActivityService stravaActivityService, IActivityRepository activityRepository, IJwtService jwtService)
     {
         _stravaActivityService = stravaActivityService;
         _activityRepository = activityRepository;
+        _jwtService = jwtService;
     }
 
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest request)
     {
+        // verify username matches contents of token
+        var isValidUsernameForToken = _jwtService.VerifyTokenAgainstUsername(request.Username);
+        if (!isValidUsernameForToken) throw new UsernameTokenMismatchException();
+
         // persist to strava
         var stravaRequest = request.AsStravaCreateActivityRequest();
         var stravaResponse = await _stravaActivityService.CreateActivity(stravaRequest);
@@ -30,6 +37,7 @@ public class ActivityService : IActivityService
         // persist to repository
         var activityEntity = new ActivityEntity
         {
+            Username = request.Username,
             Name = request.Name,
             DateCreated = DateTime.Now,
             StravaActivityId = stravaResponse.Id

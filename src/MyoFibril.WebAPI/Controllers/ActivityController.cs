@@ -39,13 +39,26 @@ public class ActivityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateActivity(CreateActivityRequest createActivityRequest)
     {
-        var response = await _activityService.CreateActivity(createActivityRequest);
-
-        if (response is null)
+        try
         {
-            _logger.LogError("Response not found");
-            return NotFound();
+            var accessToken = ExtractBearerTokenFromRequest(Request);
+            var authHeader = Request.Headers["Authentication"].ToString();
+            var authHeaderString = authHeader.Split(" ");
+
+
+
+            var response = await _activityService.CreateActivity(createActivityRequest);
+
+            if (response is null)
+            {
+                _logger.LogError("Response not found");
+                return NotFound();
+            }
+            return Ok(response);
         }
-        return Ok(response);
+        catch
+        {
+            return BadRequest();
+        }
     }
 }

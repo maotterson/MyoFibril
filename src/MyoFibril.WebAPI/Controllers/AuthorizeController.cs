@@ -36,7 +36,7 @@ public class AuthorizeController : ControllerBase
 
             return Ok(response);
         }
-        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+        catch (Exception ex) when (ex is InvalidAccessTokenException ||
                                     ex is InvalidRefreshTokenException ||
                                     ex is InvalidCredentialsException)
         {
@@ -94,7 +94,7 @@ public class AuthorizeController : ControllerBase
 
             return Ok(response);
         }
-        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException || 
+        catch (Exception ex) when (ex is InvalidAccessTokenException || 
                                     ex is InvalidRefreshTokenException || 
                                     ex is InvalidCredentialsException)
         {
@@ -124,7 +124,7 @@ public class AuthorizeController : ControllerBase
 
             return Ok(response);
         }
-        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+        catch (Exception ex) when (ex is InvalidAccessTokenException ||
                                     ex is InvalidRefreshTokenException ||
                                     ex is InvalidCredentialsException)
         {

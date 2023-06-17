@@ -38,7 +38,7 @@ public class RegisterController : ControllerBase
 
             return Ok(response);
         }
-        catch (Exception ex) when (ex is InvalidAuthorizeTokenRequestException ||
+        catch (Exception ex) when (ex is InvalidAccessTokenException ||
                                     ex is InvalidRefreshTokenException ||
                                     ex is InvalidCredentialsException ||
                                     ex is UsernameExistsException)

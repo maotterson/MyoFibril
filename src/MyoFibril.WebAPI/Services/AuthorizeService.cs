@@ -23,7 +23,7 @@ public class AuthorizeService : IAuthorizeService
         var tokenToAuthorize = authorizeTokenRequest.AccessToken;
         var refreshTokenToAuthorize = authorizeTokenRequest.RefreshToken;
 
-        if (string.IsNullOrEmpty(tokenToAuthorize) || string.IsNullOrEmpty(refreshTokenToAuthorize)) throw new InvalidAuthorizeTokenRequestException();
+        if (string.IsNullOrEmpty(tokenToAuthorize) || string.IsNullOrEmpty(refreshTokenToAuthorize)) throw new InvalidAccessTokenException();
 
         GetAccessTokenResponse? tokenInfo = default;
         UserInfo? userInfo = default;
