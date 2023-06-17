@@ -17,6 +17,11 @@ public class UserInMemoryRepository : IUserRepository
         }
     };
 
+    public async Task CreateUser(UserEntity user)
+    {
+        _users.Add(user);
+    }
+
     public async Task<UserEntity> GetUserByUsername(string username)
     {
         var user = _users.FirstOrDefault(a => a.Username == username);
