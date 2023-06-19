@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
+using MyoFibril.WebAPI.Common.Attributes;
+using MyoFibril.WebAPI.Common.Utils.Request;
 using MyoFibril.WebAPI.Services.Interfaces;
-using MyoFibril.WebAPI.Utils.Request;
 using System.ComponentModel;
 
 namespace MyoFibril.WebAPI.Controllers;
@@ -37,8 +38,8 @@ public class ActivityController : ControllerBase
         return Ok(response);
     }
 
-    // todo custom attribute to authenticate token against username
     [HttpGet("{username}")]
+    [UsernameTokenVerification]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<GetActivityResponse>>> GetActivitiesForUsername(string username, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
