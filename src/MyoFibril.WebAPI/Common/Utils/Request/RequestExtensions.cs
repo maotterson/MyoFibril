@@ -1,6 +1,6 @@
 ﻿using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 
-namespace MyoFibril.WebAPI.Utils.Request;
+namespace MyoFibril.WebAPI.Common.Utils.Request;
 
 public static class RequestExtensions
 {

@@ -4,7 +4,6 @@ using JWT;
 using MyoFibril.Domain.Entities.Auth;
 using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
-using MyoFibril.WebAPI.Utils.Jwt;
 using JWT.Builder;
 using JWT.Exceptions;
 using Amazon.SecurityToken.Model;
@@ -12,6 +11,7 @@ using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using Newtonsoft.Json.Linq;
 using MongoDB.Driver;
+using MyoFibril.WebAPI.Common.Utils.Jwt;
 
 namespace MyoFibril.WebAPI.Services;
 

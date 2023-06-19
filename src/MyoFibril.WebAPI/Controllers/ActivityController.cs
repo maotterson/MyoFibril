@@ -37,6 +37,7 @@ public class ActivityController : ControllerBase
         return Ok(response);
     }
 
+    // todo custom attribute to authenticate token against username
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

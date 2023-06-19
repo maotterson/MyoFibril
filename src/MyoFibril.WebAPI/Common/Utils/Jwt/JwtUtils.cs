@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace MyoFibril.WebAPI.Utils.Jwt;
+namespace MyoFibril.WebAPI.Common.Utils.Jwt;
 
 public static class JwtUtils
 {

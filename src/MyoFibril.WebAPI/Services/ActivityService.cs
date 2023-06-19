@@ -51,7 +51,8 @@ public class ActivityService : IActivityService
         {
             Id = activityEntity.Id,
             Name = activityEntity.Name,
-            StravaActivity = stravaResponse
+            StravaActivity = stravaResponse,
+            PerformedExercises = activityEntity.PerformedExercises
         };
         return createActivityResponse;
     }
