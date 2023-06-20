@@ -13,5 +13,6 @@ public class ActivitiesListService : IActivitiesListService
     public Task<List<ActivityEntity>> GetActivitiesAsync()
     {
         var username = _userService.GetLoggedInUser();
+        throw new NotImplementedException(); // todo implement getting of activities
     }
 }
