@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
 using MyoFibril.WebAPI.Common.Attributes;
@@ -9,6 +10,7 @@ using System.ComponentModel;
 namespace MyoFibril.WebAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class ActivityController : ControllerBase
 {
@@ -38,7 +40,7 @@ public class ActivityController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("{username}")]
+    [HttpGet("by-user/{username}")]
     [UsernameTokenVerification]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

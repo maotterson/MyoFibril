@@ -16,6 +16,8 @@ var configuration = builder.Configuration;
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 
@@ -60,6 +62,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
