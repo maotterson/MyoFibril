@@ -23,8 +23,8 @@ public class UserService : IUserService
     {
         await _authenticationProvider.Logout();
     }
-    public UserEntity GetLoggedInUser()
+    public Task<UserEntity> GetLoggedInUser()
     {
-        
+        throw new NotImplementedException();
     }
 }
