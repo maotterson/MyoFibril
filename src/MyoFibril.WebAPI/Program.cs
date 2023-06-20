@@ -1,5 +1,7 @@
+using JWT.Algorithms;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using MyoFibril.Contracts.Strava.Static;
 using MyoFibril.WebAPI.Repositories;
@@ -10,6 +12,8 @@ using MyoFibril.WebAPI.Strava.Api;
 using MyoFibril.WebAPI.Strava.Extensions;
 using MyoFibril.WebAPI.Strava.OAuth;
 using Refit;
+using System.Security.Cryptography;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -18,11 +22,29 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-});
+builder.Services
+    .AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        var rsa = System.Security.Cryptography.RSA.Create();
+        var publicKeyPem = configuration["Jwt:PublicKeyPem"];
+        rsa.ImportFromPem(publicKeyPem);
+        x.RequireHttpsMetadata = false;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            IssuerSigningKey = new RsaSecurityKey(rsa),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 

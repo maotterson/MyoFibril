@@ -12,6 +12,7 @@ using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using Newtonsoft.Json.Linq;
 using MongoDB.Driver;
 using MyoFibril.WebAPI.Common.Utils.Jwt;
+using System.Security.Cryptography;
 
 namespace MyoFibril.WebAPI.Services;
 
@@ -19,14 +20,19 @@ public class JwtService : IJwtService
 {
     private IJwtAlgorithm _algorithm;
     private ICredentialsRepository _credentialsRepository;
+    private RSACryptoServiceProvider _publicKeyProvider;
     public JwtService(IConfiguration configuration, ICredentialsRepository credentialsRepository)
     {
         var privateKey = configuration["Jwt:PrivateKeyPem"] ?? throw new NullReferenceException("Missing private key for JWT signing");
         var publicKey = configuration["Jwt:PublicKeyPem"] ?? throw new NullReferenceException("Missing public key for JWT signing"); ;
-        var publicKeyProvider = JwtUtils.CreatePublicRSAProviderFromPem(publicKey);
+        _publicKeyProvider = JwtUtils.CreatePublicRSAProviderFromPem(publicKey);
         var privateKeyProvider = JwtUtils.CreatePrivateRSAProviderFromPem(privateKey);
-        _algorithm = new RS256Algorithm(publicKeyProvider, privateKeyProvider);
+        _algorithm = new RS256Algorithm(_publicKeyProvider, privateKeyProvider);
         _credentialsRepository = credentialsRepository;
+    }
+    public RSACryptoServiceProvider GetPublicKeyProvider()
+    {
+        return _publicKeyProvider;
     }
     public async Task<string> GetAccessTokenWithRefreshToken(string refreshToken)
     {
