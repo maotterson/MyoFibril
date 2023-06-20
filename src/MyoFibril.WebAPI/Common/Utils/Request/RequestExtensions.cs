@@ -12,4 +12,13 @@ public static class RequestExtensions
         var accessToken = authHeaderString[1];
         return accessToken;
     }
+
+    public static string ExtractRouteParameter(this HttpRequest request)
+    {
+        var pathString = request.Path;
+        var pathUri = new Uri(pathString, UriKind.Relative);
+        var routeParameter = pathUri.Segments.LastOrDefault() ?? throw new Exception("Invalid route parameter");
+
+        return routeParameter
+    }
 }

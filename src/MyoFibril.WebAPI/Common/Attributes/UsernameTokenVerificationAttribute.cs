@@ -16,9 +16,7 @@ public class UsernameTokenVerificationAttribute : ActionFilterAttribute
         {
             var jwtService = context.HttpContext.RequestServices.GetService<IJwtService>()!;
             var accessToken = context.HttpContext.Request.ExtractBearerToken();
-            var pathString = context.HttpContext.Request.Path;
-            var pathUri = new Uri(pathString);
-            var providedUsername = pathUri.Segments.LastOrDefault() ?? throw new UsernameTokenMismatchException();
+            var providedUsername = context.HttpContext.Request.ExtractRouteParameter();
 
             var isValidProvidedUsername = jwtService.VerifyTokenAgainstUsername(accessToken, providedUsername);
             if (!isValidProvidedUsername) throw new UsernameTokenMismatchException();
