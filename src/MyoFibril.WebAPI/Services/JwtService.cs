@@ -56,7 +56,7 @@ public class JwtService : IJwtService
         // generate accesstoken
         var accessToken = JwtBuilder.Create()
                      .WithAlgorithm(_algorithm)
-                     .AddClaim("expires-at", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
+                     .AddClaim("exp", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
                      .AddClaim("username", credentials.Username)
                      .AddClaim("email", credentials.Email)
                      .Encode();
@@ -87,7 +87,7 @@ public class JwtService : IJwtService
     {
         var accessToken = JwtBuilder.Create()
                       .WithAlgorithm(_algorithm)
-                      .AddClaim("expires-at", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
+                      .AddClaim("exp", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
                       .AddClaim("username", credentials.Username)
                       .AddClaim("email", credentials.Email)
                       .Encode();
@@ -122,7 +122,7 @@ public class JwtService : IJwtService
             var decoder = new JwtDecoder(serializer, validator, urlEncoder, _algorithm);
 
             var json = decoder.DecodeToObject<IDictionary<string, object>>(token);
-            var expires = long.Parse(json["expires-at"].ToString()!);
+            var expires = long.Parse(json["exp"].ToString()!);
             var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             if (now > expires)
