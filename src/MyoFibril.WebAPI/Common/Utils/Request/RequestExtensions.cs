@@ -1,4 +1,5 @@
-﻿using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 
 namespace MyoFibril.WebAPI.Common.Utils.Request;
 
@@ -15,10 +16,11 @@ public static class RequestExtensions
 
     public static string ExtractRouteParameter(this HttpRequest request)
     {
+        var basePathString = request.GetDisplayUrl();
         var pathString = request.Path;
-        var pathUri = new Uri(pathString, UriKind.Relative);
+        var pathUri = new Uri(basePathString);
         var routeParameter = pathUri.Segments.LastOrDefault() ?? throw new Exception("Invalid route parameter");
 
-        return routeParameter
+        return routeParameter;
     }
 }
