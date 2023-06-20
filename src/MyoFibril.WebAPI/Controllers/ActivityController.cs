@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.Contracts.WebAPI.GetActivity;
@@ -10,7 +11,7 @@ using System.ComponentModel;
 namespace MyoFibril.WebAPI.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("[controller]")]
 public class ActivityController : ControllerBase
 {

@@ -37,7 +37,6 @@ builder.Services
         x.RequireHttpsMetadata = false;
         x.TokenValidationParameters = new TokenValidationParameters
         {
-            
             ValidateIssuerSigningKey = true,
             ValidateIssuer = false,
             ValidateAudience = false,
