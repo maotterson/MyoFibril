@@ -7,9 +7,11 @@ namespace MyoFibril.MAUIBlazorApp.Services.Local;
 public class UserService : IUserService
 {
     private readonly CustomAuthenticationStateProvider _authenticationProvider;
-    public UserService(CustomAuthenticationStateProvider authenticationProvider)
+    private readonly IStorageService _storageService;
+    public UserService(CustomAuthenticationStateProvider authenticationProvider, IStorageService storageService)
     {
         _authenticationProvider = authenticationProvider;
+        _storageService = storageService;
         
     }
 
@@ -23,8 +25,21 @@ public class UserService : IUserService
     {
         await _authenticationProvider.Logout();
     }
-    public Task<UserEntity> GetLoggedInUser()
+    public async Task<UserInfo> GetLoggedInUserInfo()
     {
-        throw new NotImplementedException();
+        // todo method to retrieve full user entity
+        var userInfo = await _storageService.GetItemAsync<UserInfo>("user-info");
+        return userInfo;
+    }
+    public async Task<UserEntity> GetLoggedInUser()
+    {
+        var userInfo = await GetLoggedInUserInfo();
+
+        // retrieve user entity information via a repository/caching paradigm
+        return new UserEntity
+        {
+            Username = userInfo.Username,
+            Email = userInfo.Email
+        };
     }
 }

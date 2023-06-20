@@ -2,11 +2,20 @@
 @attribute [Authorize]
 @inject IUserService _userService;
 
+@using MyoFibril.Contracts.WebAPI.Auth.Models;
+@using MyoFibril.Domain.Entities;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 
 <button class="btn btn-primary form-control" @onclick="HandleLogoutClick">Log out</button>
 
 @code {
+    private UserEntity _user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await _userService.GetLoggedInUser();
+    }
+
     public async Task HandleLogoutClick()
     {
         await _userService.Logout();
