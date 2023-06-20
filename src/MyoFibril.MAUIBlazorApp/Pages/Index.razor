@@ -6,10 +6,12 @@
 @using MyoFibril.Domain.Entities;
 @using MyoFibril.MAUIBlazorApp.Services.Local;
 
+<p>Welcome @_user?.Username</p>
+
 <button class="btn btn-primary form-control" @onclick="HandleLogoutClick">Log out</button>
 
 @code {
-    private UserEntity _user;
+    private UserEntity _user = default;
 
     protected override async Task OnInitializedAsync()
     {

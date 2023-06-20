@@ -123,8 +123,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             await Logout();
             return false;
         }
-
-
     }
 
 
@@ -161,6 +159,9 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         {
             // send refresh token for revoking
             var tokens = await _storageService.GetItemAsync<TokenInfo>("token_info");
+
+            if (tokens is null) return;
+
             var refreshTokenToRevoke = tokens.RefreshToken;
 
             var http = _httpClient;

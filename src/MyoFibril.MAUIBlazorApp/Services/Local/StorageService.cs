@@ -11,9 +11,17 @@ public class StorageService : IStorageService
 
     public async Task<T> GetItemAsync<T>(string key)
     {
-        var json = await SecureStorage.GetAsync(key);
-        if (json is null) return default(T);
-        return JsonSerializer.Deserialize<T>(json);
+        try
+        {
+            var json = await SecureStorage.GetAsync(key);
+            if (json is null) return default(T);
+            return JsonSerializer.Deserialize<T>(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 
     public void RemoveItem(string key)

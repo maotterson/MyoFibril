@@ -28,7 +28,7 @@ public class UserService : IUserService
     public async Task<UserInfo> GetLoggedInUserInfo()
     {
         // todo method to retrieve full user entity
-        var userInfo = await _storageService.GetItemAsync<UserInfo>("user-info");
+        var userInfo = await _storageService.GetItemAsync<UserInfo>("user_info");
         return userInfo;
     }
     public async Task<UserEntity> GetLoggedInUser()
