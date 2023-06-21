@@ -12,10 +12,11 @@ public class NewActivityService : INewActivityService
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
     private readonly IStorageService _storageService;
-    public NewActivityService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public NewActivityService(IHttpClientFactory httpClientFactory, IConfiguration configuration, IStorageService storageService)
     {
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
+        _storageService = storageService;
     }
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest createActivityRequest)
     {
