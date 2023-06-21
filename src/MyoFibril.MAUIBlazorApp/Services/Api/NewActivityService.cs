@@ -1,4 +1,8 @@
-﻿using MyoFibril.Contracts.WebAPI.CreateActivity;
+﻿using Microsoft.Extensions.Configuration;
+using MyoFibril.Contracts.WebAPI.CreateActivity;
+using MyoFibril.MAUIBlazorApp.Services.Local;
+using MyoFibril.MAUIBlazorApp.Storage.Models;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -6,15 +10,25 @@ namespace MyoFibril.MAUIBlazorApp.Services.Api;
 public class NewActivityService : INewActivityService
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    public NewActivityService(IHttpClientFactory httpClientFactory)
+    private readonly IConfiguration _configuration;
+    private readonly IStorageService _storageService;
+    public NewActivityService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _httpClientFactory = httpClientFactory;
+        _configuration = configuration;
     }
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest createActivityRequest)
     {
         var httpClient = _httpClientFactory.CreateClient("MyClient");
-        var requestUri = "http://localhost:5230/Activity"; // todo move to config
+        var baseUri = _configuration["Settings:API:BaseUri"];
+        var requestUri = $"{baseUri}/Activity";
+
+        // todo move retrieval/attachment of bearer header to utils
+        var tokenInfo = await _storageService.GetItemAsync<TokenInfo>("token_info");
+        if (tokenInfo is null) throw new Exception(); // todo better exception
+        var accessToken = tokenInfo.AccessToken;
         var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(createActivityRequest), Encoding.UTF8, "application/json");
+        jsonContent.Headers.Add("Authorization", $"Bearer {accessToken}");
 
         var response = await httpClient.PostAsync(requestUri, jsonContent);
 
