@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.Extensions.Configuration;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.MAUIBlazorApp.Services.Local;
 using MyoFibril.MAUIBlazorApp.Storage.Models;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -28,9 +30,9 @@ public class NewActivityService : INewActivityService
         var tokenInfo = await _storageService.GetItemAsync<TokenInfo>("token_info");
         if (tokenInfo is null) throw new Exception(); // todo better exception
         var accessToken = tokenInfo.AccessToken;
-        var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(createActivityRequest), Encoding.UTF8, "application/json");
-        jsonContent.Headers.Add("Authorization", $"Bearer {accessToken}");
+        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
+        var jsonContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(createActivityRequest), Encoding.UTF8, "application/json");
         var response = await httpClient.PostAsync(requestUri, jsonContent);
 
         // Check if the response is successful
