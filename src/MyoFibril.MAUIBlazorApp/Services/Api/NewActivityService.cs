@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.Extensions.Configuration;
+using MyoFibril.Contracts.WebAPI.Auth.Models;
 using MyoFibril.Contracts.WebAPI.CreateActivity;
 using MyoFibril.MAUIBlazorApp.Services.Local;
 using MyoFibril.MAUIBlazorApp.Storage.Models;
@@ -22,6 +23,11 @@ public class NewActivityService : INewActivityService
     }
     public async Task<CreateActivityResponse> CreateActivity(CreateActivityRequest createActivityRequest)
     {
+        // todo attach username to request via storage service in separate method (userservice?)
+        var userInfo = await _storageService.GetItemAsync<UserInfo>("user_info");
+        var username = userInfo.Username;
+        createActivityRequest.Username = username;
+
         var httpClient = _httpClientFactory.CreateClient("MyClient");
         var baseUri = _configuration["Settings:API:BaseUri"];
         var requestUri = $"{baseUri}/Activity";

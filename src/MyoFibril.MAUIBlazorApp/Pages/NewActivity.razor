@@ -13,6 +13,11 @@
 @inject IBuildActivityService _buildActivityService;
 @inject CreateActivityViewModel _createActivityViewModel
 
+@if (_error is not null)
+{
+    <p>@_error</p>
+}
+
 <CreateActivityComponent></CreateActivityComponent>
 
 @if (_createdActivity is not null)
@@ -25,10 +30,7 @@
     </div>
 }
 
-@if (_error is not null)
-{
-    <p>@_error</p>
-}
+
 
 
 @code{
