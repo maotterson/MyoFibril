@@ -50,15 +50,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="resources\raw\appsettings.development.json" />
       <Content Remove="resources\raw\AppSettings.json" />
     </ItemGroup>
 
     <ItemGroup>
+      <MauiAsset Remove="Resources\Raw\appsettings.development.json" />
       <MauiAsset Remove="Resources\Raw\appsettings.json" />
       <MauiAsset Remove="Resources\Raw\exercises.json" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\Raw\appsettings.development.json" />
       <EmbeddedResource Include="Resources\Raw\appsettings.json" />
       <EmbeddedResource Include="Resources\Raw\exercises.json" />
     </ItemGroup>

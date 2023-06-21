@@ -8,7 +8,7 @@ public static class ConfigurationManagerExtensions
     {
 
         var a = Assembly.GetExecutingAssembly();
-        var resourcePath = $"{a.GetName().Name}.Resources.Raw.appsettings.json";
+        var resourcePath = $"{a.GetName().Name}.Resources.Raw.appsettings.development.json"; // swap out in production
         using var stream = a.GetManifestResourceStream(resourcePath);
 
         var config = new ConfigurationBuilder()
