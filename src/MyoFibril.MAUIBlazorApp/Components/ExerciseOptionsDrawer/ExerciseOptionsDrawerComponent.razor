@@ -1,6 +1,8 @@
 ﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Services.Local;
 @using MyoFibril.MAUIBlazorApp.Services.UI;
 @inject IExerciseOptionsDrawerManager _drawerManager;
+@inject IBuildActivityService _buildActivityService;
 
 <div class="offcanvas show offcanvas-bottom offcanvas-size-xl" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
     <div class="card">
@@ -44,6 +46,6 @@
     }
     private void HandleDeleteExercise()
     {
-        
+        _buildActivityService.RemovePerformedExercise(_selectedExercise);
     }
 }
