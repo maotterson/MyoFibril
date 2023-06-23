@@ -47,5 +47,6 @@
     private void HandleDeleteExercise()
     {
         _buildActivityService.RemovePerformedExercise(_selectedExercise);
+        _drawerManager.CloseDrawer();
     }
 }
