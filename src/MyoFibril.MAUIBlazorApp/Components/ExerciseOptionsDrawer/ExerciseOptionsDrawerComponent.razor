@@ -3,6 +3,7 @@
 @using MyoFibril.MAUIBlazorApp.Services.UI;
 @inject IExerciseOptionsDrawerManager _drawerManager;
 @inject IBuildActivityService _buildActivityService;
+@inject IAddExerciseService _addExerciseService;
 
 <div class="offcanvas show offcanvas-bottom offcanvas-size-xl" tabindex="-1" aria-labelledby="offcanvasBottomLabel">
     <div class="card">
@@ -15,15 +16,15 @@
             </div>
         </div>
         <div class="card-content list-group list-group-flush">
-            <div class="list-group-item row py-2" @onclick="HandleViewSetSummary">
+            <div class="list-group-item row py-2" role="button" @onclick="HandleViewSetSummary">
                 <i class="bi-card-list"></i>
                 <span>View set summary</span>
             </div>
-            <div class="list-group-item row py-2" @onclick="HandleAddNewSet">
+            <div class="list-group-item row py-2" role="button" @onclick="HandleAddNewSet">
                 <i class="bi-file-earmark-plus"></i>
                 <span>Add new set</span>
             </div>
-            <div class="list-group-item row py-2" @onclick="HandleDeleteExercise">
+            <div class="list-group-item row py-2" role="button" @onclick="HandleDeleteExercise">
                 <i class="bi-trash"></i>
                 <span>Delete exercise</span>
             </div>
@@ -38,11 +39,13 @@
 
     private void HandleViewSetSummary()
     {
-
+        _addExerciseService.OpenModal();
+        _drawerManager.CloseDrawer();
     }
     private void HandleAddNewSet()
     {
-
+        _addExerciseService.OpenModal();
+        _drawerManager.CloseDrawer();
     }
     private void HandleDeleteExercise()
     {
