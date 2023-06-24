@@ -80,7 +80,7 @@ public class JwtService : IJwtService
         return credentials;
     }
 
-    public async Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials)
+    public (string accessToken, string refreshToken) GetTokensWithCredentials(UserCredentialsEntity credentials)
     {
         var accessToken = JwtBuilder.Create()
                       .WithAlgorithm(_algorithm)
@@ -97,7 +97,7 @@ public class JwtService : IJwtService
         return (accessToken, refreshToken);
     }
 
-    public async Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
+    public bool VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify)
     {
         if (storedCredentials.Username != credentialsToVerify.Username)
             return false;
@@ -108,7 +108,7 @@ public class JwtService : IJwtService
         return true;
     }
 
-    public async Task<bool> VerifyToken(string token)
+    public bool VerifyToken(string token)
     {
         try
         {

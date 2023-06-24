@@ -5,10 +5,10 @@ namespace MyoFibril.WebAPI.Services.Interfaces;
 
 public interface IJwtService
 {
-    Task<(string accessToken, string refreshToken)> GetTokensWithCredentials(UserCredentialsEntity credentials);
-    Task<bool> VerifyToken(string accessToken);
+    (string accessToken, string refreshToken) GetTokensWithCredentials(UserCredentialsEntity credentials);
+    bool VerifyToken(string accessToken);
     Task<string> GetAccessTokenWithRefreshToken(string refreshToken);
-    Task<bool> VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify);
+    bool VerifyCredentials(UserCredentialsEntity storedCredentials, ProtectedUserCredentials credentialsToVerify);
     Task<UserCredentialsEntity> GetCredentialsFromAccessToken(string accessToken);
     bool VerifyTokenAgainstUsername(string accessToken, string username);
 }
