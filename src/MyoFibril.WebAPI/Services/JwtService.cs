@@ -9,8 +9,6 @@ using JWT.Exceptions;
 using Amazon.SecurityToken.Model;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
-using Newtonsoft.Json.Linq;
-using MongoDB.Driver;
 using MyoFibril.WebAPI.Common.Utils.Jwt;
 using System.Security.Cryptography;
 
