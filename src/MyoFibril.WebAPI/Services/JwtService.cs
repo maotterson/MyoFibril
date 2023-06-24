@@ -6,7 +6,6 @@ using MyoFibril.WebAPI.Models.Auth;
 using MyoFibril.WebAPI.Services.Interfaces;
 using JWT.Builder;
 using JWT.Exceptions;
-using Amazon.SecurityToken.Model;
 using MyoFibril.WebAPI.Repositories.Interfaces;
 using MyoFibril.Contracts.WebAPI.Auth.Exceptions;
 using MyoFibril.WebAPI.Common.Utils.Jwt;
@@ -16,9 +15,9 @@ namespace MyoFibril.WebAPI.Services;
 
 public class JwtService : IJwtService
 {
-    private IJwtAlgorithm _algorithm;
-    private ICredentialsRepository _credentialsRepository;
-    private RSACryptoServiceProvider _publicKeyProvider;
+    private readonly IJwtAlgorithm _algorithm;
+    private readonly ICredentialsRepository _credentialsRepository;
+    private readonly RSACryptoServiceProvider _publicKeyProvider;
     public JwtService(IConfiguration configuration, ICredentialsRepository credentialsRepository)
     {
         var privateKey = configuration["Jwt:PrivateKeyPem"] ?? throw new NullReferenceException("Missing private key for JWT signing");
