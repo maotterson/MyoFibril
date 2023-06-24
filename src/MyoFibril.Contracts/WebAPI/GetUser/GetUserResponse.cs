@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using MyoFibril.Contracts.Strava.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace MyoFibril.Contracts.WebAPI.GetUser;
 public class GetUserResponse
