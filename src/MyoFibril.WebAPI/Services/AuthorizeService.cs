@@ -27,7 +27,7 @@ public class AuthorizeService : IAuthorizeService
 
         GetAccessTokenResponse? tokenInfo = default;
         UserInfo? userInfo = default;
-        var isVerified = await _jwtService.VerifyToken(tokenToAuthorize);
+        var isVerified = _jwtService.VerifyToken(tokenToAuthorize);
 
         if (isVerified)
         {
@@ -88,14 +88,14 @@ public class AuthorizeService : IAuthorizeService
         var credentials = await _credentialsRepository.GetCredentialsForUsername(request.Username);
         var salt = credentials.Salt;
         var userCredentials = new ProtectedUserCredentials(request.Username, request.Password, salt);
-        var validCredentials = await _jwtService.VerifyCredentials(credentials, userCredentials);
+        var validCredentials = _jwtService.VerifyCredentials(credentials, userCredentials);
 
         if (!validCredentials) throw new InvalidCredentialsException();
 
         // grab the rest of the relevant user information for the verified user
         var credentialsEntity = await _credentialsRepository.GetCredentialsForUsername(request.Username);
 
-        var (accessToken, refreshToken) = await _jwtService.GetTokensWithCredentials(credentialsEntity);
+        var (accessToken, refreshToken) = _jwtService.GetTokensWithCredentials(credentialsEntity);
 
         // save currently issued refresh token alongside credentials
         await _credentialsRepository.UpdateRefreshTokenForUsername(credentialsEntity.Username, refreshToken);
