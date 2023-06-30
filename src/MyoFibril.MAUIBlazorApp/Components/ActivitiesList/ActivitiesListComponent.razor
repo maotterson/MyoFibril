@@ -2,7 +2,17 @@
 @using MyoFibril.MAUIBlazorApp.Services.Local.Activities;
 @inject IActivitiesProvider _activitiesProvider;
 
-<h3>ActivitiesListComponent</h3>
+<div>
+    @foreach(var activity in _activities)
+    {
+        <p>@activity.DateCreated</p>
+        <p>@activity.Name</p>
+        @foreach(var exercise in activity.PerformedExercises)
+        {
+            <p>@exercise.Exercise.Name</p>
+        }
+    }
+</div>
 
 @code {
     private List<ActivityEntity> _activities;
