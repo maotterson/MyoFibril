@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using MyoFibril.MAUIBlazorApp.Settings;
 using MyoFibril.MAUIBlazorApp.Services.Local.Activities;
+using MyoFibril.MAUIBlazorApp.Data.Activities;
 
 namespace MyoFibril.MAUIBlazorApp;
 public static class MauiProgram
@@ -62,7 +63,8 @@ public static class MauiProgram
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
         builder.Services.AddScoped<IStorageService, StorageService>();
-        builder.Services.AddScoped<IActivitiesListService, ActivitiesProvider>();
+        builder.Services.AddScoped<IActivitiesProvider, ActivitiesProvider>();
+        builder.Services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 
         // auth
         builder.Services.AddAuthorizationCore();

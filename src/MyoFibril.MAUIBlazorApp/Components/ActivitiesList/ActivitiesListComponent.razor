@@ -5,12 +5,14 @@
 <div>
     @foreach(var activity in _activities)
     {
-        <p>@activity.DateCreated</p>
-        <p>@activity.Name</p>
-        @foreach(var exercise in activity.PerformedExercises)
-        {
-            <p>@exercise.Exercise.Name</p>
-        }
+        <div class="card">
+            <p>@activity.DateCreated</p>
+            <p>@activity.Name</p>
+            @foreach (var exercise in activity.PerformedExercises)
+            {
+                <p>@exercise.Exercise.Name</p>
+            }
+        </div>
     }
 </div>
 
