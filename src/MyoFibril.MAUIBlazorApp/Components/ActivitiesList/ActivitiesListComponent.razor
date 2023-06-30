@@ -1,5 +1,13 @@
-﻿<h3>ActivitiesListComponent</h3>
+﻿@using MyoFibril.Domain.Entities;
+@using MyoFibril.MAUIBlazorApp.Services.Local.Activities;
+@inject IActivitiesProvider _activitiesProvider;
+
+<h3>ActivitiesListComponent</h3>
 
 @code {
-
+    private List<ActivityEntity> _activities;
+    protected override async Task OnInitializedAsync()
+    {
+        _activities = await _activitiesProvider.GetActivitiesAsync();
+    }
 }

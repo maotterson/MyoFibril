@@ -1,10 +1,10 @@
 ﻿using MyoFibril.Domain.Entities;
 
 namespace MyoFibril.MAUIBlazorApp.Services.Local.Activities;
-public class ActivitiesListService : IActivitiesListService
+public class ActivitiesProvider : IActivitiesProvider
 {
     private readonly IUserService _userService;
-    public ActivitiesListService(IUserService userService)
+    public ActivitiesProvider(IUserService userService)
     {
 
         _userService = userService;

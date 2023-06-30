@@ -62,7 +62,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IAddExerciseService, AddExerciseService>();
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
         builder.Services.AddScoped<IStorageService, StorageService>();
-        builder.Services.AddScoped<IActivitiesListService, ActivitiesListService>();
+        builder.Services.AddScoped<IActivitiesListService, ActivitiesProvider>();
 
         // auth
         builder.Services.AddAuthorizationCore();
