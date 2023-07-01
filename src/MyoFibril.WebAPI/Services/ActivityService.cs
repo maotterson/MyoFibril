@@ -96,6 +96,8 @@ public class ActivityService : IActivityService
         {
             Id = a.Id,
             Name = a.Name,
+            DateCreated = a.DateCreated,
+            Username = a.Username,
             PerformedExercises = a.PerformedExercises,
         });
 
