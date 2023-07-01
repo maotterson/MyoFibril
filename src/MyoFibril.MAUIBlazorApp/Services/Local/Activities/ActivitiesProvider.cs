@@ -10,10 +10,12 @@ public class ActivitiesProvider : IActivitiesProvider
     {
         _userService = userService;
     }
-    public Task<List<ActivityEntity>> GetActivitiesAsync()
+    public async Task<List<ActivityEntity>> GetActivitiesAsync()
     {
-        var username = _userService.GetLoggedInUser();
-        if (username is null) throw new NullReferenceException(nameof(username));
-        throw new NotImplementedException(); // todo implement getting of activities
+        var user = await _userService.GetLoggedInUser();
+        if (user is null) throw new NullReferenceException(nameof(user));
+        var activities = await _activitiesRepository.GetActivitiesByUsernameAsync(user.Username);
+
+        return activities;
     }
 }
