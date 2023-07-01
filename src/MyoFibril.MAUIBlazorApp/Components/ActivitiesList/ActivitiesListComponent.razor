@@ -17,7 +17,7 @@
 </div>
 
 @code {
-    private List<ActivityEntity> _activities;
+    private List<ActivityEntity> _activities = new List<ActivityEntity>();
     protected override async Task OnInitializedAsync()
     {
         _activities = await _activitiesProvider.GetActivitiesAsync();
