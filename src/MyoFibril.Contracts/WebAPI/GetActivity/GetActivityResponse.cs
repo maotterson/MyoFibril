@@ -9,6 +9,10 @@ public class GetActivityResponse
 {
     [JsonPropertyName("id")]
     public string Id { get; set; } = default!;
+    [JsonPropertyName("username")]
+    public string Username { get; set; } = default!;
+    [JsonPropertyName("date_created")]
+    public DateTimeOffset DateCreated { get; set; }
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
     [JsonPropertyName("strava_activity")]
