@@ -9,6 +9,7 @@ public class ActivitiesProvider : IActivitiesProvider
     public ActivitiesProvider(IUserService userService, IActivitiesRepository activitiesRepository)
     {
         _userService = userService;
+        _activitiesRepository = activitiesRepository;
     }
     public async Task<List<ActivityEntity>> GetActivitiesAsync()
     {

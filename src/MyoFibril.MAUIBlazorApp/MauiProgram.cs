@@ -64,7 +64,8 @@ public static class MauiProgram
         builder.Services.AddScoped<IBuildActivityService, BuildActivityService>();
         builder.Services.AddScoped<IStorageService, StorageService>();
         builder.Services.AddScoped<IActivitiesProvider, ActivitiesProvider>();
-        builder.Services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
+
+        builder.Services.AddSingleton<IActivitiesRepository, ActivitiesRepository>();
 
         // auth
         builder.Services.AddAuthorizationCore();
