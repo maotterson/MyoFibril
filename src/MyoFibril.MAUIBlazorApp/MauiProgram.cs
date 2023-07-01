@@ -38,8 +38,8 @@ public static class MauiProgram
 
         // add http client (ignores ssl for use with localhost env)
         builder.Services.AddHttpClient("MyClient", client => {
-            client.Timeout = TimeSpan.FromSeconds(10);
-           })
+                client.Timeout = TimeSpan.FromSeconds(10);
+            })
            .ConfigurePrimaryHttpMessageHandler(() => {
                HttpClientHandler clientHandler = new HttpClientHandler();
                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
