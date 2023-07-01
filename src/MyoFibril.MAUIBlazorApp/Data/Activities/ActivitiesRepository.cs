@@ -46,7 +46,7 @@ public class ActivitiesRepository : IActivitiesRepository
             StravaActivityId = dto.StravaActivity.Id,
             Name = dto.Name,
             PerformedExercises = dto.PerformedExercises,
-            DateCreated = dto.DatePerformed,
+            DateCreated = dto.DateCreated,
             Username = dto.Username
         }).ToList();
     }

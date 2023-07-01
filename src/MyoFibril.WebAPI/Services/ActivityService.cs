@@ -41,7 +41,8 @@ public class ActivityService : IActivityService
             Username = request.Username,
             Name = request.Name,
             DateCreated = DateTime.Now,
-            StravaActivityId = stravaResponse.Id
+            StravaActivityId = stravaResponse.Id,
+            PerformedExercises = request.PerformedExercises
         };
         var isCreated = await _activityRepository.CreateActivity(activityEntity);
         if (!isCreated) throw new Exception("Error creating activity");
