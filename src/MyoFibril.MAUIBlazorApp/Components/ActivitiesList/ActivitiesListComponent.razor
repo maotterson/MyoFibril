@@ -8,9 +8,12 @@
         <div class="card">
             <p>@activity.DateCreated</p>
             <p>@activity.Name</p>
-            @foreach (var exercise in activity.PerformedExercises)
+            @if(activity.PerformedExercises is not null)
             {
-                <p>@exercise.Exercise.Name</p>
+                @foreach (var exercise in activity.PerformedExercises)
+                {
+                    <p>@exercise.Exercise.Name</p>
+                }
             }
         </div>
     }
