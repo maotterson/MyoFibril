@@ -43,7 +43,6 @@ public class ActivitiesRepository : IActivitiesRepository
 
         return getActivitiesResponse.Select(dto => new ActivityEntity
         {
-            StravaActivityId = dto.StravaActivity.Id,
             Name = dto.Name,
             PerformedExercises = dto.PerformedExercises,
             DateCreated = dto.DateCreated,
