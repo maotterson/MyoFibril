@@ -41,7 +41,13 @@ public class ActivitiesRepository : IActivitiesRepository
         var responseBody = await response.Content.ReadAsStringAsync();
         var getActivitiesResponse = JsonSerializer.Deserialize<List<GetActivityResponse>>(responseBody);
 
-        // Return the deserialized response
-        return getActivitiesResponse.AsActivityEntity();
+        return getActivitiesResponse.Select(dto => new ActivityEntity
+        {
+            StravaActivityId = dto.StravaActivity.Id,
+            Name = dto.Name,
+            PerformedExercises = dto.PerformedExercises,
+            DateCreated = dto.DatePerformed,
+            Username = dto.Username
+        }).ToList();
     }
 }
