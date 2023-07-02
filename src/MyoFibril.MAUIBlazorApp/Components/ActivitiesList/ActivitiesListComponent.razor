@@ -6,15 +6,19 @@
     @foreach(var activity in _activities)
     {
         <div class="card">
-            <p>@activity.DateCreated</p>
-            <p>@activity.Name</p>
-            @if(activity.PerformedExercises is not null)
-            {
-                @foreach (var exercise in activity.PerformedExercises)
+            <div class="card-body">
+                <h5 class="card-title">@activity.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@activity.DateCreated</h6>
+                <div class="card-text">
+                @if(activity.PerformedExercises is not null)
                 {
-                    <p>@exercise.Exercise.Name</p>
+                    @foreach (var exercise in activity.PerformedExercises)
+                    {
+                        <p>@exercise.Exercise.Name</p>
+                    }
                 }
-            }
+                </div>
+            </div>
         </div>
     }
 </div>

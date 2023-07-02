@@ -58,7 +58,7 @@ public class ActivityService : IActivityService
         return createActivityResponse;
     }
 
-    public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false, int numActivities = 10)
+    public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false)
     {
         var activityEntity = await _activityRepository.GetActivityById(id);
         StravaDetailedActivity? stravaActivity = null;
