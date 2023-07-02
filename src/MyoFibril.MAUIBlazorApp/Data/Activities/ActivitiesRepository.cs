@@ -29,6 +29,7 @@ public class ActivitiesRepository : IActivitiesRepository
         var tokenInfo = await _storageService.GetItemAsync<TokenInfo>("token_info");
         if (tokenInfo is null) throw new Exception(); // todo better exception
         var accessToken = tokenInfo.AccessToken;
+        _httpClient.DefaultRequestHeaders.Remove("Authorization");
         _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
         // send request
