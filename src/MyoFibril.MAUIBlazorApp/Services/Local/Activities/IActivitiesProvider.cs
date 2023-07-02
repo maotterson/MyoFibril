@@ -3,5 +3,5 @@
 namespace MyoFibril.MAUIBlazorApp.Services.Local.Activities;
 public interface IActivitiesProvider
 {
-    Task<List<ActivityEntity>> GetActivitiesAsync();
+    Task<List<ActivityEntity>> GetActivitiesAsync(int numActivities);
 }

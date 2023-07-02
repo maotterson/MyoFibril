@@ -11,11 +11,11 @@ public class ActivitiesProvider : IActivitiesProvider
         _userService = userService;
         _activitiesRepository = activitiesRepository;
     }
-    public async Task<List<ActivityEntity>> GetActivitiesAsync()
+    public async Task<List<ActivityEntity>> GetActivitiesAsync(int numActivities)
     {
         var user = await _userService.GetLoggedInUser();
         if (user is null) throw new NullReferenceException(nameof(user));
-        var activities = await _activitiesRepository.GetActivitiesByUsernameAsync(user.Username);
+        var activities = await _activitiesRepository.GetActivitiesByUsernameAsync(user.Username, numActivities);
 
         return activities;
     }

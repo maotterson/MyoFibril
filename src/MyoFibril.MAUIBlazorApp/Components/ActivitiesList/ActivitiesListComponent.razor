@@ -21,8 +21,9 @@
 
 @code {
     private List<ActivityEntity> _activities = new List<ActivityEntity>();
+    private int _numberOfActivitiesToDisplay = 15;
     protected override async Task OnInitializedAsync()
     {
-        _activities = await _activitiesProvider.GetActivitiesAsync();
+        _activities = await _activitiesProvider.GetActivitiesAsync(_numberOfActivitiesToDisplay);
     }
 }
