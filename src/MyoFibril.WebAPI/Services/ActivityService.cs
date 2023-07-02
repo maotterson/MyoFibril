@@ -58,7 +58,7 @@ public class ActivityService : IActivityService
         return createActivityResponse;
     }
 
-    public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false)
+    public async Task<GetActivityResponse> GetActivityById(string id, bool includeStrava = false, int numActivities = 10)
     {
         var activityEntity = await _activityRepository.GetActivityById(id);
         StravaDetailedActivity? stravaActivity = null;
@@ -83,13 +83,16 @@ public class ActivityService : IActivityService
         return getActivityResponse;
     }
 
-    public async Task<List<GetActivityResponse>> GetActivitiesForUsername(string username, string accessToken, bool includeStrava = false)
+    public async Task<List<GetActivityResponse>> GetActivitiesForUsername(string username, 
+        string accessToken, 
+        bool includeStrava = false,
+        int numActivities = 10)
     {
         // verify username matches contents of token
         var isValidUsernameForToken = _jwtService.VerifyTokenAgainstUsername(accessToken, username);
         if (!isValidUsernameForToken) throw new UsernameTokenMismatchException();
 
-        var activityList = await _activityRepository.GetActivitiesForUsername(username);
+        var activityList = await _activityRepository.GetActivitiesForUsername(username, numActivities);
         // todo: could additionally retrieve strava specific information but would simplify/cut down on external calls to forgo it for all activities
 
         // map entities to response collection

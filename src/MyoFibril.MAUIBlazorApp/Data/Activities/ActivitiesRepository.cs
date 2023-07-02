@@ -23,7 +23,7 @@ public class ActivitiesRepository : IActivitiesRepository
     public async Task<List<ActivityEntity>> GetActivitiesByUsernameAsync(string username, int numActivities)
     {
         var baseUri = _configuration["Settings:API:BaseUri"];
-        var requestUri = $"{baseUri}/Activity/by-user/{username}?activities={numActivities}";
+        var requestUri = $"{baseUri}/Activity/by-user/{username}?limit={numActivities}";
 
         // get and attach bearer token to httpclient
         var tokenInfo = await _storageService.GetItemAsync<TokenInfo>("token_info");

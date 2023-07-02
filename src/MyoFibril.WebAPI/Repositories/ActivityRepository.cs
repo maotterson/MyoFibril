@@ -30,9 +30,9 @@ public class ActivityRepository : IActivityRepository
         }
     }
 
-    public async Task<List<ActivityEntity>> GetActivitiesForUsername(string username)
+    public async Task<List<ActivityEntity>> GetActivitiesForUsername(string username, int numActivities)
     {
-        var activitiesQuery = await _activitiesCollection.Find(a => a.Username == username).ToListAsync();
+        var activitiesQuery = await _activitiesCollection.Find(a => a.Username == username).Limit(numActivities).ToListAsync();
 
         if (activitiesQuery is null) throw new ActivityNotFoundException();
 

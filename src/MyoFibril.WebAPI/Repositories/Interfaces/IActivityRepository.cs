@@ -8,5 +8,5 @@ public interface IActivityRepository
 {
     Task<bool> CreateActivity(ActivityEntity activityEntity);
     Task<ActivityEntity> GetActivityById(string id);
-    Task<List<ActivityEntity>> GetActivitiesForUsername(string username);
+    Task<List<ActivityEntity>> GetActivitiesForUsername(string username, int numActivities);
 }

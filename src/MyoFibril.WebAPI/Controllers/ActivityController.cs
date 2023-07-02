@@ -45,14 +45,16 @@ public class ActivityController : ControllerBase
     [UsernameTokenVerification]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActivityResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<GetActivityResponse>>> GetActivitiesForUsername(string username, [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava)
+    public async Task<ActionResult<List<GetActivityResponse>>> GetActivitiesForUsername(string username, 
+        [FromQuery(Name = "include-strava"), DefaultValue(false)] bool includeStrava,
+        [FromQuery(Name = "limit"), DefaultValue(10)] int numActivities)
     {
         try
         {
             // todo could provide validation for access tokens provided id owner against that of the token
             var accessToken = Request.ExtractBearerToken();
 
-            var response = await _activityService.GetActivitiesForUsername(username, accessToken, includeStrava);
+            var response = await _activityService.GetActivitiesForUsername(username, accessToken, includeStrava, numActivities);
 
             if (response is null)
             {
